@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>NearMiss</title>
+    <title>Unsafe Act/Condition</title>
 
     <!-- Custom fonts for this template-->
 
@@ -28,10 +28,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
+<style>
+
+</style>
 <?php
 session_start();
 
@@ -59,151 +64,178 @@ $msg ="";
 
  
 
-if(isset($_POST['submit']) && empty($error)){
+if(isset($_POST['submit'])){
 
-   
-    $error = array();
+    $uac_id=$_POST['number'];
 
+    $rowCount = count($_POST['name']);
+    // Note that this assumes all the variables will correctly be submitted as arrays of the same length. For completeness and robustness you could add a !empty check for each value.
+    for ($i = 0; $i < $rowCount; $i++) {
+        $name = validate_input_text($_POST['name'][$i]);
+        $employee = validate_input_text($_POST['employee'][$i]);
+        $department = validate_input_text($_POST['department'][$i]);
+        $organization = validate_input_text($_POST['organization'][$i]);
 
-$mines = validate_input_text($_POST['mines']);
-if (empty($mines)){
-    $error[] = "error";
-}
-$date_incident = validate_input_text($_POST['date_incident']);
-if (empty($date_incident)){
-    $error[] = "error";
-}
+        $query = "INSERT INTO uac_person_details (uac_id,name,employee_no,department,organization)";
+        $query .= "VALUES(?, ?, ?, ?,?)";   
+        $q = mysqli_stmt_init($con);   
+        mysqli_stmt_prepare($q, $query);    
+        mysqli_stmt_bind_param($q, 'issss', $uac_id,$name, $employee,$department,$organization);
+        mysqli_stmt_execute($q);
 
-$date_report = validate_input_text($_POST['date_report']);
-if (empty($date_report)){
-    $error[] = "error";
-}
+        if( $uac_id!='' && $name!='' && $name !='' && $employee != '' & $department !='' && $organization !='' ){
 
-$person = validate_input_text($_POST['person']);
-if (empty($person)){
-    $error[] = "error";
-}
-$designation = validate_input_text($_POST['designation']);
-if (empty($designation)){
-    $error[] = "error";
-}
-
-$incident_report = validate_input_text($_POST['incident_report']);
-if (empty($incident_report)){
-    $error[] = "error";
-}
-
-
-$location = validate_input_text($_POST['location']);
-if (empty($location)){
-    $error[] = "error";
-}
-
-$equipment = validate_input_text($_POST['equipment']);
-if (empty($equipment)){
-    $equipment = "Null";
-}
-
-
-$person_involved= validate_input_text($_POST['person_involved']);
-if (empty($person_involved)){
-    $person_involved = "Null";
-}
-
-$clean = clean($_POST['description']);
-$description= validate_input_text($clean );
-if (empty($description)){
-    $error[] = "error";
-}
-
-if (isset($_FILES['image']) ){
-	$target_dir = 'nearmiss_photo/';
-	// The path of the new uploaded image
-	$image_path = $target_dir . basename($_FILES['image']['name']);
-	// Check to make sure the image is valid
-    $fileType = pathinfo($image_path, PATHINFO_EXTENSION);
-    $allowType = array('jpg', 'png', 'jpeg');
-	$maxDimW = 900;
-	$maxDimH = 500;
-    $file_name = $_FILES['image']['tmp_name'];
-    if (!empty($file_name) ){
-	list($width, $height, $type, $attr) = getimagesize( $file_name );
-	if ( $width > $maxDimW || $height > $maxDimH ) {
-    $target_filename = $_FILES['image']['tmp_name'];
-	$size = getimagesize( $file_name );
-	$ratio = $size[0]/$size[1]; // width/height
-    if( $ratio > 1) {
-        $new_width = $maxDimW;
-        $new_height = $maxDimH/$ratio;
-    } else {
-        $new_width = $maxDimW*$ratio;
-        $new_height = $maxDimH;
-    }
-    $src = imagecreatefromstring( file_get_contents( $file_name ) );
-    $dst = imagecreatetruecolor( $new_width, $new_height );
-    imagecopyresampled( $dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
-    imagedestroy( $src );
-    imagejpeg( $dst, $target_filename ); // adjust format as needed
-    imagedestroy( $dst );
-
-    }
-    if(file_exists($image_path)) {
-        $msg = 'Image already exists, please choose another or rename that image.!';
-    goto end;
-    } else if ($_FILES['image']['size'] > 5000000) {
-        $msg = 'Image file size too large, please choose an image less than 5Mb.';
-        goto end;
-    }
-    else if(!in_array($fileType, $allowType)){
-        $msg = 'This File Type is not allowed';
-        goto end;
-    }
-    
-    move_uploaded_file($_FILES['image']['tmp_name'],"nearmiss_photo/".$_FILES['image']['name']);
-    
-}
-else{
-    $image_path="Null";
-}
-}
-
-    // make a query
-    $query = "INSERT INTO nearmiss (mine,date_incident,date_report,person,designation, reported_by, location,equipment,person_involved,description,image)";
-    $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?)";
-
-    // initialize a statement
-    $q = mysqli_stmt_init($con);
-
-    // prepare sql statement
-    mysqli_stmt_prepare($q, $query);
-
-    // bind values
-    mysqli_stmt_bind_param($q, 'sssssssssss', $mines,$date_incident, $date_report,$person,$designation,$incident_report,$location,$equipment,$person_involved,$description,$image_path);
-
-    // execute statement
-    mysqli_stmt_execute($q);
-
-    if( $mines!='' && $date_incident!='' && $date_report !='' && $person != '' & $designation !='' && $incident_report !='' && $location !='' && $person_involved !='' && $description !='' && $image_path !='' && $equipment !=''){
-
-        $_POST['mines'] = '';
-        $_POST['date_incident'] = '';
-        $_POST['date_report'] = '';
-        $_POST['person']='';
-        $_POST['designation']='';
-        $_POST['incident_report']='';
-        $_POST['location']='';
-        $_POST['person_involved']='';
-        $_POST['description']='';
-        $_POST['image']='';
-        $_POST['equipment']='';
         $msg = 'Report uploaded successfully!';
 
     }else{
         $msg = 'Error while submitting report...!!';
 
     }
+    }
+
 }
-end:
+
+
+
+// $mines = validate_input_text($_POST['mines']);
+// if (empty($mines)){
+//     $error[] = "error";
+// }
+// $date_incident = validate_input_text($_POST['date_incident']);
+// if (empty($date_incident)){
+//     $error[] = "error";
+// }
+
+// $date_report = validate_input_text($_POST['date_report']);
+// if (empty($date_report)){
+//     $error[] = "error";
+// }
+
+// $person = validate_input_text($_POST['person']);
+// if (empty($person)){
+//     $error[] = "error";
+// }
+// $designation = validate_input_text($_POST['designation']);
+// if (empty($designation)){
+//     $error[] = "error";
+// }
+
+// $incident_report = validate_input_text($_POST['incident_report']);
+// if (empty($incident_report)){
+//     $error[] = "error";
+// }
+
+
+// $location = validate_input_text($_POST['location']);
+// if (empty($location)){
+//     $error[] = "error";
+// }
+
+// $equipment = validate_input_text($_POST['equipment']);
+// if (empty($equipment)){
+//     $equipment = "Null";
+// }
+
+
+// $person_involved= validate_input_text($_POST['person_involved']);
+// if (empty($person_involved)){
+//     $person_involved = "Null";
+// }
+
+// $clean = clean($_POST['description']);
+// $description= validate_input_text($clean );
+// if (empty($description)){
+//     $error[] = "error";
+// }
+
+// if (isset($_FILES['image']) ){
+// 	$target_dir = 'nearmiss_photo/';
+// 	// The path of the new uploaded image
+// 	$image_path = $target_dir . basename($_FILES['image']['name']);
+// 	// Check to make sure the image is valid
+//     $fileType = pathinfo($image_path, PATHINFO_EXTENSION);
+//     $allowType = array('jpg', 'png', 'jpeg');
+// 	$maxDimW = 900;
+// 	$maxDimH = 500;
+//     $file_name = $_FILES['image']['tmp_name'];
+//     if (!empty($file_name) ){
+// 	list($width, $height, $type, $attr) = getimagesize( $file_name );
+// 	if ( $width > $maxDimW || $height > $maxDimH ) {
+//     $target_filename = $_FILES['image']['tmp_name'];
+// 	$size = getimagesize( $file_name );
+// 	$ratio = $size[0]/$size[1]; // width/height
+//     if( $ratio > 1) {
+//         $new_width = $maxDimW;
+//         $new_height = $maxDimH/$ratio;
+//     } else {
+//         $new_width = $maxDimW*$ratio;
+//         $new_height = $maxDimH;
+//     }
+//     $src = imagecreatefromstring( file_get_contents( $file_name ) );
+//     $dst = imagecreatetruecolor( $new_width, $new_height );
+//     imagecopyresampled( $dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
+//     imagedestroy( $src );
+//     imagejpeg( $dst, $target_filename ); // adjust format as needed
+//     imagedestroy( $dst );
+
+//     }
+//     if(file_exists($image_path)) {
+//         $msg = 'Image already exists, please choose another or rename that image.!';
+//     goto end;
+//     } else if ($_FILES['image']['size'] > 5000000) {
+//         $msg = 'Image file size too large, please choose an image less than 5Mb.';
+//         goto end;
+//     }
+//     else if(!in_array($fileType, $allowType)){
+//         $msg = 'This File Type is not allowed';
+//         goto end;
+//     }
+    
+//     move_uploaded_file($_FILES['image']['tmp_name'],"nearmiss_photo/".$_FILES['image']['name']);
+    
+// }
+// else{
+//     $image_path="Null";
+// }
+// }
+
+//     // make a query
+//     $query = "INSERT INTO nearmiss (mine,date_incident,date_report,person,designation, reported_by, location,equipment,person_involved,description,image)";
+//     $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?)";
+
+//     // initialize a statement
+//     $q = mysqli_stmt_init($con);
+
+//     // prepare sql statement
+//     mysqli_stmt_prepare($q, $query);
+
+//     // bind values
+//     mysqli_stmt_bind_param($q, 'sssssssssss', $mines,$date_incident, $date_report,$person,$designation,$incident_report,$location,$equipment,$person_involved,$description,$image_path);
+
+//     // execute statement
+//     mysqli_stmt_execute($q);
+
+//     if( $mines!='' && $date_incident!='' && $date_report !='' && $person != '' & $designation !='' && $incident_report !='' && $location !='' && $person_involved !='' && $description !='' && $image_path !='' && $equipment !=''){
+
+//         $_POST['mines'] = '';
+//         $_POST['date_incident'] = '';
+//         $_POST['date_report'] = '';
+//         $_POST['person']='';
+//         $_POST['designation']='';
+//         $_POST['incident_report']='';
+//         $_POST['location']='';
+//         $_POST['person_involved']='';
+//         $_POST['description']='';
+//         $_POST['image']='';
+//         $_POST['equipment']='';
+//         $msg = 'Report uploaded successfully!';
+
+//     }else{
+//         $msg = 'Error while submitting report...!!';
+
+//     }
+// }
+// end:
 
 ?>
 <style>
@@ -251,7 +283,7 @@ end:
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Safety Components:</h6>
                         <a class="collapse-item" href="nearmiss.php">Near Miss</a>
-                        <a class="collapse-item" href="unsafeA&C.php">Unsafe Act/Condition</a>
+                        <a class="collapse-item" href="">Unsafe Act/Condition</a>
                         <a class="collapse-item" href="">VFL</a>
                         <a class="collapse-item" href="">Special Task</a>
 
@@ -383,13 +415,12 @@ end:
 
                     <div class="container">
                         <div class="row">
-                            <div class="offset-lg-2 col-lg-8 col-sm-8 col-8 border rounded main-section">
-                                <h3 class="text-center text-inverse">Near Miss Report</h3>
+                            <div class="offset-lg-1 col-lg-10 col-sm-8 col-8 border rounded main-section">
+                                <h3 class="text-center text-inverse">Unsafe ACT/CONDITION</h3>
                                 <hr>
                                 <p><?= $msg?></p>
-                                <form class="container" action="nearmiss.php" method="post"
+                                <form class="container" action="unsafeA&C.php" method="post"
                                     enctype="multipart/form-data" id="nearmiss">
-
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 col-12">
                                             <div class="form-group">
@@ -402,7 +433,7 @@ end:
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-12">
                                             <div class="form-group">
-                                                <label class="text-inverse" for="Near Miss No">Near Miss No</label>
+                                                <label class="text-inverse" for="Incident ID">Incident ID</label>
                                                 <?php
                                                 $query = "SELECT * FROM nearmiss";
                                                 $q = mysqli_stmt_init($con);
@@ -414,26 +445,6 @@ end:
                                                 ?>
                                                 <input type="text" class="form-control" id="number" name="number"
                                                     value="<?php echo $next ?>" required readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-12 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="Date and Time of incident">Date and
-                                                    Time of incident*</label>
-                                                <input type="datetime-local" class="form-control" id="date_incident"
-                                                    name="date_incident" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse"
-                                                    for="Date and Time incident was reported">Date
-                                                    and Time incident was reported*</label>
-                                                <input type="datetime-local" class="form-control" id="date_report"
-                                                    name="date_report" required>
                                             </div>
                                         </div>
                                     </div>
@@ -458,18 +469,53 @@ end:
 
                                     </div>
                                     <div class="row">
+                                        <div class="col-md-3 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <label class="text-inverse" for="Date">Date*</label>
+                                                <input type="date" class="form-control" id="date" name="date" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label class="text-inverse" for="time">Time*</label>
+                                                <input type="time" class="form-control" id="time" name="time" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label class="text-inverse" for="Shift">Shift*</label>
+                                                <select class="custom-select d-block form-control" id="shift"
+                                                    name="shift" required>
+                                                    <option value="">Select Shift</option>
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label class="text-inverse" for="Unsafe Act/Condition">Unsafe
+                                                    Act/Condition*</label>
+                                                <select class="custom-select d-block form-control" id="uac" name="uac"
+                                                    required>
+                                                    <option value="">Select category</option>
+                                                    <option value="Unsafe Act">Unsafe Act</option>
+                                                    <option value="UnSafe Condition">UnSafe Condition</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-lg-6 col-sm-6 col-12">
                                             <div class="form-group">
-                                                <label class="text-inverse" for="Incident Reported By">Incident Reported
-                                                    By*</label>
-                                                <select class="custom-select d-block form-control" id="incident_report"
-                                                    name="incident_report" required>
-                                                    <option value="">Select Category</option>
-                                                    <option value="Dept. Executive">Dept. Executive</option>
-                                                    <option value="Dept. Non-Executive">Dept. Non-Executive</option>
-                                                    <option value="Cont. Executive">Cont. Executive</option>
-                                                    <option value="Cont. Non-Executive">Cont. Non-Executive</option>
-                                                </select>
+                                                <div class="form-group">
+                                                    <label class="text-inverse" for="Shift Inchargeo">Shift
+                                                        Incharge*</label>
+                                                    <input type="text" class="form-control" id="shift_ic"
+                                                        name="shift_ic">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-12">
@@ -490,21 +536,28 @@ end:
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-6 col-12">
+                                        <div class="col-12">
                                             <div class="form-group">
-                                                <label class="text-inverse"
-                                                    for="Equipment(s) involved (If any)">Equipment(s)
-                                                    involved (If any)</label>
-                                                <input type="text" class="form-control" id="equipment" name="equipment">
+                                                <label class="text-inverse" for=" Details of the Event">
+                                                    Details of the Event*</label>
+                                                <textarea name="details" id="details" cols="30" rows="5"
+                                                    class="form-control" required></textarea>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-sm-6 col-12">
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-6 col-12">
                                             <div class="form-group">
-                                                <label class="text-inverse" for="Person(s) involved (If any)">Person(s)
-                                                    involved
-                                                    (If any) </label>
-                                                <input type="text" class="form-control" id="person_involved"
-                                                    name="person_involved">
+                                                <label class="text-inverse" for=Weather corrective action taken or
+                                                    not?">Weather corrective action taken or not?</label>
+                                                <label for="yes">
+                                                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                                    &emsp;YES</label>
+                                                <input type="radio" name="action" required value="yes" required>
+                                                <label for="no">&emsp;NO</label>
+                                                <input type="radio" name="action" required value="no" required>
                                             </div>
                                         </div>
 
@@ -512,22 +565,90 @@ end:
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="text-inverse"
-                                                    for="Incident Description and what adverse effect it could have caused">Incident
-                                                    Description and what adverse effect it could have caused*</label>
-                                                <textarea name="description" id="description" cols="30" rows="5"
-                                                    class="form-control" required></textarea>
+                                                <label class="text-inverse" for="If yes! Please specify ">
+                                                    If Yes! Please specify the reason </label>
+                                                <textarea name="yes_details" id="yes_details" cols="30" rows="5"
+                                                    class="form-control"></textarea>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-6 col-12">
+                                        <div class="col-12">
                                             <div class="form-group">
-                                                <label for="image">Choose Image</label>
-                                                <input type="file" name="image" accept="image/*" id="image">
+                                                <label class="text-inverse" for="If No! Please specify the reason  ">
+                                                    If No! Please specify the reason </label>
+                                                <textarea name="no_details" id="no_details" cols="30" rows="5"
+                                                    class="form-control"></textarea>
                                             </div>
                                         </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-12">
+                                            <label class="text-inverse" for="Details of the person involved in UA">
+                                                Details of the person involved in UA/UC </label>
+                                            <table class="table table-bordered table-hover" id="tab_logic">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">
+                                                            Name
+                                                        </th>
+                                                        <th class="text-center">
+                                                            Employee NO
+                                                        </th>
+                                                        <th class="text-center">
+                                                            Department
+                                                        </th>
+                                                        <th class="text-center">
+                                                            Organization
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr id='addr0'>
+                                                        <td>
+                                                            <input type="text" name='name[]' class="form-control"
+                                                                required />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name='employee[]' class="form-control"
+                                                                required />
+                                                        </td>
+                                                        <td>
+                                                            <select class="custom-select d-block form-control"
+                                                                id="department" name="department[]" required>
+                                                                <option value="">Select department</option>
+                                                                <option value="MECH">MECH</option>
+                                                                <option value="MINE">MINE</option>
+                                                                <option value="CIVIL">CIVIL</option>
+                                                                <option value="SECURITY">SECURITY</option>
+                                                                <option value="ELECTRICAL">ELECTRICAL</option>
+                                                                <option value="OTHERS">OTHERS</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select class="custom-select d-block form-control"
+                                                                id="organization" name="organization[]" required>
+                                                                <option value="">Select organization</option>
+                                                                <option value="Mines">OMC</option>
+                                                                <option value="Workshop">MYTHIRI</option>
+                                                                <option value="Stackyard">G4S</option>
+                                                                <option value="Transporting">SUPCO</option>
+                                                                <option value="Others">OTHERS</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr id='addr1'></tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <button id="add_row" class="btn btn-default pull-left" type="button"
+                                            style="font-size:30px ; margin-left: 800px;"><i
+                                                class="fa-sharp fa-solid fa-circle-plus"></i></button>
+
                                     </div>
                                     <hr>
                                     <div class="row">
@@ -606,8 +727,18 @@ end:
     <!-- <script src='js/fullcalendar.min.js'></script> -->
     <script src='js/fullcalendarxx.min.js'></script>
     <script src='packages/list/main.js'> </script>
+    <script>
+    $(document).ready(function() {
+        var i = 1;
+        $("#add_row").click(function() {
+            b = i - 1;
+            $('#addr' + i).html($('#addr' + b).html()).find('td:first-child');
+            $('#tab_logic').append('<tr id="addr' + (i + 1) + '"></tr>');
+            i++;
+        });
 
-
+    });
+    </script>
 </body>
 
 </html>

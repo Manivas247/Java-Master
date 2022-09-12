@@ -15,7 +15,6 @@ if (empty($password)){
     $error[] = "You forgot to enter your password";
 }
 
-$remember= $_POST['remember'];
 
 if(empty($error)){
     // sql query
@@ -52,7 +51,7 @@ if(empty($error)){
             echo '<script>alert("Incorrect username or password!")</script>';
         }
     }else{
-        echo '<script>alert("Re-directing to login page")</script>';
+        echo '<script>alert("User not Exists: Re-directing to login page")</script>';
     }
 
 }else{
