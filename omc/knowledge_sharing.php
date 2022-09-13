@@ -71,8 +71,8 @@ session_start();
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Safety Components:</h6>
                         <a class="collapse-item" href="nearmiss.php">Near Miss</a>
-                        <a class="collapse-item" href="">Unsafe Act/Condition</a>
-                        <a class="collapse-item" href="">VFL</a>
+                        <a class="collapse-item" href="unsafeA&C.php">Unsafe Act/Condition</a>
+                        <a class="collapse-item" href="vfl.php">VFL</a>
                         <a class="collapse-item" href="">Special Task</a>
 
                     </div>
@@ -428,7 +428,11 @@ session_start();
 
     <script src='packages/list/main.js'> </script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+    </script>
 
 </body>
 

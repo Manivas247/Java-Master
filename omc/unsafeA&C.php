@@ -47,18 +47,18 @@ $msg ="";
 
  if(isset($_SESSION['email'])){
     $email = $_SESSION['email'];
-    $query = "SELECT * FROM user WHERE email=? ";
-                        $q = mysqli_stmt_init($con);
-                        mysqli_stmt_prepare($q, $query);
+    $query1 = "SELECT * FROM user WHERE email=? ";
+                        $q1 = mysqli_stmt_init($con);
+                        mysqli_stmt_prepare($q1, $query1);
                     
                         // bind parameter
-                        mysqli_stmt_bind_param($q, 's', $email);
+                        mysqli_stmt_bind_param($q1, 's', $email);
                         //execute query
-                        mysqli_stmt_execute($q);
+                        mysqli_stmt_execute($q1);
                     
-                        $result = mysqli_stmt_get_result($q);
+                        $result1 = mysqli_stmt_get_result($q1);
                     
-                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                        $row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC);
 
  }
 
@@ -66,7 +66,75 @@ $msg ="";
 
 if(isset($_POST['submit'])){
 
-    $uac_id=$_POST['number'];
+$mines = validate_input_text($_POST['mines']);
+$person = validate_input_text($_POST['person']);
+$designation = validate_input_text($_POST['designation']);
+$date = validate_input_text($_POST['date']);
+$time = validate_input_text($_POST['time']);
+$shift = validate_input_text($_POST['shift']);
+$category = validate_input_text($_POST['uac']);
+$location = validate_input_text($_POST['location']);
+$shift_ic = validate_input_text($_POST['shift_ic']);
+$action= validate_input_text($_POST['action']);
+$clean = clean($_POST['details']);
+$details= validate_input_text($clean );
+$clean1 = clean($_POST['yes_details']);
+$yes_details= validate_input_text($clean1);
+if (empty($yes_details)){
+    $yes_details = "Null";
+}
+$clean2 = clean($_POST['no_details']);
+$no_details= validate_input_text($clean2);
+if (empty($no_details)){
+    $no_details = "Null";
+}
+
+
+    // make a query
+    $query = "INSERT INTO uac (mines,name,designation,date,time, shift, category,shift_ic,location,detail,action,yes_detail,no_detail)";
+    $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
+
+    // initialize a statement
+    $q = mysqli_stmt_init($con);
+
+    // prepare sql statement
+    mysqli_stmt_prepare($q, $query);
+
+    // bind values
+    mysqli_stmt_bind_param($q, 'sssssssssssss', $mines,$person, $designation,$date,$time,$shift,$category,$shift_ic,$location,$details,$action,$yes_details,$no_details);
+
+    // execute statement
+    mysqli_stmt_execute($q);
+
+    if( $mines!='' && $person!='' && $designation !='' && $date != '' & $time !='' && $shift !='' && $category !='' && $shift_ic !='' && $location !='' && $details !='' && $action !='' && $yes_details !='' && $no_details !=''){
+
+        $_POST['mines'] = '';
+        $_POST['person'] = '';
+        $_POST['designation'] = '';
+        $_POST['date']='';
+        $_POST['time']='';
+        $_POST['shift']='';
+        $_POST['uac']='';
+        $_POST['location']='';
+        $_POST['shift_ic']='';
+        $_POST['action']='';
+        $_POST['details']='';
+        $_POST['yes_details']='';
+        $_POST['no_details']='';
+        $msg = 'Report uploaded successfully!';
+        // header("Location: unsafeA&C.php");
+
+    }else{
+        $msg = 'Error while submitting report...!!';
+        }
+
+        $query = "SELECT * FROM uac ORDER BY id DESC LIMIT 1;";
+                                                $q = mysqli_stmt_init($con);
+                                                mysqli_stmt_prepare($q, $query);
+                                                mysqli_stmt_execute($q);                                            
+                                                $result = mysqli_stmt_get_result($q); 
+                                                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                     
+                                                $uac_id=$row['id'];
 
     $rowCount = count($_POST['name']);
     // Note that this assumes all the variables will correctly be submitted as arrays of the same length. For completeness and robustness you could add a !empty check for each value.
@@ -76,7 +144,7 @@ if(isset($_POST['submit'])){
         $department = validate_input_text($_POST['department'][$i]);
         $organization = validate_input_text($_POST['organization'][$i]);
 
-        $query = "INSERT INTO uac_person_details (uac_id,name,employee_no,department,organization)";
+        $query = "INSERT INTO uac_person_detail (uac_id,name,employee_no,department,organization)";
         $query .= "VALUES(?, ?, ?, ?,?)";   
         $q = mysqli_stmt_init($con);   
         mysqli_stmt_prepare($q, $query);    
@@ -87,161 +155,116 @@ if(isset($_POST['submit'])){
 
         $msg = 'Report uploaded successfully!';
 
+
     }else{
         $msg = 'Error while submitting report...!!';
+        goto end;
 
     }
     }
-
 }
-
-
-
-// $mines = validate_input_text($_POST['mines']);
-// if (empty($mines)){
-//     $error[] = "error";
-// }
-// $date_incident = validate_input_text($_POST['date_incident']);
-// if (empty($date_incident)){
-//     $error[] = "error";
-// }
-
-// $date_report = validate_input_text($_POST['date_report']);
-// if (empty($date_report)){
-//     $error[] = "error";
-// }
-
-// $person = validate_input_text($_POST['person']);
-// if (empty($person)){
-//     $error[] = "error";
-// }
-// $designation = validate_input_text($_POST['designation']);
-// if (empty($designation)){
-//     $error[] = "error";
-// }
-
-// $incident_report = validate_input_text($_POST['incident_report']);
-// if (empty($incident_report)){
-//     $error[] = "error";
-// }
-
-
-// $location = validate_input_text($_POST['location']);
-// if (empty($location)){
-//     $error[] = "error";
-// }
-
-// $equipment = validate_input_text($_POST['equipment']);
-// if (empty($equipment)){
-//     $equipment = "Null";
-// }
-
-
-// $person_involved= validate_input_text($_POST['person_involved']);
-// if (empty($person_involved)){
-//     $person_involved = "Null";
-// }
-
-// $clean = clean($_POST['description']);
-// $description= validate_input_text($clean );
-// if (empty($description)){
-//     $error[] = "error";
-// }
-
-// if (isset($_FILES['image']) ){
-// 	$target_dir = 'nearmiss_photo/';
-// 	// The path of the new uploaded image
-// 	$image_path = $target_dir . basename($_FILES['image']['name']);
-// 	// Check to make sure the image is valid
-//     $fileType = pathinfo($image_path, PATHINFO_EXTENSION);
-//     $allowType = array('jpg', 'png', 'jpeg');
-// 	$maxDimW = 900;
-// 	$maxDimH = 500;
-//     $file_name = $_FILES['image']['tmp_name'];
-//     if (!empty($file_name) ){
-// 	list($width, $height, $type, $attr) = getimagesize( $file_name );
-// 	if ( $width > $maxDimW || $height > $maxDimH ) {
-//     $target_filename = $_FILES['image']['tmp_name'];
-// 	$size = getimagesize( $file_name );
-// 	$ratio = $size[0]/$size[1]; // width/height
-//     if( $ratio > 1) {
-//         $new_width = $maxDimW;
-//         $new_height = $maxDimH/$ratio;
-//     } else {
-//         $new_width = $maxDimW*$ratio;
-//         $new_height = $maxDimH;
-//     }
-//     $src = imagecreatefromstring( file_get_contents( $file_name ) );
-//     $dst = imagecreatetruecolor( $new_width, $new_height );
-//     imagecopyresampled( $dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
-//     imagedestroy( $src );
-//     imagejpeg( $dst, $target_filename ); // adjust format as needed
-//     imagedestroy( $dst );
-
-//     }
-//     if(file_exists($image_path)) {
-//         $msg = 'Image already exists, please choose another or rename that image.!';
-//     goto end;
-//     } else if ($_FILES['image']['size'] > 5000000) {
-//         $msg = 'Image file size too large, please choose an image less than 5Mb.';
-//         goto end;
-//     }
-//     else if(!in_array($fileType, $allowType)){
-//         $msg = 'This File Type is not allowed';
-//         goto end;
-//     }
-    
-//     move_uploaded_file($_FILES['image']['tmp_name'],"nearmiss_photo/".$_FILES['image']['name']);
-    
-// }
-// else{
-//     $image_path="Null";
-// }
-// }
-
-//     // make a query
-//     $query = "INSERT INTO nearmiss (mine,date_incident,date_report,person,designation, reported_by, location,equipment,person_involved,description,image)";
-//     $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?)";
-
-//     // initialize a statement
-//     $q = mysqli_stmt_init($con);
-
-//     // prepare sql statement
-//     mysqli_stmt_prepare($q, $query);
-
-//     // bind values
-//     mysqli_stmt_bind_param($q, 'sssssssssss', $mines,$date_incident, $date_report,$person,$designation,$incident_report,$location,$equipment,$person_involved,$description,$image_path);
-
-//     // execute statement
-//     mysqli_stmt_execute($q);
-
-//     if( $mines!='' && $date_incident!='' && $date_report !='' && $person != '' & $designation !='' && $incident_report !='' && $location !='' && $person_involved !='' && $description !='' && $image_path !='' && $equipment !=''){
-
-//         $_POST['mines'] = '';
-//         $_POST['date_incident'] = '';
-//         $_POST['date_report'] = '';
-//         $_POST['person']='';
-//         $_POST['designation']='';
-//         $_POST['incident_report']='';
-//         $_POST['location']='';
-//         $_POST['person_involved']='';
-//         $_POST['description']='';
-//         $_POST['image']='';
-//         $_POST['equipment']='';
-//         $msg = 'Report uploaded successfully!';
-
-//     }else{
-//         $msg = 'Error while submitting report...!!';
-
-//     }
-// }
-// end:
+end:
 
 ?>
 <style>
 .main-section {
     padding: 15px;
     background: #f1f1f1;
+}
+
+.group::after,
+.tabBlock-tabs::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+
+.unstyledList,
+.tabBlock-tabs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tabBlock {
+    margin: 0 0 2.5rem;
+}
+
+.tabBlock-tab {
+    background-color: #fff;
+    border-color: #d8d8d8;
+    border-left-style: solid;
+    border-top: solid;
+    border-width: 2px;
+    color: #b5a8c5;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    float: left;
+    padding: 0.625rem 1.25rem;
+    position: relative;
+    -webkit-transition: 0.1s ease-in-out;
+    transition: 0.1s ease-in-out;
+}
+
+.tabBlock-tab:last-of-type {
+    border-right-style: solid;
+}
+
+.tabBlock-tab::before,
+.tabBlock-tab::after {
+    content: "";
+    display: block;
+    height: 4px;
+    position: absolute;
+    -webkit-transition: 0.1s ease-in-out;
+    transition: 0.1s ease-in-out;
+}
+
+.tabBlock-tab::before {
+    background-color: #b5a8c5;
+    left: -2px;
+    right: -2px;
+    top: -2px;
+}
+
+.tabBlock-tab::after {
+    background-color: transparent;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+}
+
+
+.tabBlock-tab.is-active {
+    position: relative;
+    color: #975997;
+    z-index: 1;
+}
+
+.tabBlock-tab.is-active::before {
+    background-color: #975997;
+}
+
+.tabBlock-tab.is-active::after {
+    background-color: #fff;
+}
+
+.tabBlock-content {
+    background-color: #fff;
+    border: 2px solid #d8d8d8;
+    padding: 1.25rem;
+}
+
+.tabBlock-pane> :last-child {
+    margin-bottom: 0;
 }
 </style>
 
@@ -283,8 +306,8 @@ if(isset($_POST['submit'])){
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Safety Components:</h6>
                         <a class="collapse-item" href="nearmiss.php">Near Miss</a>
-                        <a class="collapse-item" href="">Unsafe Act/Condition</a>
-                        <a class="collapse-item" href="">VFL</a>
+                        <a class="collapse-item" href="unsafeA&C.php">Unsafe Act/Condition</a>
+                        <a class="collapse-item" href="vfl.php">VFL</a>
                         <a class="collapse-item" href="">Special Task</a>
 
                     </div>
@@ -412,333 +435,426 @@ if(isset($_POST['submit'])){
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid ">
+                    <figure class="tabBlock">
+                        <ul class="tabBlock-tabs">
+                            <li class="tabBlock-tab is-active">New Record</li>
+                            <li class="tabBlock-tab">Submitted Record</li>
+                        </ul>
+                        <div class="tabBlock-content">
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="offset-lg-1 col-lg-10 col-sm-8 col-8 border rounded main-section">
-                                <h3 class="text-center text-inverse">Unsafe ACT/CONDITION</h3>
-                                <hr>
-                                <p><?= $msg?></p>
-                                <form class="container" action="unsafeA&C.php" method="post"
-                                    enctype="multipart/form-data" id="nearmiss">
+                            <div class="tabBlock-pane">
+
+                                <div class="container">
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="Near Miss No">Name of
-                                                    Mines</label>
-                                                <input type="text" class="form-control" id="mines" name="mines"
-                                                    placeholder="Name of Mines" value="Kodingamali Bauxite Mines"
-                                                    readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="Incident ID">Incident ID</label>
-                                                <?php
-                                                $query = "SELECT * FROM nearmiss";
+                                        <div class="offset-lg-1 col-lg-10 col-sm-8 col-8 border rounded main-section">
+                                            <h3 class="text-center text-inverse">Unsafe ACT/CONDITION Report</h3>
+                                            <hr>
+                                            <p><?= $msg?></p>
+                                            <form class="container" action="unsafeA&C.php" method="post"
+                                                enctype="multipart/form-data" id="unsafea&c">
+                                                <div class=" row">
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse" for="Near Miss No">Name of
+                                                                Mines</label>
+                                                            <input type="text" class="form-control" id="mines"
+                                                                name="mines" placeholder="Name of Mines"
+                                                                value="Kodingamali Bauxite Mines" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse" for="Incident ID">Incident
+                                                                ID</label>
+                                                            <?php
+                                                $query = "SELECT * FROM uac ";
                                                 $q = mysqli_stmt_init($con);
                                                 mysqli_stmt_prepare($q, $query);
                                                 mysqli_stmt_execute($q);                                            
-                                                $result = mysqli_stmt_get_result($q);                                         
+                                                $result = mysqli_stmt_get_result($q); 
+                                                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                        
                                                 $number= mysqli_num_rows($result); 
                                                 $next=$number+1;                      
                                                 ?>
-                                                <input type="text" class="form-control" id="number" name="number"
-                                                    value="<?php echo $next ?>" required readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="Person reported">Person
-                                                    reported*</label>
-                                                <input type="text" class="form-control" id="person" name="person"
-                                                    style="text-transform:capitalize ;" value="<?=$row['name']?>"
-                                                    required readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="Designation">Designation*</label>
-                                                <input type="text" class="form-control" id="designation"
-                                                    style="text-transform:capitalize ;" value="<?=$row['designation']?>"
-                                                    name="designation" required readonly>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-12 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="Date">Date*</label>
-                                                <input type="date" class="form-control" id="date" name="date" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-3 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="time">Time*</label>
-                                                <input type="time" class="form-control" id="time" name="time" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="Shift">Shift*</label>
-                                                <select class="custom-select d-block form-control" id="shift"
-                                                    name="shift" required>
-                                                    <option value="">Select Shift</option>
-                                                    <option value="A">A</option>
-                                                    <option value="B">B</option>
-                                                    <option value="C">C</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="Unsafe Act/Condition">Unsafe
-                                                    Act/Condition*</label>
-                                                <select class="custom-select d-block form-control" id="uac" name="uac"
-                                                    required>
-                                                    <option value="">Select category</option>
-                                                    <option value="Unsafe Act">Unsafe Act</option>
-                                                    <option value="UnSafe Condition">UnSafe Condition</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <div class="form-group">
-                                                    <label class="text-inverse" for="Shift Inchargeo">Shift
-                                                        Incharge*</label>
-                                                    <input type="text" class="form-control" id="shift_ic"
-                                                        name="shift_ic">
+                                                            <input type="text" class="form-control" id="number"
+                                                                name="number" value="<?php echo $next ?>" required
+                                                                readonly>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="Location of Incident">Location of
-                                                    Incident*</label>
-                                                <select class="custom-select d-block form-control" id="location"
-                                                    name="location" required>
-                                                    <option value="">Select Location</option>
-                                                    <option value="Mines">Mines</option>
-                                                    <option value="Workshop">Workshop</option>
-                                                    <option value="Stackyard">Stackyard</option>
-                                                    <option value="Transporting">Transporting</option>
-                                                    <option value="Security">Security</option>
-                                                    <option value="Others">Others</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for=" Details of the Event">
-                                                    Details of the Event*</label>
-                                                <textarea name="details" id="details" cols="30" rows="5"
-                                                    class="form-control" required></textarea>
-                                            </div>
-                                        </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse" for="Person reported">Person
+                                                                reported*</label>
+                                                            <input type="text" class="form-control" id="person"
+                                                                name="person" style="text-transform:capitalize ;"
+                                                                value="<?=$row1['name']?>" required readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse"
+                                                                for="Designation">Designation*</label>
+                                                            <input type="text" class="form-control" id="designation"
+                                                                style="text-transform:capitalize ;"
+                                                                value="<?=$row1['designation']?>" name="designation"
+                                                                required readonly>
+                                                        </div>
+                                                    </div>
 
-                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-12 col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse" for="Date">Date*</label>
+                                                            <input type="date" class="form-control" id="date"
+                                                                name="date" required>
+                                                        </div>
+                                                    </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-12 col-sm-6 col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for=Weather corrective action taken or
-                                                    not?">Weather corrective action taken or not?</label>
-                                                <label for="yes">
-                                                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                                                    &emsp;YES</label>
-                                                <input type="radio" name="action" required value="yes" required>
-                                                <label for="no">&emsp;NO</label>
-                                                <input type="radio" name="action" required value="no" required>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="If yes! Please specify ">
-                                                    If Yes! Please specify the reason </label>
-                                                <textarea name="yes_details" id="yes_details" cols="30" rows="5"
-                                                    class="form-control"></textarea>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label class="text-inverse" for="If No! Please specify the reason  ">
-                                                    If No! Please specify the reason </label>
-                                                <textarea name="no_details" id="no_details" cols="30" rows="5"
-                                                    class="form-control"></textarea>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-
-                                        <div class="col-12">
-                                            <label class="text-inverse" for="Details of the person involved in UA">
-                                                Details of the person involved in UA/UC </label>
-                                            <table class="table table-bordered table-hover" id="tab_logic">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center">
-                                                            Name
-                                                        </th>
-                                                        <th class="text-center">
-                                                            Employee NO
-                                                        </th>
-                                                        <th class="text-center">
-                                                            Department
-                                                        </th>
-                                                        <th class="text-center">
-                                                            Organization
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr id='addr0'>
-                                                        <td>
-                                                            <input type="text" name='name[]' class="form-control"
-                                                                required />
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" name='employee[]' class="form-control"
-                                                                required />
-                                                        </td>
-                                                        <td>
+                                                    <div class="col-lg-3 col-sm-6 col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse" for="time">Time*</label>
+                                                            <input type="time" class="form-control" id="time"
+                                                                name="time" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-sm-6 col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse" for="Shift">Shift*</label>
                                                             <select class="custom-select d-block form-control"
-                                                                id="department" name="department[]" required>
-                                                                <option value="">Select department</option>
-                                                                <option value="MECH">MECH</option>
-                                                                <option value="MINE">MINE</option>
-                                                                <option value="CIVIL">CIVIL</option>
-                                                                <option value="SECURITY">SECURITY</option>
-                                                                <option value="ELECTRICAL">ELECTRICAL</option>
-                                                                <option value="OTHERS">OTHERS</option>
+                                                                id="shift" name="shift" required>
+                                                                <option value="">Select Shift</option>
+                                                                <option value="A">A</option>
+                                                                <option value="B">B</option>
+                                                                <option value="C">C</option>
                                                             </select>
-                                                        </td>
-                                                        <td>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-sm-6 col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse"
+                                                                for="Unsafe Act/Condition">Unsafe
+                                                                Act/Condition*</label>
+                                                            <select class="custom-select d-block form-control" id="uac"
+                                                                name="uac" required>
+                                                                <option value="">Select category</option>
+                                                                <option value="Unsafe Act">Unsafe Act</option>
+                                                                <option value="UnSafe Condition">UnSafe Condition
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                        <div class="form-group">
+                                                            <div class="form-group">
+                                                                <label class="text-inverse" for="Shift Inchargeo">Shift
+                                                                    Incharge*</label>
+                                                                <input type="text" class="form-control" id="shift_ic"
+                                                                    name="shift_ic" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse"
+                                                                for="Location of Incident">Location of
+                                                                Incident*</label>
                                                             <select class="custom-select d-block form-control"
-                                                                id="organization" name="organization[]" required>
-                                                                <option value="">Select organization</option>
-                                                                <option value="Mines">OMC</option>
-                                                                <option value="Workshop">MYTHIRI</option>
-                                                                <option value="Stackyard">G4S</option>
-                                                                <option value="Transporting">SUPCO</option>
-                                                                <option value="Others">OTHERS</option>
+                                                                id="location" name="location" required>
+                                                                <option value="">Select Location</option>
+                                                                <option value="Mines">Mines</option>
+                                                                <option value="Workshop">Workshop</option>
+                                                                <option value="Stackyard">Stackyard</option>
+                                                                <option value="Transporting">Transporting</option>
+                                                                <option value="Security">Security</option>
+                                                                <option value="Others">Others</option>
                                                             </select>
-                                                        </td>
-                                                    </tr>
-                                                    <tr id='addr1'></tr>
-                                                </tbody>
-                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse" for=" Details of the Event">
+                                                                Details of the Event*</label>
+                                                            <textarea name="details" id="details" cols="30" rows="5"
+                                                                class="form-control" required></textarea>
+                                                        </div>
+                                                    </div>
 
-                                        </div>
-                                        <button id="add_row" class="btn btn-default pull-left" type="button"
-                                            style="font-size:30px ; margin-left: 800px;"><i
-                                                class="fa-sharp fa-solid fa-circle-plus"></i></button>
+                                                </div>
 
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-lg-12 col-sm-12 col-12 text-center">
-                                            <button class="btn btn-info" type="submit" name="submit">Submit
-                                                report</button>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-6 col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse" for=Weather corrective action
+                                                                taken or not?">Weather
+                                                                corrective action taken or not?</label>
+                                                            <label for="yes">
+                                                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                                                &emsp;YES</label>
+                                                            <input type="radio" name="action" required value="yes"
+                                                                required>
+                                                            <label for="no">&emsp;NO</label>
+                                                            <input type="radio" name="action" required value="no"
+                                                                required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse" for="If yes! Please specify ">
+                                                                If Yes! Please specify the reason </label>
+                                                            <textarea name="yes_details" id="yes_details" cols="30"
+                                                                rows="5" class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="text-inverse"
+                                                                for="If No! Please specify the reason  ">
+                                                                If No! Please specify the reason </label>
+                                                            <textarea name="no_details" id="no_details" cols="30"
+                                                                rows="5" class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+
+                                                    <div class="col-12">
+                                                        <label class="text-inverse"
+                                                            for="Details of the person involved in UA">
+                                                            Details of the person involved in UA/UC </label>
+                                                        <table class="table table-bordered table-hover" id="tab_logic">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-center">
+                                                                        Name
+                                                                    </th>
+                                                                    <th class="text-center">
+                                                                        Employee NO
+                                                                    </th>
+                                                                    <th class="text-center">
+                                                                        Department
+                                                                    </th>
+                                                                    <th class="text-center">
+                                                                        Organization
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr id='addr0'>
+                                                                    <td>
+                                                                        <input type="text" name='name[]'
+                                                                            class="form-control" required />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" name='employee[]'
+                                                                            class="form-control" required />
+                                                                    </td>
+                                                                    <td>
+                                                                        <select
+                                                                            class="custom-select d-block form-control"
+                                                                            id="department" name="department[]"
+                                                                            required>
+                                                                            <option value="">Select department</option>
+                                                                            <option value="MECH">MECH</option>
+                                                                            <option value="MINE">MINE</option>
+                                                                            <option value="CIVIL">CIVIL</option>
+                                                                            <option value="SECURITY">SECURITY</option>
+                                                                            <option value="ELECTRICAL">ELECTRICAL
+                                                                            </option>
+                                                                            <option value="OTHERS">OTHERS</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select
+                                                                            class="custom-select d-block form-control"
+                                                                            id="organization" name="organization[]"
+                                                                            required>
+                                                                            <option value="">Select organization
+                                                                            </option>
+                                                                            <option value="Mines">OMC</option>
+                                                                            <option value="Workshop">MYTHIRI</option>
+                                                                            <option value="Stackyard">G4S</option>
+                                                                            <option value="Transporting">SUPCO</option>
+                                                                            <option value="Others">OTHERS</option>
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id='addr1'></tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                    <button id="add_row" class="btn btn-default pull-left" type="button"
+                                                        style="font-size:30px ; margin-left: 800px;"><i
+                                                            class="fa-sharp fa-solid fa-circle-plus"></i></button>
+
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-12 text-center">
+                                                        <button class="btn btn-info" type="submit" name="submit">Submit
+                                                            report</button>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
+                            </div>
+                            <div class="tabBlock-pane">
                             </div>
                         </div>
-                    </div>
+                    </figure>
+
+
                 </div>
 
 
+
+
+
+
+                <!-- /.container-fluid -->
+                <!-- End of Main Content -->
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy;Kodingamali Bauxite Mines 2022</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
             </div>
-
-
-
-
-
-
-            <!-- /.container-fluid -->
-            <!-- End of Main Content -->
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy;Kodingamali Bauxite Mines 2022</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+            <!-- End of Content Wrapper -->
         </div>
-        <!-- End of Content Wrapper -->
-    </div>
-    <!-- End of Page Wrapper -->
+        <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
 
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-    <!-- jQuery Version 1.11.1 -->
-    <script src="js/jquery.js"></script>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
+        <!-- jQuery Version 1.11.1 -->
+        <script src="js/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
+        <!-- Bootstrap Core JavaScript -->
 
-    <!-- FullCalendar -->
-    <script src='js/moment.min.js'></script>
-    <!-- <script src='js/fullcalendar.min.js'></script> -->
-    <script src='js/fullcalendarxx.min.js'></script>
-    <script src='packages/list/main.js'> </script>
-    <script>
-    $(document).ready(function() {
-        var i = 1;
-        $("#add_row").click(function() {
-            b = i - 1;
-            $('#addr' + i).html($('#addr' + b).html()).find('td:first-child');
-            $('#tab_logic').append('<tr id="addr' + (i + 1) + '"></tr>');
-            i++;
+        <!-- FullCalendar -->
+        <script src='js/moment.min.js'></script>
+        <!-- <script src='js/fullcalendar.min.js'></script> -->
+        <script src='js/fullcalendarxx.min.js'></script>
+        <script src='packages/list/main.js'> </script>
+        <script>
+        $(document).ready(function() {
+            var i = 1;
+            $("#add_row").click(function() {
+                b = i - 1;
+                $('#addr' + i).html($('#addr' + b).html()).find('td:first-child');
+                $('#tab_logic').append('<tr id="addr' + (i + 1) + '"></tr>');
+                i++;
+            });
+
         });
+        </script>
+        <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+        </script>
+        <script>
+        var TabBlock = {
+            s: {
+                animLen: 200
+            },
 
-    });
-    </script>
+            init: function() {
+                TabBlock.bindUIActions();
+                TabBlock.hideInactive();
+            },
+
+            bindUIActions: function() {
+                $('.tabBlock-tabs').on('click', '.tabBlock-tab', function() {
+                    TabBlock.switchTab($(this));
+                });
+            },
+
+            hideInactive: function() {
+                var $tabBlocks = $('.tabBlock');
+
+                $tabBlocks.each(function(i) {
+                    var
+                        $tabBlock = $($tabBlocks[i]),
+                        $panes = $tabBlock.find('.tabBlock-pane'),
+                        $activeTab = $tabBlock.find('.tabBlock-tab.is-active');
+
+                    $panes.hide();
+                    $($panes[$activeTab.index()]).show();
+                });
+            },
+
+            switchTab: function($tab) {
+                var $context = $tab.closest('.tabBlock');
+
+                if (!$tab.hasClass('is-active')) {
+                    $tab.siblings().removeClass('is-active');
+                    $tab.addClass('is-active');
+
+                    TabBlock.showPane($tab.index(), $context);
+                }
+            },
+
+            showPane: function(i, $context) {
+                var $panes = $context.find('.tabBlock-pane');
+
+                // Normally I'd frown at using jQuery over CSS animations, but we can't transition between unspecified variable heights, right? If you know a better way, I'd love a read it in the comments or on Twitter @johndjameson
+                $panes.slideUp(TabBlock.s.animLen);
+                $($panes[i]).slideDown(TabBlock.s.animLen);
+            }
+        };
+
+        $(function() {
+            TabBlock.init();
+        });
+        </script>
 </body>
 
 </html>

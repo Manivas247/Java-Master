@@ -100,8 +100,8 @@ if(isset($_SESSION['email'])){
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Safety Components:</h6>
                         <a class="collapse-item" href="nearmiss.php">Near Miss</a>
-                        <a class="collapse-item" href="">Unsafe Act/Condition</a>
-                        <a class="collapse-item" href="">VFL</a>
+                        <a class="collapse-item" href="unsafeA&C.php">Unsafe Act/Condition</a>
+                        <a class="collapse-item" href="vfl.php">VFL</a>
                         <a class="collapse-item" href="">Special Task</a>
                     </div>
                 </div>
@@ -401,7 +401,11 @@ if(isset($_SESSION['email'])){
     <!-- <script src='js/fullcalendar.min.js'></script> -->
     <script src='js/fullcalendarxx.min.js'></script>
     <script src='packages/list/main.js'> </script>
-
+    <script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+    </script>
 
 </body>
 
