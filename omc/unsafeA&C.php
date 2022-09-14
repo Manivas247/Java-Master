@@ -34,9 +34,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<style>
-
-</style>
 <?php
 session_start();
 
@@ -91,8 +88,8 @@ if (empty($no_details)){
 
 
     // make a query
-    $query = "INSERT INTO uac (mines,name,designation,date,time, shift, category,shift_ic,location,detail,action,yes_detail,no_detail)";
-    $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
+    $query = "INSERT INTO uac (mines,name,designation,date,time, shift, category,shift_ic,location,detail,action,yes_detail,no_detail,email)";
+    $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)";
 
     // initialize a statement
     $q = mysqli_stmt_init($con);
@@ -101,7 +98,7 @@ if (empty($no_details)){
     mysqli_stmt_prepare($q, $query);
 
     // bind values
-    mysqli_stmt_bind_param($q, 'sssssssssssss', $mines,$person, $designation,$date,$time,$shift,$category,$shift_ic,$location,$details,$action,$yes_details,$no_details);
+    mysqli_stmt_bind_param($q, 'ssssssssssssss', $mines,$person, $designation,$date,$time,$shift,$category,$shift_ic,$location,$details,$action,$yes_details,$no_details,$email);
 
     // execute statement
     mysqli_stmt_execute($q);
@@ -715,6 +712,101 @@ end:
                                 </div>
                             </div>
                             <div class="tabBlock-pane">
+                                <div class=" d-flex table-data"
+                                    style="height: 560px;overflow: scroll; flex-basis: 40%;  margin: 1em 0em; margin-left: 10px;">
+                                    <table class="table table-bordered">
+                                        <thead style="text-align: center; justify-items: center;">
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Mine</th>
+                                                <th scope="col">Person Reported</th>
+                                                <th scope="col">Designation</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Shift</th>
+                                                <th scope="col">Category</th>
+                                                <th scope="col">Shift Incharge</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Details</th>
+                                                <th scope="col">Action taken</th>
+                                                <th scope="col">If yes, reason</th>
+                                                <th scope="col">If no, reason</th>
+                                                <th scope="col">Details of the person involved in UA/UC</th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody3" style="text-align: center;">
+                                            <?php
+
+            require_once 'mysqli_connect.php';
+            $query = "SELECT * FROM uac WHERE email= '$email'";
+            $result = mysqli_query($con, $query);
+
+            while($rows = mysqli_fetch_assoc($result))
+            {?>
+
+                                            <tr>
+                                                <td><?php echo $rows['id'];?></td>
+                                                <td><?php echo $rows['mines'];?>
+                                                </td>
+                                                <td><?php echo $rows['name'];?></td>
+                                                <td>
+                                                    <?php echo $rows['designation'];?></td>
+                                                <td><?php echo $rows['date'];?></td>
+                                                <td><?php echo $rows['time'];?></td>
+                                                <td><?php echo $rows['shift'];?></td>
+                                                <td><?php echo $rows['category'];?></td>
+                                                <td><?php echo $rows['shift_ic'];?></td>
+                                                <td><?php echo $rows['location'];?></td>
+                                                <td><?php echo $rows['detail'];?></td>
+                                                <td><?php echo $rows['action'];?></td>
+                                                <td><?php echo $rows['yes_detail'];?></td>
+                                                <td><?php echo $rows['no_detail'];?></td>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <th scope="col">Name</th>
+                                                            <th scope="col">Emp_ID </th>
+                                                            <th scope="col">Department</th>
+                                                            <th scope="col">Organization</th>
+                                                        </thead>
+                                                        <?php
+                                                $uac_id1=$rows['id'];
+                                        $query1 = "SELECT * FROM uac_person_detail WHERE uac_id= '$uac_id1'";
+                                        $result1 = mysqli_query($con, $query1);
+                            
+                                        while($rows1 = mysqli_fetch_assoc($result1))
+                                               { ?>
+
+                                                        <tbody>
+                                                            <tr>
+
+                                                                <td><?php echo $rows1['name'];?></td>
+                                                                <td><?php echo $rows1['employee_no'];?></td>
+                                                                <td><?php echo $rows1['department'];?></td>
+                                                                <td><?php echo $rows1['organization'];?></td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                        <?php
+                }
+                ?>
+                                                    </table>
+
+
+
+                                                </td>
+
+
+                                            </tr>
+
+                                            <?php
+                }
+                ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </figure>
@@ -855,6 +947,7 @@ end:
             TabBlock.init();
         });
         </script>
+
 </body>
 
 </html>

@@ -93,6 +93,8 @@ if(isset($_SESSION['email'])){
                         <a class="collapse-item" href="unsafeA&C.php">Unsafe Act/Condition</a>
                         <a class="collapse-item" href="vfl.php">VFL</a>
                         <a class="collapse-item" href="">Special Task</a>
+                        <a class="collapse-item" href="assigntask.php">Assign Task</a>
+
                     </div>
                 </div>
             </li>

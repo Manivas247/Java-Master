@@ -107,6 +107,7 @@ $safety= validate_input_text($clean2);
     $dst = imagecreatetruecolor( $new_width, $new_height );
     imagecopyresampled( $dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
     imagedestroy( $src );
+    
     imagejpeg( $dst, $target_filename ); // adjust format as needed
     imagedestroy( $dst );
 
@@ -131,8 +132,8 @@ else{
 }
 
     // make a query
-    $query = "INSERT INTO vfl (mines,name,designation,date,time, workmen, location,brief,understanding,safety,image)";
-    $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?)";
+    $query = "INSERT INTO vfl (mines,name,designation,date,time, workmen, location,brief,understanding,safety,image,email)";
+    $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?,?)";
 
     // initialize a statement
     $q = mysqli_stmt_init($con);
@@ -141,7 +142,7 @@ else{
     mysqli_stmt_prepare($q, $query);
 
     // bind values
-    mysqli_stmt_bind_param($q, 'sssssssssss', $mines,$person, $designation,$date,$time,$workmen,$location,$brief,$understanding,$safety,$image);
+    mysqli_stmt_bind_param($q, 'ssssssssssss', $mines,$person, $designation,$date,$time,$workmen,$location,$brief,$understanding,$safety,$image,$email);
 
     // execute statement
     mysqli_stmt_execute($q);
@@ -335,6 +336,102 @@ end:
 
 .tabBlock-pane> :last-child {
     margin-bottom: 0;
+
+}
+
+#myImg:hover {
+    opacity: 0.7;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.9);
+    /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation */
+.modal-content,
+#caption {
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
 }
 </style>
 
@@ -813,6 +910,158 @@ end:
                                 </div>
                             </div>
                             <div class="tabBlock-pane">
+                                <div class=" d-flex table-data"
+                                    style="height: 560px;overflow: scroll; flex-basis: 40%;  margin: 1em 0em; margin-left: 10px;">
+                                    <table class="table table-bordered">
+                                        <thead style="text-align: center; justify-items: center;">
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Mine</th>
+                                                <th scope="col">Person Executed </th>
+                                                <th scope="col">Designation</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Workmen Interacted</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Brief about on-going Operations</th>
+                                                <th scope="col">Understanding of the Workmen on Safety</th>
+                                                <th scope="col">Safety Briefing Provided to Workmen</th>
+                                                <th scope="col">Details of the Observations</th>
+                                                <th scope="col">Photograph</th>
+                                                <th scope="col">Proposed Corrective/Preventive Action(s)</th>
+
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody3" style="text-align: center;">
+                                            <?php
+
+            require_once 'mysqli_connect.php';
+            $query = "SELECT * FROM vfl WHERE email= '$email'";
+            $result = mysqli_query($con, $query);
+
+            while($rows = mysqli_fetch_assoc($result))
+            {?>
+
+                                            <tr>
+                                                <td><?php echo $rows['id'];?></td>
+                                                <td><?php echo $rows['mines'];?>
+                                                </td>
+                                                <td><?php echo $rows['name'];?></td>
+                                                <td>
+                                                    <?php echo $rows['designation'];?></td>
+                                                <td><?php echo $rows['date'];?></td>
+                                                <td><?php echo $rows['time'];?></td>
+                                                <td><?php echo $rows['workmen'];?></td>
+                                                <td><?php echo $rows['location'];?></td>
+                                                <td><?php echo $rows['brief'];?></td>
+                                                <td><?php echo $rows['understanding'];?></td>
+                                                <td><?php echo $rows['safety'];?></td>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <th scope="col">Observations</th>
+                                                            <th scope="col">Type </th>
+                                                            <th scope="col">Category</th>
+                                                            <th scope="col">Potential</th>
+                                                            <th scope="col">Severity</th>
+                                                        </thead>
+                                                        <?php
+                                                $vfl_id1=$rows['id'];
+                                        $query1 = "SELECT * FROM vfl_observation WHERE vfl_id= '$vfl_id1'";
+                                        $result1 = mysqli_query($con, $query1);
+                            
+                                        while($rows1 = mysqli_fetch_assoc($result1))
+                                               { ?>
+
+                                                        <tbody>
+                                                            <tr>
+
+                                                                <td><?php echo $rows1['observation'];?></td>
+                                                                <td><?php echo $rows1['type'];?></td>
+                                                                <td><?php echo $rows1['category'];?></td>
+                                                                <td><?php echo $rows1['potential'];?></td>
+                                                                <td><?php echo $rows1['severity'];?></td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                        <?php
+                }
+                ?>
+                                                    </table>
+
+
+
+                                                </td>
+                                                <td>
+
+                                                    <?php if (file_exists($rows['image'])){?>
+                                                    <a href="#">
+                                                        <img src="<?=$rows['image']?>" width="300" height="200"
+                                                            class="myImg">
+                                                    </a>
+                                                    <?php }  else{
+                                                       ?> <h5>Null</h5>
+                                                    <?php } 
+                                                       ?>
+                                                </td>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <th scope="col">Observations</th>
+                                                            <th scope="col">Severity </th>
+                                                            <th scope="col">Action_to_be_taken</th>
+                                                            <th scope="col">Responsibility</th>
+                                                            <th scope="col">Timeline</th>
+                                                            <th scope="col">Action_closed_on</th>
+                                                        </thead>
+                                                        <?php
+                                                $vfl_id1=$rows['id'];
+                                        $query2 = "SELECT * FROM vlf_corrective WHERE vfl_id= '$vfl_id1'";
+                                        $result2 = mysqli_query($con, $query2);
+                            
+                                        while($rows2 = mysqli_fetch_assoc($result2))
+                                               { ?>
+
+                                                        <tbody>
+                                                            <tr>
+
+                                                                <td><?php echo $rows2['observation'];?></td>
+                                                                <td><?php echo $rows2['severity'];?></td>
+                                                                <td><?php echo $rows2['action'];?></td>
+                                                                <td><?php echo $rows2['responsibility'];?></td>
+                                                                <td><?php echo $rows2['timeline'];?></td>
+                                                                <td><?php echo $rows2['action_close'];?></td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                        <?php
+                }
+                ?>
+                                                    </table>
+
+
+
+                                                </td>
+
+
+                                            </tr>
+
+                                            <?php
+                }
+                ?>
+                                            <div id="myModal" class="modal">
+                                                <!-- The Close Button -->
+                                                <span class="close"
+                                                    onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+                                                <!-- Modal Content (The Image) -->
+                                                <img class="modal-content" id="img01">
+                                                <!-- Modal Caption (Image Text) -->
+                                            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </figure>
@@ -963,6 +1212,33 @@ end:
     $(function() {
         TabBlock.init();
     });
+    </script>
+    <script>
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementsByClassName('myImg');
+    //window.alert(img);
+    var i = img.length;
+    var j;
+    var modalImg = document.getElementById('img01');
+
+    //var captionText = document.getElementById("caption");
+    for (j = 0; j < i; j++) {
+        img[j].onclick = function() {
+            modal.style.display = "flex";
+            modalImg.src = this.src;
+
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close");
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    }
     </script>
 </body>
 
