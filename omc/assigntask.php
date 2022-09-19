@@ -26,11 +26,12 @@
         href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
 </head>
 <?php
@@ -56,153 +57,83 @@ $msg ="";
                     
                         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
- }
+ } 
 
- 
 
 if(isset($_POST['submit']) && empty($error)){
 
+    $id = validate_input_text($_POST['id1']);
+    
+
+
+    $query = "SELECT * FROM nearmiss where task_assign = 0 AND number = '$id'";
+    $result = mysqli_query($con, $query);
+    while($rows = mysqli_fetch_assoc($result))
+    {
+        $mines = $rows['mine'];
+        $date_incident = $rows['date_incident'];
+        $date_report = $rows['date_report'];
+        $person = $rows['person'];
+        $designation = $rows['designation'];
+        $reported_by = $rows['reported_by'];
+        $location = $rows['location'];
+        $equipment = $rows['equipment'];
+        $person_involved = $rows['person_involved'];
+        $image = $rows['image'];
+
+    }
+
    
-    $error = array();
+    $clean = clean($_POST['description1']);
+    $description= validate_input_text($clean );
+    $name = validate_input_text($_POST['name']);
+    $email = validate_input_text($_POST['email1']);
+    $designation = validate_input_text($_POST['designation']);
+    $phone = ($_POST['phone']);
+    $date = date("Y-m-d");
+    $active = 0;
+    $status= "Not Completed";
+  
+  
 
+   // make a query
+   $query = "INSERT INTO assign_task (incident_id,description,name,email,designation, phone,active,date,mine,date_incident,date_report,person,designation1, reported_by, location,equipment,person_involved,image,status)";
+   $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-$mines = validate_input_text($_POST['mines']);
-if (empty($mines)){
-    $error[] = "error";
-}
-$date_incident = validate_input_text($_POST['date_incident']);
-if (empty($date_incident)){
-    $error[] = "error";
-}
+   // initialize a statement
+   $q = mysqli_stmt_init($con);
 
-$date_report = validate_input_text($_POST['date_report']);
-if (empty($date_report)){
-    $error[] = "error";
-}
+   // prepare sql statement
+   mysqli_stmt_prepare($q, $query);
 
-$person = validate_input_text($_POST['person']);
-if (empty($person)){
-    $error[] = "error";
-}
-$designation = validate_input_text($_POST['designation']);
-if (empty($designation)){
-    $error[] = "error";
-}
+   // bind values
+   mysqli_stmt_bind_param($q, 'sssssssssssssssssss', $id,$description, $name,$email,$designation,$phone,$active,$date,$mines,$date_incident, $date_report,$person,$designation,$reported_by,$location,$equipment,$person_involved,$image,$status);
 
-$incident_report = validate_input_text($_POST['incident_report']);
-if (empty($incident_report)){
-    $error[] = "error";
-}
+   // execute statement
+   mysqli_stmt_execute($q);
 
-
-$location = validate_input_text($_POST['location']);
-if (empty($location)){
-    $error[] = "error";
-}
-
-$equipment = validate_input_text($_POST['equipment']);
-if (empty($equipment)){
-    $equipment = "Null";
-}
-
-
-$person_involved= validate_input_text($_POST['person_involved']);
-if (empty($person_involved)){
-    $person_involved = "Null";
-}
-
-$clean = clean($_POST['description']);
-$description= validate_input_text($clean );
-if (empty($description)){
-    $error[] = "error";
-}
-
-if (isset($_FILES['image']) ){
-	$target_dir = 'nearmiss_photo/';
-	// The path of the new uploaded image
-	$image_path = $target_dir . basename($_FILES['image']['name']);
-	// Check to make sure the image is valid
-    $fileType = pathinfo($image_path, PATHINFO_EXTENSION);
-    $allowType = array('jpg', 'png', 'jpeg');
-	$maxDimW = 1000;
-	$maxDimH = 900;
-    $file_name = $_FILES['image']['tmp_name'];
-    if (!empty($file_name) ){
-	list($width, $height, $type, $attr) = getimagesize( $file_name );
-	if ( $width > $maxDimW || $height > $maxDimH ) {
-    $target_filename = $_FILES['image']['tmp_name'];
-	$size = getimagesize( $file_name );
-	$ratio = $size[0]/$size[1]; // width/height
-    if( $ratio > 1) {
-        $new_width = $maxDimW;
-        $new_height = $maxDimH/$ratio;
-    } else {
-        $new_width = $maxDimW*$ratio;
-        $new_height = $maxDimH;
-    }
-    $src = imagecreatefromstring( file_get_contents( $file_name ) );
-    $dst = imagecreatetruecolor( $new_width, $new_height );
-    imagecopyresampled( $dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
-    imagedestroy( $src );
-    imagejpeg( $dst, $target_filename ); // adjust format as needed
-    imagedestroy( $dst );
-
-    }
-    if(file_exists($image_path)) {
-        $msg = 'Image already exists, please choose another or rename that image.!';
-    goto end;
-    } else if ($_FILES['image']['size'] > 5000000) {
-        $msg = 'Image file size too large, please choose an image less than 5Mb.';
-        goto end;
-    }
-    else if(!in_array($fileType, $allowType)){
-        $msg = 'This File Type is not allowed';
-        goto end;
-    }
+   if( $id!='' && $description!='' && $name !='' && $email != '' & $designation !='' && $phone !=''){
+      $query = "UPDATE nearmiss SET task_assign=? WHERE number =?"; 
+      $assign = 1;
+       $q = mysqli_stmt_init($con);
+       mysqli_stmt_prepare($q, $query);
+       mysqli_stmt_bind_param($q, 'ii', $assign,$id);
+       mysqli_stmt_execute($q);
+       $_POST['id1'] = '';
+       $_POST['description1'] = '';
+       $_POST['name'] = '';
+       $_POST['phone']='';
+       $_POST['email1']='';
+       $_POST['designation']='';
+       $msg = 'Task Assigned Successfully!';
+       
     
-    move_uploaded_file($_FILES['image']['tmp_name'],"nearmiss_photo/".$_FILES['image']['name']);
-    
-}
-else{
-    $image_path="Null";
-}
-}
 
-    // make a query
-    $query = "INSERT INTO nearmiss (mine,date_incident,date_report,person,designation, reported_by, location,equipment,person_involved,description,image,email)";
-    $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?,?)";
+   }else{
+      
+    $msg = 'Error while assigning task...!!';
 
-    // initialize a statement
-    $q = mysqli_stmt_init($con);
-
-    // prepare sql statement
-    mysqli_stmt_prepare($q, $query);
-
-    // bind values
-    mysqli_stmt_bind_param($q, 'ssssssssssss', $mines,$date_incident, $date_report,$person,$designation,$incident_report,$location,$equipment,$person_involved,$description,$image_path,$email);
-
-    // execute statement
-    mysqli_stmt_execute($q);
-
-    if( $mines!='' && $date_incident!='' && $date_report !='' && $person != '' & $designation !='' && $incident_report !='' && $location !='' && $person_involved !='' && $description !='' && $image_path !='' && $equipment !=''){
-
-        $_POST['mines'] = '';
-        $_POST['date_incident'] = '';
-        $_POST['date_report'] = '';
-        $_POST['person']='';
-        $_POST['designation']='';
-        $_POST['incident_report']='';
-        $_POST['location']='';
-        $_POST['person_involved']='';
-        $_POST['description']='';
-        $_POST['image']='';
-        $_POST['equipment']='';
-        $msg = 'Report uploaded successfully!';
-
-    }else{
-        $msg = 'Error while submitting report...!!';
-
-    }
+   }
 }
 end:
 
@@ -402,13 +333,69 @@ end:
     text-decoration: none;
     cursor: pointer;
 }
+
+.round {
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    position: relative;
+    background: red;
+    display: inline-block;
+    padding: 0.3rem 0.2rem !important;
+
+
+    z-index: 10 !important;
+    margin-top: -10px;
+
+}
+
+.round>span {
+    color: white;
+    display: block;
+    text-align: center;
+    font-size: 0.6rem !important;
+    padding: 0 !important;
+    margin-top: -2px;
+    margin-left: -2px;
+}
+
+#list {
+
+    display: none;
+    top: 33px;
+    position: absolute;
+    right: 2%;
+    background: #ffffff;
+    z-index: 100 !important;
+    width: 25vw;
+    margin-left: -37px;
+
+    padding: 0 !important;
+    margin: 0 auto !important;
+
+
+}
+
+.message>span {
+    width: 100%;
+    display: block;
+    color: red;
+    text-align: justify;
+    margin: 0.2rem 0.3rem !important;
+    padding: 0.3rem !important;
+    line-height: 1rem !important;
+    font-weight: bold;
+    border-bottom: 1px solid white;
+    font-size: 1.8rem !important;
+
+}
 </style>
 
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"
+        <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar"
             style="font-family: 'Nunito', sans-serif;">
             <!-- Sidebar - Brand -->
 
@@ -445,6 +432,7 @@ end:
                         <a class="collapse-item" href="unsafeA&C.php">Unsafe Act/Condition</a>
                         <a class="collapse-item" href="vfl.php">VFL</a>
                         <a class="collapse-item" href="">Special Task</a>
+                        <a class="collapse-item" href="investigation.php">Investigation</a>
 
                     </div>
                 </div>
@@ -452,7 +440,7 @@ end:
 
             <!-- Nav Item - grievance -->
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="grievance.php">
                     <i class="fa-solid fa-hands-praying"></i>
                     <span>Grievance</span></a>
             </li>
@@ -469,14 +457,24 @@ end:
                     <span>Requests</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="business.php">
                     <i class="fa-solid fa-envelope-circle-check"></i>
-                    <span>Suggestion</span></a>
+                    <span>Business Excellence</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="quizmain.php">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="true" aria-controls="collapseThree">
                     <i class="fa-solid fa-person-circle-question"></i>
-                    <span>Daily Quiz</span></a>
+                    <span>Quiz</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">General Knowledge:</h6>
+                        <a class="collapse-item" href="quizmain.php">Daily Quiz</a>
+                        <a class="collapse-item" href="quizmain_safety.php">Safety Quiz</a>
+
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="photohub.php">
@@ -510,49 +508,65 @@ end:
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
+                                <i class="fas fa-bell fa-fw" style="font-size: 18px;"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
+
+                                <?php
+        $query = "SELECT * FROM assign_task where active =0 and email ='$email' ORDER BY date DESC LIMIT 0,5";
+        $count = mysqli_num_rows(mysqli_query($con,$query));
+        ?>
+                                <span class="badge badge-danger badge-counter"
+                                    style="border-radius: 50%; font-size: 13px;"><?php echo $count; ?></span>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">Alerts Center</h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <h6 class="dropdown-header">Notification Center</h6>
+                                <?php
+          $result = mysqli_query($con, $query);                     
+                                          
+        if($count >0 ){
+            while($rows = mysqli_fetch_assoc($result)) {?>
+
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="investigation.php?id=<?php echo $rows['incident_id'] ?>">
                                     <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
+                                        <div class="icon-circle bg-success">
                                             <i class="fas fa-file-alt text-white"></i>
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <div class="small text-gray-500">Task assigned on:
+                                            &nbsp;&nbsp;<?php echo $rows['date'];  ?>
+                                        </div>
+                                        <span class="font-weight-bold">New Task has been assigned to you- "Incident ID:
+                                            <?php echo $rows['incident_id'];   ?> "</span>
                                     </div>
                                 </a>
+
+                                <?php     }
+        }
+        else{
+
+
+?>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
+                                        <div class="icon-circle bg-danger">
+                                            <i class="fa-regular fa-face-frown text-white"></i>
                                         </div>
                                     </div>
+
                                     <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
+                                        <span class="font-weight-bold">Sorry no notifications for you!</span>
                                     </div>
+
+                                    <?php
+        }
+            ?>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for
-                                        your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="investigation.php">Show
+                                    All Tasks</a>
                             </div>
                         </li>
 
@@ -577,6 +591,7 @@ end:
                             <li class="tabBlock-tab">Assigned task</li>
                         </ul>
                         <div class="tabBlock-content">
+                            <p><?= $msg?></p>
 
                             <div class="tabBlock-pane">
 
@@ -595,9 +610,7 @@ end:
                                         </thead>
                                         <tbody id="tbody3" style="text-align: center;">
                                             <?php
-
-           require_once 'mysqli_connect.php';
-            $query = "SELECT * FROM nearmiss";
+            $query = "SELECT * FROM nearmiss where task_assign = 0";
             $result = mysqli_query($con, $query);
 
             while($rows = mysqli_fetch_assoc($result))
@@ -674,9 +687,25 @@ end:
                                                     <div class="form-row" style="margin: 5px;">
                                                         <div class="col">
                                                             <label for="email" class="col-form-label">Email:</label>
-                                                            <input type="text" class="form-control" id="email"
-                                                                name="email" required>
+                                                            <select name="email1" id="email1" required
+                                                                class="custom-select d-block form-control">
+                                                                <option value="">Select Email</option>
+                                                                <?php
+                                                                
+                                                                 $query = "SELECT * FROM user";
+                                                                 $result = mysqli_query($con, $query);
+                                                     
+                                                                 while($rows = mysqli_fetch_assoc($result))
+                                                                 {?>
+
+                                                                <option value="<?php echo $rows['email']; ?>">
+                                                                    <?php echo $rows['email']; ?></option>
+                                                                <?php } 
+                                                       ?>
+                                                            </select>
                                                         </div>
+
+
                                                         <div class="col">
                                                             <label for="name" class="col-form-label">Name:</label>
                                                             <input type="text" class="form-control" id="name"
@@ -696,11 +725,12 @@ end:
                                                                 name="phone" readonly required>
                                                         </div>
                                                     </div>
+
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             id="close11">Close</button>
-                                                        <button type="submit" class="btn btn-primary"
-                                                            name="post">Post</button>
+                                                        <button type="submit" class="btn btn-primary" id="submit_login"
+                                                            name="submit">Post</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -715,17 +745,12 @@ end:
                                     <table class="table table-bordered">
                                         <thead style="text-align: center; justify-items: center;">
                                             <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Mine</th>
-                                                <th scope="col">Date of incident*</th>
-                                                <th scope="col">Date incident was reported*</th>
-                                                <th scope="col">Incident Reported By</th>
-                                                <th scope="col">Location of Incident</th>
-                                                <th scope="col">Equipment(s) involved </th>
-                                                <th scope="col">Person(s) involved</th>
-                                                <th scope="col">Incident Description</th>
-                                                <th scope="col">Image</th>
-
+                                                <th scope="col">Incident ID</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Designation</th>
+                                                <th scope="col">Phone</th>
 
                                             </tr>
                                         </thead>
@@ -733,47 +758,23 @@ end:
                                             <?php
 
            require_once 'mysqli_connect.php';
-            $query = "SELECT * FROM nearmiss WHERE email= '$email'";
+            $query = "SELECT * FROM assign_task";
             $result = mysqli_query($con, $query);
 
             while($rows = mysqli_fetch_assoc($result))
             {?>
 
                                             <tr>
-                                                <td><?php echo $rows['number'];?></td>
-                                                <td><?php echo $rows['mine'];?>
+                                                <td><?php echo $rows['incident_id'];?></td>
+                                                <td><?php echo $rows['description'];?>
                                                 </td>
-                                                <td><?php echo $rows['date_incident'];?></td>
+                                                <td><?php echo $rows['name'];?></td>
                                                 <td>
-                                                    <?php echo $rows['date_report'];?></td>
-                                                <td><?php echo $rows['reported_by'];?></td>
-                                                <td><?php echo $rows['location'];?></td>
-                                                <td><?php echo $rows['equipment'];?></td>
-                                                <td><?php echo $rows['person_involved'];?></td>
-                                                <td><?php echo $rows['description'];?></td>
-                                                <td>
-
-                                                    <?php if (file_exists($rows['image'])){?>
-                                                    <a href="#">
-                                                        <img src="<?=$rows['image']?>" width="300" height="200"
-                                                            class="myImg">
-                                                    </a>
-                                                    <?php }  else{
-                                                       ?> <h5>Null</h5>
-                                                    <?php } 
-                                                       ?>
-
+                                                    <?php echo $rows['email'];?></td>
+                                                <td><?php echo $rows['designation'];?></td>
+                                                <td><?php echo $rows['phone'];?></td>
 
                                                 </td>
-                                                <div id="myModal" class="modal1">
-                                                    <!-- The Close Button -->
-                                                    <span class="close"
-                                                        onclick="document.getElementById('myModal').style.display='none'">&times;</span>
-                                                    <!-- Modal Content (The Image) -->
-                                                    <img class="modal-content1" id="img01">
-                                                    <!-- Modal Caption (Image Text) -->
-                                                </div>
-
                                             </tr>
 
                                             <?php
@@ -785,7 +786,6 @@ end:
                             </div>
                     </figure>
                 </div>
-            </div>
 
 
 
@@ -795,19 +795,21 @@ end:
 
 
 
-            <!-- /.container-fluid -->
-            <!-- End of Main Content -->
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy;Kodingamali Bauxite Mines 2022</span>
+
+                <!-- /.container-fluid -->
+                <!-- End of Main Content -->
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy;Kodingamali Bauxite Mines 2022</span>
+                        </div>
                     </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+                </footer>
+                <!-- End of Footer -->
+            </div>
+            <!-- End of Content Wrapper -->
         </div>
-        <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
 
@@ -965,6 +967,93 @@ end:
         }
         return textvalues3;
     }
+    </script>
+
+    <script>
+    document.getElementById("email1").onchange = changeListener;
+
+    function changeListener() {
+
+        var email = document.getElementById('email1').value;
+
+        $.ajax({
+            url: 'taskprocess.php', //This is the current doc
+            type: "POST",
+            dataType: 'json', // add json datatype to get json
+            data: ({
+                email: email
+            }),
+            success: function(data) {
+                var name = data.name;
+                var designation = data.designation;
+                var phone = data.phone
+
+                document.getElementById("name").value = name;
+                document.getElementById("phone").value = phone;
+                document.getElementById("designation").value = designation;
+
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr);
+            }
+        });
+
+    };
+    </script>
+    <script>
+    $(document).ready(function() {
+        var ids = new Array();
+        $('#over').on('click', function() {
+            $('#list').toggle();
+        });
+
+        //Message with Ellipsis
+        $('div.msg').each(function() {
+            var len = $(this).text().trim(" ").split(" ");
+            if (len.length > 12) {
+                var add_elip = $(this).text().trim().substring(0, 65) + "…";
+                $(this).text(add_elip);
+            }
+
+        });
+
+
+        $("#bell-count").on('click', function(e) {
+            e.preventDefault();
+
+            let belvalue = $('#bell-count').attr('data-value');
+
+            if (belvalue == '') {
+
+                console.log("inactive");
+            } else {
+                $(".round").css('display', 'none');
+                $("#list").css('display', 'block');
+
+                // $('.message').each(function(){
+                // var i = $(this).attr("data-id");
+                // ids.push(i);
+
+                // });
+                //Ajax
+                $('.message').click(function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: 'notify.php',
+                        type: 'POST',
+                        data: {
+                            "incident_id": $(this).attr('data-id')
+                        },
+                        success: function(data) {
+
+                            console.log(data);
+                            location.reload();
+                        }
+                    });
+                });
+            }
+        });
+    });
     </script>
 
 

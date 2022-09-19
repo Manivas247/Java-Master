@@ -439,7 +439,7 @@ end:
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"
+        <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar"
             style="font-family: 'Nunito', sans-serif;">
             <!-- Sidebar - Brand -->
 
@@ -476,6 +476,7 @@ end:
                         <a class="collapse-item" href="unsafeA&C.php">Unsafe Act/Condition</a>
                         <a class="collapse-item" href="">VFL</a>
                         <a class="collapse-item" href="">Special Task</a>
+                        <a class="collapse-item" href="investigation.php">Investigation</a>
 
                     </div>
                 </div>
@@ -483,7 +484,7 @@ end:
 
             <!-- Nav Item - grievance -->
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="grievance.php">
                     <i class="fa-solid fa-hands-praying"></i>
                     <span>Grievance</span></a>
             </li>
@@ -500,14 +501,24 @@ end:
                     <span>Requests</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="business.php">
                     <i class="fa-solid fa-envelope-circle-check"></i>
-                    <span>Suggestion</span></a>
+                    <span>Business Excellence</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="quizmain.php">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="true" aria-controls="collapseThree">
                     <i class="fa-solid fa-person-circle-question"></i>
-                    <span>Daily Quiz</span></a>
+                    <span>Quiz</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">General Knowledge:</h6>
+                        <a class="collapse-item" href="quizmain.php">Daily Quiz</a>
+                        <a class="collapse-item" href="quizmain_safety.php">Safety Quiz</a>
+
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="photohub.php">
@@ -534,6 +545,7 @@ end:
                     </div>
 
 
+
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -541,49 +553,65 @@ end:
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
+                                <i class="fas fa-bell fa-fw" style="font-size: 18px;"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
+
+                                <?php
+        $query = "SELECT * FROM assign_task where active =0 and email ='$email' ORDER BY date DESC LIMIT 0,5 ";
+        $count = mysqli_num_rows(mysqli_query($con,$query));
+        ?>
+                                <span class="badge badge-danger badge-counter"
+                                    style="border-radius: 50%; font-size: 13px;"><?php echo $count; ?></span>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">Alerts Center</h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <h6 class="dropdown-header">Notification Center</h6>
+                                <?php
+          $result = mysqli_query($con, $query);                     
+                                          
+        if($count >0 ){
+            while($rows = mysqli_fetch_assoc($result)) {?>
+
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="investigation.php?id=<?php echo $rows['incident_id'] ?>">
                                     <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
+                                        <div class="icon-circle bg-success">
                                             <i class="fas fa-file-alt text-white"></i>
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <div class="small text-gray-500">Task assigned on:
+                                            &nbsp;&nbsp;<?php echo $rows['date'];  ?>
+                                        </div>
+                                        <span class="font-weight-bold">New Task has been assigned to you- "Incident ID:
+                                            <?php echo $rows['incident_id'];   ?> "</span>
                                     </div>
                                 </a>
+
+                                <?php     }
+        }
+        else{
+
+
+?>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
+                                        <div class="icon-circle bg-danger">
+                                            <i class="fa-regular fa-face-frown text-white"></i>
                                         </div>
                                     </div>
+
                                     <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
+                                        <span class="font-weight-bold">Sorry no notifications for you!</span>
                                     </div>
+
+                                    <?php
+        }
+            ?>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for
-                                        your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="investigation.php">Show
+                                    All Tasks</a>
                             </div>
                         </li>
 

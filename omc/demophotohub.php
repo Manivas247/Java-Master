@@ -78,6 +78,7 @@ include 'mysqli_connect.php';
                         <a class="collapse-item" href="">Unsafe Act/Condition</a>
                         <a class="collapse-item" href="">VFL</a>
                         <a class="collapse-item" href="">Special Task</a>
+                        <a class="collapse-item" href="investigation.php">investigation</a>
 
                     </div>
                 </div>
