@@ -145,6 +145,11 @@ if(isset($_SESSION['email'])){
                     <i class="fa-solid fa-camera-retro"></i>
                     <span>Photo Hub</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="userapproval.php">
+                    <i class="fa-sharp fa-solid fa-person-circle-check"></i>
+                    <span>User Approval</span></a>
+            </li>
         </ul>
         <!-- End of Sidebar -->
 
@@ -307,11 +312,29 @@ if(isset($_SESSION['email'])){
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
+                                                    <label>Employee ID</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    </b><span
+                                                        style="text-transform: capitalize;"><?php echo isset($user['employee_id']) ? $user['employee_id'] : ''; ?></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
                                                     <label>Email</label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     </b><span
                                                         style="text-transform: none;"><?php echo isset($user['email']) ? $user['email'] : ''; ?></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Department</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    </b><span
+                                                        style="text-transform: uppercase;"><?php echo isset($user['department']) ? $user['department'] : ''; ?></span>
                                                 </div>
                                             </div>
                                             <div class="row">

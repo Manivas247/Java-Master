@@ -35,7 +35,9 @@ if(empty($error)){
 
     if (!empty($row)){
         // verify password
-        if($password == $row['password'] && $row['type'] == 'admin'){
+        if( $row['is_approved'] == '1'){
+
+        if($password == $row['password'] && $row['type'] == 'admin' ){
             $_SESSION['email'] = $row['email'];
             header("location: homepage.php");
            
@@ -48,9 +50,13 @@ if(empty($error)){
             exit();
         }
         else{
-            echo '<script>alert("Incorrect username or password!")</script>';
+            echo '<script>alert("Incorrect username or password")</script>';
         }
-    }else{
+    }
+    else{
+        echo '<script>alert("Account not yet approved")</script>';
+    }
+}else{
         echo '<script>alert("User not Exists: Re-directing to login page")</script>';
     }
 

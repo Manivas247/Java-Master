@@ -60,6 +60,16 @@ session_start();
                                             name="email" placeholder="Email Address*" required>
                                     </div>
                                 </div>
+                                <div class=" form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" id="id" name="id"
+                                            placeholder="Employee ID*" required>
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" id="department"
+                                            name="department" placeholder="Department*" required>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="phone" name="phone"
                                         placeholder="Phone*" required />

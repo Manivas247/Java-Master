@@ -10,17 +10,25 @@ $name = validate_input_text($_POST['name']);
 if (empty($name)){
     $error[] = "You forgot to enter your name";
 }
-$email = validate_input_text($_POST['email']);
+$email = validate_input_email($_POST['email']);
 if (empty($email)){
     $error[] = "You forgot to enter your email";
 }
 
+$id = validate_input_text($_POST['id']);
+if (empty($id)){
+    $error[] = "You forgot to enter your id";
+}
+$department = validate_input_text($_POST['department']);
+if (empty($department)){
+    $error[] = "You forgot to enter your department";
+}
 $blood = validate_input_text($_POST['blood']);
 if (empty($blood)){
     $error[] = "You forgot to enter your blood group";
 }
 
-$designation = validate_input_email($_POST['designation']);
+$designation = validate_input_text($_POST['designation']);
 if (empty($designation)){
     $error[] = "You forgot to enter your designation";
 }
@@ -59,8 +67,8 @@ if(isset($_POST['create']) && empty($error)){
     }
     else{
     // make a query
-    $query = "INSERT INTO user (name,email,phone,blood,designation, password, doj,type)";
-    $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?)";
+    $query = "INSERT INTO user (name,employee_id,email,department,phone,blood,designation, password, doj,type)";
+    $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?)";
 
     // initialize a statement
     $q = mysqli_stmt_init($con);
@@ -71,12 +79,12 @@ if(isset($_POST['create']) && empty($error)){
     $user_type='user';
 
     // bind values
-    mysqli_stmt_bind_param($q, 'ssssssss', $name,$email, $phone,$blood,$designation,$password,$doj,$user_type);
+    mysqli_stmt_bind_param($q, 'ssssssssss', $name,$id,$email,$department, $phone,$blood,$designation,$password,$doj,$user_type);
 
     // execute statement
     mysqli_stmt_execute($q);
 
-    if( $name!='' && $email!='' && $phone !='' && $blood != '' & $designation !='' && $password !='' && $doj !=''){
+    if( $name!='' && $email!='' && $phone !='' && $blood != '' & $designation !='' && $password !='' && $doj !=''  && $id !='' && $department !=''){
 
         echo '<script>alert("User Registered Successfully")</script>';
         $_POST['name'] = '';
@@ -87,6 +95,8 @@ if(isset($_POST['create']) && empty($error)){
         $_POST['password']='';
         $_POST['repeatpassword']='';
         $_POST['doj']='';
+        $_POST['id']='';
+        $_POST['department']='';
 
     }else{
         print "Error while registration...!";
