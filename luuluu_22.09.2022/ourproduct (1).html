@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuLuHomes.com</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./jquery.flipster.min.css" />
+    <link
+      rel="stylesheet"
+      href="./font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/d0d48d242d.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  </head>
+  <style>
+    @import url("https://rsms.me/inter/inter.css");
+    .buttons1 {
+      text-align: center;
+    }
+
+    .buttons1 .button {
+      transition: all 0.2s ease-in-out;
+      -webkit-appearance: none;
+      border-radius: 100px;
+      font-family: inherit;
+      appearance: none;
+      background: none;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 20px;
+      outline: none;
+      opacity: 0.4;
+      border: none;
+      color: black;
+    }
+
+    .button:hover,
+    .button.active {
+      opacity: 1;
+    }
+
+    .grid {
+      grid-template-columns: 1fr 1fr 1fr;
+      margin: 0 auto 80px;
+      max-width: 90%;
+      grid-gap: 20px;
+      display: grid;
+      width: 1000px;
+    }
+
+    .item {
+      border-radius: 4px;
+      height: 300px;
+      width: 100%;
+    }
+
+    .item.maindoor {
+      background-image: url("./assets/maindoor.png");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+
+    .item.bathroom {
+      background-image: url("./assets/bedroom.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.bedroom {
+      background-image: url("./assets/bathroom.png");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+
+    .item.alwindow {
+      background-image: url("./assets/aluminum-windows-750x750.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.sswindow {
+      background-image: url("./assets/stainless_steel_750x750.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.plywindow {
+      background-image: url("./assets/ploywood_with_glass_750x750.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.upvcwindow {
+      background-image: url("./assets/Upvc_750x750.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.pvcwindow {
+      background-image: url("./assets/pvc_750x750.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.kitwindow {
+      background-image: url("./assets/kitchan_wood_750x750.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.indoorcam {
+      background-image: url("./assets/indoor_750x750.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.outdoorcam {
+      background-image: url("./assets/outdoor.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+
+    .item.switches {
+      background-image: url("./assets/switches.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.mcb {
+      background-image: url("./assets/mcb box.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.fsl {
+      background-image: url("./assets/fsl.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.cable {
+      background-image: url("./assets/wire-cables.png");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.wiring {
+      background-image: url("./assets/wiring devices.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.junction {
+      background-image: url("./assets/junction box.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.jacks {
+      background-image: url("./assets/wall jack.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.plate {
+      background-image: url("./assets/wall plate.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.fansupport {
+      background-image: url("./assets/fan support box.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .item.fan {
+      background-image: url("./assets/fan.jpg");
+      background-size: 300px 300px;
+      background-repeat: no-repeat;
+    }
+    .hide {
+      display: none;
+    }
+
+    .container500 {
+      position: relative;
+      display: inline-block;
+      padding: 0 75px;
+      cursor: pointer;
+      width: 94%;
+      height: 100%;
+    }
+    span {
+      width: 100%;
+    }
+
+    .text {
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: 800;
+      position: relative;
+      color: #34495e;
+      margin-top: 145px;
+      width: 100%;
+      visibility: hidden;
+    }
+
+    .text::before {
+      content: attr(data-text);
+      text-align: center;
+      position: absolute;
+      color: #fff;
+      width: 0;
+      overflow: hidden;
+    }
+
+    .container500::before {
+      content: "";
+      width: 0%;
+      height: 10%;
+      position: absolute;
+      background: #2980b9;
+      right: 0;
+      top: 140px;
+      transition: 0.6s;
+    }
+
+    .container500:hover .text::before,
+    .container500:hover::before {
+      width: 100%;
+      visibility: visible;
+    }
+  </style>
+  <body onload="myFunction()">
+    <div class="header">
+      <div class="container98">
+        <div class="navbar">
+          <div class="logo">
+            <a href="index.html" style="display: flex"
+              ><i
+                class="fa-solid fa-sink"
+                style="font-size: 23px; color: whitesmoke"
+              ></i>
+              <h3
+                style="
+                  color: palegoldenrod;
+                  font-weight: bold;
+                  margin-top: -8px;
+                "
+              >
+                &nbsp;LUULUU HOMES
+              </h3></a
+            >
+          </div>
+          <nav>
+            <ul id="menuitems">
+              <li><a href="/index.html">Home</a></li>
+              <li><a class="active" href="products.html">Products</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.php">Contact</a></li>
+            </ul>
+          </nav>
+          <img src="assets/menu.png" class="menu-icon" onclick="menutoggle()" />
+        </div>
+      </div>
+    </div>
+
+    <!-- All Products -->
+    <section class="body1">
+      <div class="buttons1">
+        <button class="button doors">Doors</button>
+        <button class="button windows">Windows</button>
+        <button class="button security">Security Cameras</button>
+        <button class="button electrical">Electrical</button>
+        <button class="button tiles">Tiles</button>
+        <button class="button ceramics">Ceramics</button>
+        <button class="button sanitary">Sanitaryware</button>
+        <button class="button taps">Taps</button>
+        <button class="button kitchen">Kitchen</button>
+        <button class="button led">LED Lights</button>
+      </div>
+
+      <div class="grid">
+        <a href=""
+          ><div class="item maindoor">
+            <span class="container500">
+              <div class="text" data-text="Main Door">
+                Main &nbsp; &nbsp; Door
+              </div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item bedroom">
+            <span class="container500">
+              <div class="text" data-text="Bathroom Door">Bathroom Door</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item bathroom">
+            <span class="container500">
+              <div class="text" data-text="Bedroom Door">Bedroom Door</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item alwindow">
+            <span class="container500">
+              <div class="text" data-text="Aluminium ">Aluminium Doors</div>
+            </span>
+          </div> </a
+        ><a href=""
+          ><div class="item sswindow">
+            <span class="container500">
+              <div class="text" data-text="Stainless Steel">
+                Stainless Steel Doors
+              </div>
+            </span>
+          </div> </a
+        ><a href=""
+          ><div class="item plywindow">
+            <span class="container500">
+              <div class="text" data-text="Ply with Glass">
+                Ply with Glass Doors
+              </div>
+            </span>
+          </div> </a
+        ><a href=""
+          ><div class="item upvcwindow">
+            <span class="container500">
+              <div class="text" data-text="UPVC">UPVC Door</div>
+            </span>
+          </div> </a
+        ><a href=""
+          ><div class="item pvcwindow">
+            <span class="container500">
+              <div class="text" data-text="PVC">PVC Door</div>
+            </span>
+          </div> </a
+        ><a href=""
+          ><div class="item kitwindow">
+            <span class="container500">
+              <div class="text" data-text="Kitchen">Kitchen Door</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item indoorcam">
+            <span class="container500">
+              <div class="text" data-text="Indoor">Indoor</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item outdoorcam">
+            <span class="container500">
+              <div class="text" data-text="Outdoor">outdoor</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item dummy">
+            <span class="container500">
+              <div class="text" data-text="dummy">dummy</div>
+            </span>
+          </div>
+        </a>
+
+        <a href=""
+          ><div class="item switches">
+            <span class="container500">
+              <div class="text" data-text="Switches">switches</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item mcb">
+            <span class="container500">
+              <div class="text" data-text="MCB">mcb</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item fsl">
+            <span class="container500">
+              <div class="text" data-text="FSL">fsl</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item cable">
+            <span class="container500">
+              <div class="text" data-text="Cables & Wires">cables</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item wiring">
+            <span class="container500">
+              <div class="text" data-text="Wiring Device">wiring</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item junction">
+            <span class="container500">
+              <div class="text" data-text="Junction Box">box</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item jacks">
+            <span class="container500">
+              <div class="text" data-text="Wall Jacks">jacks</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item plate">
+            <span class="container500">
+              <div class="text" data-text="Wall Plates">plates</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item fansupport">
+            <span class="container500">
+              <div class="text" data-text="Fan Support Box">support</div>
+            </span>
+          </div>
+        </a>
+        <a href=""
+          ><div class="item fan">
+            <span class="container500">
+              <div class="text" data-text="Fan">Fan</div>
+            </span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <!-- Footer -->
+    <div class="footer">
+      <div class="container2">
+        <div class="row">
+          <div class="footer-col-2">
+            <a href="/index.html"
+              ><i class="fa-solid fa-sink"></i>
+              <h3>&nbsp;LUULUU HOMES</h3></a
+            >
+            <p>The most exquisite choices come from our house</p>
+          </div>
+          <div class="footer-col-3">
+            <h3>Quick Links</h3>
+            <hr />
+            <ul
+              style="
+                cursor: pointer;
+                font-weight: bold;
+                text-align: justify;
+                margin-left: 80px;
+              "
+            >
+              <a href="/index.html"> <li style="margin: 10px">Home</li></a>
+              <a href="about.html"> <li style="margin: 10px">About</li></a>
+              <a href="products.html"><li style="margin: 10px">Products</li></a>
+              <a href="contact.php"><li style="margin: 10px">Contact US</li></a>
+            </ul>
+          </div>
+          <div class="footer-col-4">
+            <h3>Follow Us</h3>
+            <hr />
+            <ul style="cursor: pointer; margin-left: 60px">
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-facebook" style="margin: 5px"></i>
+                <li style="margin: 5px">Facebook</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-square-twitter" style="margin: 5px"></i>
+                <li style="margin: 5px">Twitter</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i
+                  class="fa-brands fa-square-instagram"
+                  style="margin: 5px"
+                ></i>
+                <li style="margin: 5px">Instagram</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-youtube" style="margin: 5px"></i>
+                <li style="margin: 5px">Youtube</li></a
+              >
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <p class="copyright">©Copyright 2022 - LuuLuu Homes</p>
+      </div>
+    </div>
+
+    <a href="https://wa.me/9841032642" target="_blank" class="wat1"
+      ><img style="width: 60px" src="./assets/WhatsApp.png" alt=""
+    /></a>
+
+    <!-- js for toggle menu -->
+    <script src="./main.js"></script>
+    <script>
+      var MenuItems = document.getElementById("menuitems");
+      MenuItems.style.maxHeight = "0px";
+      function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+          MenuItems.style.maxHeight = "200px";
+        } else {
+          MenuItems.style.maxHeight = "0px";
+        }
+      }
+
+      // Check active classes
+      var checkClass = function () {
+        if ($(".item").hasClass("hide")) {
+          $(".item").removeClass("hide");
+        }
+      };
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+      integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      // Check active classes
+      function myFunction() {
+        checkClass();
+        $(".item:not(.maindoor)").toggleClass("hide");
+        $(".item:not(.bathroom)").toggleClass("hide");
+        $(".item:not(.bedroom)").toggleClass("hide");
+        $(".doors").addClass("active");
+      }
+
+      // Category filter
+
+      $(".windows").click(function () {
+        checkClass();
+        $(!".item.maindoor").toggleClass("hide");
+        $(".item.bathroom").toggleClass("hide");
+        $(".item.bedroom").toggleClass("hide");
+        $(".item.indoorcam").toggleClass("hide");
+        $(".item.outdoorcam").toggleClass("hide");
+        $(".item.fan").toggleClass("hide");
+        $(".item.switches").toggleClass("hide");
+        $(".item.mcb").toggleClass("hide");
+        $(".item.fsl").toggleClass("hide");
+        $(".item.cable").toggleClass("hide");
+        $(".item.wiring").toggleClass("hide");
+        $(".item.junction").toggleClass("hide");
+        $(".item.jacks").toggleClass("hide");
+        $(".item.plate").toggleClass("hide");
+        $(".item.fansupport").toggleClass("hide");
+      });
+
+      $(".doors").click(function () {
+        checkClass();
+        $(".item.alwindow").toggleClass("hide");
+        $(".item.sswindow").toggleClass("hide");
+        $(".item.plywindow").toggleClass("hide");
+        $(".item.upvcwindow").toggleClass("hide");
+        $(".item.pvcwindow").toggleClass("hide");
+        $(".item.kitwindow").toggleClass("hide");
+        $(".item.indoorcam").toggleClass("hide");
+        $(".item.outdoorcam").toggleClass("hide");
+        $(".item.fan").toggleClass("hide");
+        $(".item.switches").toggleClass("hide");
+        $(".item.mcb").toggleClass("hide");
+        $(".item.fsl").toggleClass("hide");
+        $(".item.cable").toggleClass("hide");
+        $(".item.wiring").toggleClass("hide");
+        $(".item.junction").toggleClass("hide");
+        $(".item.jacks").toggleClass("hide");
+        $(".item.plate").toggleClass("hide");
+        $(".item.fansupport").toggleClass("hide");
+      });
+
+      $(".security").click(function () {
+        checkClass();
+        $(".item.alwindow").toggleClass("hide");
+        $(".item.sswindow").toggleClass("hide");
+        $(".item.plywindow").toggleClass("hide");
+        $(".item.upvcwindow").toggleClass("hide");
+        $(".item.pvcwindow").toggleClass("hide");
+        $(".item.kitwindow").toggleClass("hide");
+        $(".item.maindoor").toggleClass("hide");
+        $(".item.bathroom").toggleClass("hide");
+        $(".item.bedroom").toggleClass("hide");
+        $(".item.fan").toggleClass("hide");
+        $(".item.switches").toggleClass("hide");
+        $(".item.mcb").toggleClass("hide");
+        $(".item.fsl").toggleClass("hide");
+        $(".item.cable").toggleClass("hide");
+        $(".item.wiring").toggleClass("hide");
+        $(".item.junction").toggleClass("hide");
+        $(".item.jacks").toggleClass("hide");
+        $(".item.plate").toggleClass("hide");
+        $(".item.fansupport").toggleClass("hide");
+      });
+      $(".electrical").click(function () {
+        checkClass();
+        $(".item.alwindow").toggleClass("hide");
+        $(".item.sswindow").toggleClass("hide");
+        $(".item.plywindow").toggleClass("hide");
+        $(".item.upvcwindow").toggleClass("hide");
+        $(".item.pvcwindow").toggleClass("hide");
+        $(".item.kitwindow").toggleClass("hide");
+        $(".item.maindoor").toggleClass("hide");
+        $(".item.bathroom").toggleClass("hide");
+        $(".item.bedroom").toggleClass("hide");
+        $(".item.indoorcam").toggleClass("hide");
+        $(".item.outdoorcam").toggleClass("hide");
+      });
+      $(".tiles").click(function () {
+        checkClass();
+        $(".item:not(.tiles)").toggleClass("hide");
+      });
+      $(".ceramics").click(function () {
+        checkClass();
+        $(".item:not(.ceramics)").toggleClass("hide");
+      });
+      $(".sanitary").click(function () {
+        checkClass();
+        $(".item:not(.sanitary)").toggleClass("hide");
+      });
+      $(".taps").click(function () {
+        checkClass();
+        $(".item:not(.taps)").toggleClass("hide");
+      });
+      $(".kitchen").click(function () {
+        checkClass();
+        $(".item:not(.kitchen)").toggleClass("hide");
+      });
+      $(".led").click(function () {
+        checkClass();
+        $(".item:not(.led)").toggleClass("hide");
+      });
+
+      // Active tag
+      $(".button").click(function () {
+        $(".button").removeClass("active");
+        $(this).addClass("active");
+      });
+    </script>
+  </body>
+</html>

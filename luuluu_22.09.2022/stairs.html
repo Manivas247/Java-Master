@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuLuHomes.com</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./jquery.flipster.min.css" />
+    <link
+      rel="stylesheet"
+      href="./font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/d0d48d242d.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="container99">
+        <div class="navbar">
+          <div class="logo">
+            <a href="/index.html" style="display: flex"
+              ><i
+                class="fa-solid fa-sink"
+                style="font-size: 23px; color: whitesmoke"
+              ></i>
+              <h3
+                style="
+                  color: palegoldenrod;
+                  font-weight: bold;
+                  margin-top: -8px;
+                "
+              >
+                &nbsp;LUULUU HOMES
+              </h3></a
+            >
+          </div>
+          <nav>
+            <ul id="menuitems">
+              <li><a href="/index.html">Home</a></li>
+              <li><a class="active" href="products.html">Products</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.php">Contact</a></li>
+            </ul>
+          </nav>
+          <img src="assets/menu.png" class="menu-icon" onclick="menutoggle()" />
+        </div>
+      </div>
+    </div>
+    <!-- Single Product Detials -->
+    <div class="small-container single-product">
+      <div class="row">
+        <div class="col-2">
+          <img
+            src="./assets/stairs4.jpeg"
+            width="100%"
+            height="550vh"
+            id="productimg"
+          />
+          <div class="small-img-row">
+            <!-- <div class="small-img-col">
+                <img src="./assets/ledmirror1.jpeg" width="100%" class="small-img">
+            </div> 
+                <div class="small-img-col">
+                    <img src="./assets/ledmirror2.jpeg" width="100%" class="small-img">
+                </div>
+                <div class="small-img-col">
+                    <img src="./assets/ledmirror3.jpeg" width="100%" class="small-img">
+                </div>
+               <div class="small-img-col">
+                    <img src="./assets/ledmirror4.jpeg" width="100%" class="small-img">
+                </div> -->
+            <div class="small-img-col">
+              <img
+                src="./assets/stairs1.jpeg"
+                width="100%"
+                class="small-img"
+              />
+            </div>
+            <div class="small-img-col">
+              <img
+                src="./assets/stairs2.jpeg"
+                width="100%"
+                class="small-img"
+              />
+            </div>
+            <div class="small-img-col">
+              <img
+                src="./assets/stairs3.jpeg"
+                width="100%"
+                class="small-img"
+              />
+            </div>
+            <div class="small-img-col">
+              <img
+                src="./assets/stairs4.jpeg"
+                width="100%"
+                class="small-img"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-2">
+            <div class="text">
+          <p>Home / Stairs</p>
+          <h1>Modern stairs</h1>
+          <h3>Product Details<i class="fa fa-indent"></i></h3>
+          <br />
+          <p>
+            Staircases can give you a dead space under it, which can be easily used to add more storage. This can be helpful when you have limited space for storage. Indians love themselves some storage-efficient ideas and this is a handy stairs design trick. </p>
+        <br>
+        <p>Want to revamp your staircase with minimal effort? We got you covered! Use statement light to revamp your stairs design. If you want to go a little further, recessed lights under that modern stairs design will add more spice to the look.</p>
+            <br>
+            <p>A U-shaped staircase design can range from grand to simple, depending on your personal tastes. For instance, these types of staircases, when combined with a wrought-iron railing, offer a certain opulent old-school charm. And we just love such staircase designs for Indian houses, as they add to the appea</p>
+        </div>
+    </div>
+      </div>
+    </div>
+
+    <!-- title -->
+    <!-- <div class="small-container13">
+    <div class="row row-33">
+        <h2>Related Products</h2>
+        <p>View More</p>
+    </div>
+</div> -->
+
+    <!-- products
+
+<div class="small-container12">
+    <div class="row row-22">
+    <div class="row">
+        <div class="col-4">
+            <img src="./assets/product-1.jpg">
+            <h4>Red Printed t-shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>Rs.50.00</p>
+        </div>
+        
+        <div class="col-4">
+            <img src="./assets/product-2.jpg">
+            <h4>Red Printed t-shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>Rs.150.00</p>
+        </div>
+        <div class="col-4">
+            <img src="./assets/product-3.jpg">
+            <h4>Red Printed t-shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star-o" ></i>
+                <i class="fa fa-star-o" ></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>Rs.100.00</p>
+        </div>
+        <div class="col-4">
+            <img src="./assets/product-4.jpg">
+            <h4>Red Printed t-shirt</h4>
+            <div class="rating">
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star" ></i>
+                <i class="fa fa-star-o" ></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>Rs.200.00</p>
+        </div>
+    </div>
+    
+</div>
+</div> -->
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="container2">
+        <div class="row">
+          <div class="footer-col-2">
+            <a href="/index.html"
+              ><i class="fa-solid fa-sink"></i>
+              <h3>&nbsp;LUULUU HOMES</h3></a
+            >
+            <p>The most exquisite choices come from our house</p>
+          </div>
+          <div class="footer-col-3">
+            <h3>Quick Links</h3>
+            <ul
+            style="
+              cursor: pointer;
+              font-weight: bold;
+              text-align: justify;
+              margin-left: 80px;
+            "
+          >
+            <a href="/index.html"> <li style="margin: 10px">Home</li></a>
+            <a href="about.html"> <li style="margin: 10px">About</li></a>
+            <a href="products.html"><li style="margin: 10px">Products</li></a>
+            <a href="contact.php"
+              ><li style="margin: 10px">Contact US</li></a
+            >
+          </div>
+          <div class="footer-col-4">
+            <h3>Follow Us</h3>
+            <ul style="cursor: pointer; margin-left: 60px">
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-facebook" style="margin: 5px"></i>
+                <li style="margin: 5px">Facebook</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-square-twitter" style="margin: 5px"></i>
+                <li style="margin: 5px">Twitter</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i
+                  class="fa-brands fa-square-instagram"
+                  style="margin: 5px"
+                ></i>
+                <li style="margin: 5px">Instagram</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-youtube" style="margin: 5px"></i>
+                <li style="margin: 5px">Youtube</li></a
+              >
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <p class="copyright">©Copyright 2022 - LuuLuu Homes</p>
+      </div>
+    </div>
+
+    <!-- Back to Top -->
+    <a href="https://wa.me/9841032642" target="_blank" class="wat1"><img style="width: 60px" src="./assets/WhatsApp.png"
+        alt="" /></a>
+
+    <!-- js for toggle menu -->
+    <script src="./main.js"></script>
+    <script>
+      var MenuItems = document.getElementById("menuitems");
+      MenuItems.style.maxHeight = "0px";
+      function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+          MenuItems.style.maxHeight = "200px";
+        } else {
+          MenuItems.style.maxHeight = "0px";
+        }
+      }
+    </script>
+
+    <!-- js for product gallery -->
+    <script>
+      var productimg = document.getElementById("productimg");
+      var smallimg = document.getElementsByClassName("small-img");
+      smallimg[0].onclick = function () {
+        productimg.src = smallimg[0].src;
+      };
+      smallimg[1].onclick = function () {
+        productimg.src = smallimg[1].src;
+      };
+      smallimg[2].onclick = function () {
+        productimg.src = smallimg[2].src;
+      };
+      smallimg[3].onclick = function () {
+        productimg.src = smallimg[3].src;
+      };
+      smallimg[4].onclick = function () {
+        productimg.src = smallimg[4].src;
+      };
+      smallimg[5].onclick = function () {
+        productimg.src = smallimg[5].src;
+      };
+      smallimg[6].onclick = function () {
+        productimg.src = smallimg[6].src;
+      };
+      smallimg[7].onclick = function () {
+        productimg.src = smallimg[7].src;
+      };
+      smallimg[8].onclick = function () {
+        productimg.src = smallimg[8].src;
+      };
+
+    </script>
+  </body>
+</html>
