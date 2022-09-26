@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuLuHomes.com</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./jquery.flipster.min.css" />
+    <link
+      rel="stylesheet"
+      href="./font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/d0d48d242d.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/d0d48d242d.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  </head>
+
+  <style>
+    /* Lazy Load Styles */
+    .card-image {
+      display: block;
+      min-height: 20rem; /* layout hack */
+      background: #fff center center no-repeat;
+      background-size: cover;
+      /* blur the lowres image */
+    }
+
+    .card-image > img {
+      display: block;
+      width: 320px;
+      height: 400px;
+      /* visually hide the img element */
+    }
+
+    /* Layout Styles */
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .card-list {
+      display: block;
+      margin: 1rem auto;
+      padding: 0;
+      font-size: 0;
+      text-align: center;
+      list-style: none;
+    }
+
+    .card {
+      display: inline-block;
+      width: 90%;
+      max-width: 20rem;
+      margin: 1rem;
+      font-size: 1rem;
+      text-decoration: none;
+      overflow: hidden;
+      box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, 0.5);
+      transition: transform 0.1s ease-in-out, box-shadow 0.1s;
+    }
+
+    .card:hover {
+      transform: translateY(-0.5rem) scale(1.0125);
+      box-shadow: 0 0.5em 3rem -1rem rgba(0, 0, 0, 0.5);
+    }
+
+    .card-description {
+      display: block;
+      padding: 1em 0.5em;
+      color: #515151;
+      text-decoration: none;
+      background-color: lightblue;
+    }
+
+    .card-description > h2 {
+      margin: 0 0 0.5em;
+    }
+
+    .card-description > p {
+      margin: 0;
+    }
+    .checked {
+      color: orange;
+    }
+    svg text {
+      font-family: Lora;
+      letter-spacing: 5px;
+      stroke: darkgoldenrod;
+      font-size: 30px;
+      font-weight: 700;
+      stroke-width: 3;
+
+      animation: textAnimate 5s infinite alternate;
+    }
+
+    @keyframes textAnimate {
+      0% {
+        stroke-dasharray: 0 50%;
+        stroke-dashoffset: 20%;
+        fill: hsla(83, 51%, 24%, 0.897);
+      }
+
+      100% {
+        stroke-dasharray: 50% 0;
+        stroke-dashoffstet: -20%;
+        fill: hsla(189, 68%, 75%, 0%);
+      }
+    }
+  </style>
+  <body>
+    <div class="header">
+      <div class="container298">
+        <div class="navbar">
+          <div class="logo">
+            <a href="/index.html" style="display: flex"
+              ><i
+                class="fa-solid fa-sink"
+                style="font-size: 23px; color: whitesmoke"
+              ></i>
+              <h3
+                style="
+                  color: palegoldenrod;
+                  font-weight: bold;
+                  margin-top: -8px;
+                "
+              >
+                &nbsp;LUULUU HOMES
+              </h3></a
+            >
+          </div>
+          <nav>
+            <ul id="menuitems" style="font-size: 15px">
+              <li><a href="/index.html">Home</a></li>
+              <li><a class="active" href="mainproduct.html">Products</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.php">Contact</a></li>
+            </ul>
+          </nav>
+          <img src="assets/menu.png" class="menu-icon" onclick="menutoggle()" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="site-heading text-center" style="margin-bottom: -20px">
+          <h2>Aluminium<span> &nbsp;Doors</span></h2>
+        </div>
+      </div>
+    </div>
+    <ul class="card-list">
+      <li class="card">
+        <a class="card-image">
+          <img src="/source/assets/al_bath1.jpg" alt="Psychopomp" />
+        </a>
+        <a class="card-description">
+          <svg width="100%" height="60px">
+            <defs>
+              <style>
+                @import url("https://fonts.googleapis.com/css?  family=Lora:400,400i,700,700i");
+              </style>
+            </defs>
+
+            <text x="50%" y="60%" text-anchor="middle">BAD01</text>
+          </svg>
+          <span class="heading"> Rating:</span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+        </a>
+      </li>
+      <li class="card">
+        <a class="card-image">
+          <img src="/source/assets/al_bath2.jpg" alt="Psychopomp" />
+        </a>
+        <a class="card-description">
+          <svg width="100%" height="60px">
+            <defs>
+              <style>
+                @import url("https://fonts.googleapis.com/css?  family=Lora:400,400i,700,700i");
+              </style>
+            </defs>
+
+            <text x="50%" y="60%" text-anchor="middle">BAD02</text>
+          </svg>
+          <span class="heading"> Rating:</span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+        </a>
+      </li>
+
+      <li class="card">
+        <a class="card-image">
+          <img src="/source/assets/al_bath3.jpg" alt="Psychopomp" />
+        </a>
+        <a class="card-description">
+          <svg width="100%" height="60px">
+            <defs>
+              <style>
+                @import url("https://fonts.googleapis.com/css?  family=Lora:400,400i,700,700i");
+              </style>
+            </defs>
+
+            <text x="50%" y="60%" text-anchor="middle">BAD03</text>
+          </svg>
+          <span class="heading"> Rating:</span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+        </a>
+      </li>
+      <li class="card">
+        <a class="card-image">
+          <img src="/source/assets/al_bath4.jpg" alt="Psychopomp" />
+        </a>
+        <a class="card-description">
+          <svg width="100%" height="60px">
+            <defs>
+              <style>
+                @import url("https://fonts.googleapis.com/css?  family=Lora:400,400i,700,700i");
+              </style>
+            </defs>
+
+            <text x="50%" y="60%" text-anchor="middle">BAD04</text>
+          </svg>
+          <span class="heading"> Rating:</span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+        </a>
+      </li>
+      <li class="card">
+        <a class="card-image">
+          <img src="/source/assets/al_bath5.jpg" alt="Psychopomp" />
+        </a>
+        <a class="card-description">
+          <svg width="100%" height="60px">
+            <defs>
+              <style>
+                @import url("https://fonts.googleapis.com/css?  family=Lora:400,400i,700,700i");
+              </style>
+            </defs>
+
+            <text x="50%" y="60%" text-anchor="middle">BAD05</text>
+          </svg>
+          <span class="heading"> Rating:</span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="container2">
+        <div class="row">
+          <div class="footer-col-2">
+            <a href="/index.html"
+              ><i class="fa-solid fa-sink"></i>
+              <h3>&nbsp;LUULUU HOMES</h3></a
+            >
+            <p>The most exquisite choices come from our house</p>
+          </div>
+          <div class="footer-col-3">
+            <h3>Quick Links</h3>
+            <hr />
+            <ul
+              style="
+                cursor: pointer;
+                font-weight: bold;
+                text-align: justify;
+                margin-left: 80px;
+              "
+            >
+              <a href="/index.html"> <li style="margin: 10px">Home</li></a>
+              <a href="about.html"> <li style="margin: 10px">About</li></a>
+              <a href="products.html"><li style="margin: 10px">Products</li></a>
+              <a href="contact.php"><li style="margin: 10px">Contact US</li></a>
+            </ul>
+          </div>
+          <div class="footer-col-4">
+            <h3>Follow Us</h3>
+            <hr />
+            <ul style="cursor: pointer; margin-left: 60px">
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-facebook" style="margin: 5px"></i>
+                <li style="margin: 5px">Facebook</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-square-twitter" style="margin: 5px"></i>
+                <li style="margin: 5px">Twitter</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i
+                  class="fa-brands fa-square-instagram"
+                  style="margin: 5px"
+                ></i>
+                <li style="margin: 5px">Instagram</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-youtube" style="margin: 5px"></i>
+                <li style="margin: 5px">Youtube</li></a
+              >
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <p class="copyright">©Copyright 2022 - LuuLuu Homes</p>
+      </div>
+    </div>
+
+    <a href="https://wa.me/9841032642" target="_blank" class="wat1"
+      ><img style="width: 60px" src="./assets/WhatsApp.png" alt=""
+    /></a>
+
+    <!-- js for toggle menu -->
+    <script src="./main.js"></script>
+    <script>
+      var MenuItems = document.getElementById("menuitems");
+      MenuItems.style.maxHeight = "0px";
+      function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+          MenuItems.style.maxHeight = "200px";
+        } else {
+          MenuItems.style.maxHeight = "0px";
+        }
+      }
+    </script>
+    <script>
+      const categoryTitle = document.querySelectorAll(".category-title");
+      const allCategoryPosts = document.querySelectorAll(".all");
+
+      for (let i = 0; i < categoryTitle.length; i++) {
+        categoryTitle[i].addEventListener(
+          "click",
+          filterPosts.bind(this, categoryTitle[i])
+        );
+      }
+
+      function filterPosts(item) {
+        changeActivePosition(item);
+        for (let i = 0; i < allCategoryPosts.length; i++) {
+          if (
+            allCategoryPosts[i].classList.contains(item.attributes.id.value)
+          ) {
+            allCategoryPosts[i].style.display = "block";
+          } else {
+            allCategoryPosts[i].style.display = "none";
+          }
+        }
+      }
+
+      function changeActivePosition(activeItem) {
+        for (let i = 0; i < categoryTitle.length; i++) {
+          categoryTitle[i].classList.remove("active");
+        }
+        activeItem.classList.add("active");
+      }
+    </script>
+    <script>
+      const spans = document.querySelectorAll(".word span");
+
+      spans.forEach((span, idx) => {
+        span.addEventListener("click", (e) => {
+          e.target.classList.add("active");
+        });
+        span.addEventListener("animationend", (e) => {
+          e.target.classList.remove("active");
+        });
+
+        // Initial animation
+        setTimeout(() => {
+          span.classList.add("active");
+        }, 750 * (idx + 1));
+      });
+    </script>
+  </body>
+</html>
