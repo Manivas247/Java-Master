@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>NearMiss</title>
+    <title>Training Module</title>
 
     <!-- Custom fonts for this template-->
 
@@ -31,6 +31,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 </head>
 <?php
 session_start();
@@ -44,133 +46,32 @@ $msg ="";
  if(isset($_SESSION['email'])){
     $email = $_SESSION['email'];
     $query = "SELECT * FROM user WHERE email=? ";
-                        $q = mysqli_stmt_init($con);
-                        mysqli_stmt_prepare($q, $query);
-                    
-                        // bind parameter
-                        mysqli_stmt_bind_param($q, 's', $email);
-                        //execute query
-                        mysqli_stmt_execute($q);
-                    
-                        $result = mysqli_stmt_get_result($q);
-                    
-                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    $q = mysqli_stmt_init($con);
+    mysqli_stmt_prepare($q, $query);
+
+    // bind parameter
+    mysqli_stmt_bind_param($q, 's', $email);
+    //execute query
+    mysqli_stmt_execute($q);
+
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
  }
 
- 
+ if(isset($_POST['submit'])){
 
-if(isset($_POST['submit']) && empty($error)){
-
-   
-    $error = array();
-
-
-$mines = validate_input_text($_POST['mines']);
-if (empty($mines)){
-    $error[] = "error";
-}
-$date_incident = validate_input_text($_POST['date_incident']);
-if (empty($date_incident)){
-    $error[] = "error";
-}
-
-$date_report = validate_input_text($_POST['date_report']);
-if (empty($date_report)){
-    $error[] = "error";
-}
 
 $person = validate_input_text($_POST['person']);
-if (empty($person)){
-    $error[] = "error";
-}
-$designation = validate_input_text($_POST['designation']);
-if (empty($designation)){
-    $error[] = "error";
-}
+$designation= validate_input_text($_POST['designation']);
+$title= validate_input_text($_POST['title']);
+$date = date("Y-m-d");
 
-$incident_report = validate_input_text($_POST['incident_report']);
-if (empty($incident_report)){
-    $error[] = "error";
-}
-
-
-$location = validate_input_text($_POST['location']);
-if (empty($location)){
-    $error[] = "error";
-}
-
-$equipment = validate_input_text($_POST['equipment']);
-if (empty($equipment)){
-    $equipment = "Null";
-}
-
-
-$person_involved= validate_input_text($_POST['person_involved']);
-if (empty($person_involved)){
-    $person_involved = "Null";
-}
-
-$clean = clean($_POST['description']);
-$description= validate_input_text($clean );
-if (empty($description)){
-    $error[] = "error";
-}
-
-if (isset($_FILES['image']) ){
-	$target_dir = 'nearmiss_photo/';
-	// The path of the new uploaded image
-	$image_path = $target_dir . basename($_FILES['image']['name']);
-	// Check to make sure the image is valid
-    $fileType = pathinfo($image_path, PATHINFO_EXTENSION);
-    $allowType = array('jpg', 'png', 'jpeg');
-	$maxDimW = 1000;
-	$maxDimH = 900;
-    $file_name = $_FILES['image']['tmp_name'];
-    if (!empty($file_name) ){
-	list($width, $height, $type, $attr) = getimagesize( $file_name );
-	if ( $width > $maxDimW || $height > $maxDimH ) {
-    $target_filename = $_FILES['image']['tmp_name'];
-	$size = getimagesize( $file_name );
-	$ratio = $size[0]/$size[1]; // width/height
-    if( $ratio > 1) {
-        $new_width = $maxDimW;
-        $new_height = $maxDimH/$ratio;
-    } else {
-        $new_width = $maxDimW*$ratio;
-        $new_height = $maxDimH;
-    }
-    $src = imagecreatefromstring( file_get_contents( $file_name ) );
-    $dst = imagecreatetruecolor( $new_width, $new_height );
-    imagecopyresampled( $dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
-    imagedestroy( $src );
-    imagejpeg( $dst, $target_filename ); // adjust format as needed
-    imagedestroy( $dst );
-
-    }
-    if(file_exists($image_path)) {
-        $msg = 'Image already exists, please choose another or rename that image.!';
-    goto end;
-    } else if ($_FILES['image']['size'] > 5000000) {
-        $msg = 'Image file size too large, please choose an image less than 5Mb.';
-        goto end;
-    }
-    else if(!in_array($fileType, $allowType)){
-        $msg = 'This File Type is not allowed';
-        goto end;
-    }
-    
-    move_uploaded_file($_FILES['image']['tmp_name'],"nearmiss_photo/".$_FILES['image']['name']);
-    
-}
-else{
-    $image_path="Null";
-}
-}
 
     // make a query
-    $query = "INSERT INTO nearmiss (mine,date_incident,date_report,person,designation, reported_by, location,equipment,person_involved,description,image,email,task_assign)";
-    $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
+    $query = "INSERT INTO training (name,designation,title,date,email)";
+    $query .= "VALUES(?, ?, ?, ?,?)";
 
     // initialize a statement
     $q = mysqli_stmt_init($con);
@@ -180,40 +81,55 @@ else{
 
     $assign = 0;
     // bind values
-    mysqli_stmt_bind_param($q, 'ssssssssssssi', $mines,$date_incident, $date_report,$person,$designation,$incident_report,$location,$equipment,$person_involved,$description,$image_path,$email,$assign);
+    mysqli_stmt_bind_param($q, 'sssss',$person, $designation,$title,$date,$email);
 
     // execute statement
     mysqli_stmt_execute($q);
 
-    if( $mines!='' && $date_incident!='' && $date_report !='' && $person != '' & $designation !='' && $incident_report !='' && $location !='' && $person_involved !='' && $description !='' && $image_path !='' && $equipment !=''){
+    if($person!='' && $designation !='' && $title != '' ){
 
-
-        $query1= "SELECT * FROM passport WHERE email ='$email'";
-        $q1 = mysqli_stmt_init($con);
-        mysqli_stmt_prepare($q1, $query1);
-        mysqli_stmt_execute($q1);                                            
-        $result1 = mysqli_stmt_get_result($q1); 
-        $row2 = mysqli_fetch_array($result1, MYSQLI_ASSOC);                                     
-        $near1=$row2['near_miss'];
-
-         $query = "UPDATE passport SET near_miss =? WHERE email =?"; 
-         $assign = $near1+1;
-         $q = mysqli_stmt_init($con);
-         mysqli_stmt_prepare($q, $query);
-         mysqli_stmt_bind_param($q, 'is', $assign,$email);
-         mysqli_stmt_execute($q);
-        $_POST['mines'] = '';
-        $_POST['date_incident'] = '';
-        $_POST['date_report'] = '';
-        $_POST['person']='';
-        $_POST['designation']='';
-        $_POST['incident_report']='';
-        $_POST['location']='';
-        $_POST['person_involved']='';
-        $_POST['description']='';
-        $_POST['image']='';
-        $_POST['equipment']='';
+       
+        $_POST['person'] = '';
+        $_POST['designation'] = '';
+        $_POST['title']='';
+       
         $msg = 'Report uploaded successfully!';
+
+        $query = "SELECT * FROM training ORDER BY id DESC LIMIT 1;";
+        $q = mysqli_stmt_init($con);
+        mysqli_stmt_prepare($q, $query);
+        mysqli_stmt_execute($q);                                            
+        $result = mysqli_stmt_get_result($q); 
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                     
+        $train_id=$row['id'];
+if(!empty($_POST['member'])){
+$rowCount = count($_POST['member']);
+
+// Note that this assumes all the variables will correctly be submitted as arrays of the same length. For completeness and robustness you could add a !empty check for each value.
+for ($i = 0; $i < $rowCount; $i++) {
+$member = validate_input_text($_POST['member'][$i]);
+$query = "INSERT INTO training_member (train_id,member)";
+$query .= "VALUES(?, ?)";   
+$q = mysqli_stmt_init($con);   
+mysqli_stmt_prepare($q, $query);    
+mysqli_stmt_bind_param($q, 'is', $train_id,$member);
+mysqli_stmt_execute($q);
+
+
+
+
+if( $train_id!='' && $member!='' ){
+
+$msg = 'Report uploaded successfully!';
+
+
+}else{
+$msg = 'Error while submitting report...!!';
+goto end;
+
+}
+}}
+
 
     }else{
         $msg = 'Error while submitting report...!!';
@@ -221,6 +137,7 @@ else{
     }
 }
 end:
+
 
 ?>
 <style>
@@ -235,6 +152,7 @@ end:
     content: "";
     display: table;
 }
+
 
 *,
 ::before,
@@ -322,101 +240,6 @@ end:
 
 .tabBlock-pane> :last-child {
     margin-bottom: 0;
-}
-
-#myImg:hover {
-    opacity: 0.7;
-}
-
-/* The Modal (background) */
-.modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    padding-top: 100px;
-    /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.9);
-    /* Black w/ opacity */
-}
-
-/* Modal Content (image) */
-.modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-}
-
-/* Caption of Modal Image */
-#caption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    text-align: center;
-    color: #ccc;
-    padding: 10px 0;
-    height: 150px;
-}
-
-/* Add Animation */
-.modal-content,
-#caption {
-    -webkit-animation-name: zoom;
-    -webkit-animation-duration: 0.6s;
-    animation-name: zoom;
-    animation-duration: 0.6s;
-}
-
-@-webkit-keyframes zoom {
-    from {
-        -webkit-transform: scale(0)
-    }
-
-    to {
-        -webkit-transform: scale(1)
-    }
-}
-
-@keyframes zoom {
-    from {
-        transform: scale(0)
-    }
-
-    to {
-        transform: scale(1)
-    }
-}
-
-/* The Close Button */
-.close {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.close:hover,
-.close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
 }
 </style>
 
@@ -626,11 +449,11 @@ end:
                                 <div class="container">
                                     <div class="row">
                                         <div class="offset-lg-1 col-lg-10 col-sm-8 col-8 border rounded main-section">
-                                            <h3 class="text-center text-inverse">Near Miss Report</h3>
+                                            <h3 class="text-center text-inverse">Training Module</h3>
                                             <hr>
                                             <p><?= $msg?></p>
-                                            <form class="container" action="nearmiss.php" method="post"
-                                                enctype="multipart/form-data" id="nearmiss">
+                                            <form class="container" action="training.php" method="post"
+                                                enctype="multipart/form-data" id="training">
 
                                                 <div class="row">
                                                     <div class="col-lg-6 col-sm-6 col-12">
@@ -644,10 +467,10 @@ end:
                                                     </div>
                                                     <div class="col-lg-6 col-sm-6 col-12">
                                                         <div class="form-group">
-                                                            <label class="text-inverse" for="Near Miss No">Near Miss
-                                                                No</label>
+                                                            <label class="text-inverse" for="Training No">Training
+                                                                ID</label>
                                                             <?php
-                                                $query = "SELECT * FROM nearmiss";
+                                                $query = "SELECT * FROM training";
                                                 $q = mysqli_stmt_init($con);
                                                 mysqli_stmt_prepare($q, $query);
                                                 mysqli_stmt_execute($q);                                            
@@ -661,32 +484,12 @@ end:
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for="Date and Time of incident">Date and
-                                                                Time of incident*</label>
-                                                            <input type="datetime-local" class="form-control"
-                                                                id="date_incident" name="date_incident" required>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="col-lg-6 col-sm-6 col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for="Date and Time incident was reported">Date
-                                                                and Time incident was reported*</label>
-                                                            <input type="datetime-local" class="form-control"
-                                                                id="date_report" name="date_report" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="row">
                                                     <div class="col-lg-6 col-sm-6 col-12">
                                                         <div class="form-group">
-                                                            <label class="text-inverse" for="Person reported">Person
-                                                                reported*</label>
+                                                            <label class="text-inverse"
+                                                                for="Person reported">Name*</label>
                                                             <input type="text" class="form-control" id="person"
                                                                 name="person" style="text-transform:capitalize ;"
                                                                 value="<?=$row['name']?>" required readonly>
@@ -704,85 +507,40 @@ end:
                                                     </div>
 
                                                 </div>
+
                                                 <div class="row">
-                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                    <div class="col-lg-12 col-sm-6 col-12">
                                                         <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for="Incident Reported By">Incident Reported
-                                                                By*</label>
-                                                            <select class="custom-select d-block form-control"
-                                                                id="incident_report" name="incident_report" required>
-                                                                <option value="">Select Category</option>
-                                                                <option value="Dept. Executive">Dept. Executive</option>
-                                                                <option value="Dept. Non-Executive">Dept. Non-Executive
-                                                                </option>
-                                                                <option value="Cont. Executive">Cont. Executive</option>
-                                                                <option value="Cont. Non-Executive">Cont. Non-Executive
-                                                                </option>
+                                                            <label class="text-inverse" for="Training Title">Training
+                                                                Title*</label>
+                                                            <input type="text" class="form-control" id="title"
+                                                                name="title">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="text-inverse" for="Members">Members</label>
+                                                            <select name="member[]" id="member"
+                                                                class="mulitple_select custom-select d-block form-control"
+                                                                multiple>
+                                                                <option value="">Select Email</option>
+                                                                <?php
+                                                                
+                                                                 $query = "SELECT * FROM user where is_approved ='1'";
+                                                                 $result = mysqli_query($con, $query);
+                                                     
+                                                                 while($rows = mysqli_fetch_assoc($result))
+                                                                 {?>
+
+                                                                <option value="<?php echo $rows['email']; ?>">
+                                                                    <?php echo $rows['email']; ?></option>
+                                                                <?php } 
+                                                       ?>
                                                             </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-sm-6 col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for="Location of Incident">Location of
-                                                                Incident*</label>
-                                                            <select class="custom-select d-block form-control"
-                                                                id="location" name="location" required>
-                                                                <option value="">Select Location</option>
-                                                                <option value="Mines">Mines</option>
-                                                                <option value="Workshop">Workshop</option>
-                                                                <option value="Stackyard">Stackyard</option>
-                                                                <option value="Transporting">Transporting</option>
-                                                                <option value="Security">Security</option>
-                                                                <option value="Others">Others</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-sm-6 col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for="Equipment(s) involved (If any)">Equipment(s)
-                                                                involved (If any)</label>
-                                                            <input type="text" class="form-control" id="equipment"
-                                                                name="equipment">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-sm-6 col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for="Person(s) involved (If any)">Person(s)
-                                                                involved
-                                                                (If any) </label>
-                                                            <input type="text" class="form-control" id="person_involved"
-                                                                name="person_involved">
                                                         </div>
                                                     </div>
 
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for="Incident Description and what adverse effect it could have caused">Incident
-                                                                Description and what adverse effect it could have
-                                                                caused*</label>
-                                                            <textarea name="description" id="description" cols="30"
-                                                                rows="5" class="form-control" required></textarea>
-                                                        </div>
-                                                    </div>
 
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-sm-6 col-12">
-                                                        <div class="form-group">
-                                                            <label for="image">Choose Image</label>
-                                                            <input type="file" name="image" accept="image/*" id="image">
-                                                        </div>
-                                                    </div>
-                                                </div>
+
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col-lg-12 col-sm-12 col-12 text-center">
@@ -793,6 +551,7 @@ end:
                                             </form>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="tabBlock-pane">
@@ -802,63 +561,63 @@ end:
                                         <thead style="text-align: center; justify-items: center;">
                                             <tr>
                                                 <th scope="col">ID</th>
-                                                <th scope="col">Mine</th>
-                                                <th scope="col">Date of incident*</th>
-                                                <th scope="col">Date incident was reported*</th>
-                                                <th scope="col">Incident Reported By</th>
-                                                <th scope="col">Location of Incident</th>
-                                                <th scope="col">Equipment(s) involved </th>
-                                                <th scope="col">Person(s) involved</th>
-                                                <th scope="col">Incident Description</th>
-                                                <th scope="col">Image</th>
-
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Designation</th>
+                                                <th scope="col">Training Title</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Members</th>
 
                                             </tr>
                                         </thead>
                                         <tbody id="tbody3" style="text-align: center;">
                                             <?php
 
-           
-            $query = "SELECT * FROM nearmiss WHERE email= '$email'";
+          
+            $query = "SELECT * FROM training WHERE email= '$email'";
             $result = mysqli_query($con, $query);
 
             while($rows = mysqli_fetch_assoc($result))
             {?>
 
                                             <tr>
-                                                <td><?php echo $rows['number'];?></td>
-                                                <td><?php echo $rows['mine'];?>
+                                                <td><?php echo $rows['id'];?></td>
+                                                <td><?php echo $rows['name'];?>
                                                 </td>
-                                                <td><?php echo $rows['date_incident'];?></td>
+                                                <td><?php echo $rows['designation'];?></td>
                                                 <td>
-                                                    <?php echo $rows['date_report'];?></td>
-                                                <td><?php echo $rows['reported_by'];?></td>
-                                                <td><?php echo $rows['location'];?></td>
-                                                <td><?php echo $rows['equipment'];?></td>
-                                                <td><?php echo $rows['person_involved'];?></td>
-                                                <td><?php echo $rows['description'];?></td>
+                                                    <?php echo $rows['title'];?></td>
+                                                <td><?php echo $rows['date'];?></td>
                                                 <td>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <th scope="col">Members</th>
 
-                                                    <?php if (file_exists($rows['image'])){?>
-                                                    <a href="#">
-                                                        <img src="<?=$rows['image']?>" width="300" height="200"
-                                                            class="myImg">
-                                                    </a>
-                                                    <?php }  else{
-                                                       ?> <h5>Null</h5>
-                                                    <?php } 
-                                                       ?>
+                                                        </thead>
+                                                        <?php
+                                                $train_id=$rows['id'];
+                                        $query1 = "SELECT * FROM training_member WHERE train_id= '$train_id'";
+                                        $result1 = mysqli_query($con, $query1);
+                            
+                                        while($rows1 = mysqli_fetch_assoc($result1))
+                                               { ?>
+
+                                                        <tbody>
+                                                            <tr>
+
+                                                                <td><?php echo $rows1['member'];?></td>
+
+                                                            </tr>
+                                                        </tbody>
+
+                                                        <?php
+                }
+                ?>
+                                                    </table>
+
 
 
                                                 </td>
-                                                <div id="myModal" class="modal">
-                                                    <!-- The Close Button -->
-                                                    <span class="close"
-                                                        onclick="document.getElementById('myModal').style.display='none'">&times;</span>
-                                                    <!-- Modal Content (The Image) -->
-                                                    <img class="modal-content" id="img01">
-                                                    <!-- Modal Caption (Image Text) -->
-                                                </div>
+
 
                                             </tr>
 
@@ -1025,7 +784,67 @@ end:
         }
     }
     </script>
+    <script>
+    var TabBlock = {
+        s: {
+            animLen: 200
+        },
 
+        init: function() {
+            TabBlock.bindUIActions();
+            TabBlock.hideInactive();
+        },
+
+        bindUIActions: function() {
+            $('.tabBlock-tabs').on('click', '.tabBlock-tab', function() {
+                TabBlock.switchTab($(this));
+            });
+        },
+
+        hideInactive: function() {
+            var $tabBlocks = $('.tabBlock');
+
+            $tabBlocks.each(function(i) {
+                var
+                    $tabBlock = $($tabBlocks[i]),
+                    $panes = $tabBlock.find('.tabBlock-pane'),
+                    $activeTab = $tabBlock.find('.tabBlock-tab.is-active');
+
+                $panes.hide();
+                $($panes[$activeTab.index()]).show();
+            });
+        },
+
+        switchTab: function($tab) {
+            var $context = $tab.closest('.tabBlock');
+
+            if (!$tab.hasClass('is-active')) {
+                $tab.siblings().removeClass('is-active');
+                $tab.addClass('is-active');
+
+                TabBlock.showPane($tab.index(), $context);
+            }
+        },
+
+        showPane: function(i, $context) {
+            var $panes = $context.find('.tabBlock-pane');
+
+            // Normally I'd frown at using jQuery over CSS animations, but we can't transition between unspecified variable heights, right? If you know a better way, I'd love a read it in the comments or on Twitter @johndjameson
+            $panes.slideUp(TabBlock.s.animLen);
+            $($panes[i]).slideDown(TabBlock.s.animLen);
+        }
+    };
+
+    $(function() {
+        TabBlock.init();
+    });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+    $(".mulitple_select").select2({
+        // maximumSelectionLength: 2
+    });
+    </script>
 </body>
 
 </html>

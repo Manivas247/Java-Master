@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Investigation</title>
+    <title>Reports</title>
 
     <!-- Custom fonts for this template-->
 
@@ -31,6 +31,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
 </head>
 <?php
 session_start();
@@ -116,20 +118,6 @@ if(isset($_POST['submit'])){
 
     if( $mines!='' && $site!='' && $incident_id !='' && $details != '' & $person !='' && $consequence !='' && $visit_date !='' && $person_talked !='' && $collection_date !='' && $finalize_date !='' && $action !='' && $finding !=''&& $contributory !=''&& $root !=''){
 
-        $query1= "SELECT * FROM passport WHERE email ='$email'";
-        $q1 = mysqli_stmt_init($con);
-        mysqli_stmt_prepare($q1, $query1);
-        mysqli_stmt_execute($q1);                                            
-        $result1 = mysqli_stmt_get_result($q1); 
-        $row2 = mysqli_fetch_array($result1, MYSQLI_ASSOC);                                     
-        $investigation1=$row2['investigation'];
-
-         $query = "UPDATE passport SET investigation =? WHERE email =?"; 
-         $assign = $investigation1+1;
-         $q = mysqli_stmt_init($con);
-         mysqli_stmt_prepare($q, $query);
-         mysqli_stmt_bind_param($q, 'is', $assign,$email);
-         mysqli_stmt_execute($q);
         $_POST['mines'] = '';
         $_POST['id'] = '';
         $_POST['site'] = '';
@@ -620,16 +608,25 @@ end:
                 <div class="container-fluid ">
                     <figure class="tabBlock">
                         <ul class="tabBlock-tabs">
-                            <li class="tabBlock-tab is-active">Task Details</li>
-                            <li class="tabBlock-tab">New Investigation</li>
-                            <li class="tabBlock-tab">Investigation Record</li>
+                            <li class="tabBlock-tab is-active">Near Miss Report</li>
+                            <li class="tabBlock-tab">Unsafe A/C Report</li>
+                            <li class="tabBlock-tab">VFL Report</li>
+                            <li class="tabBlock-tab">Investigation Report</li>
+                            <li class="tabBlock-tab">Passport Report</li>
                         </ul>
                         <div class="tabBlock-content">
 
+
+
                             <div class="tabBlock-pane">
+                                <!-- search bar -->
+                                <button type="button" class="btn btn-info" onclick="exportThis2()"
+                                    style="margin-left: 900px;">Export to
+                                    Excel</button>
+
                                 <div class=" d-flex table-data"
                                     style="height: 560px;overflow: scroll; flex-basis: 40%;  margin: 1em 0em; margin-left: 10px;">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered display" id="table1">
                                         <thead style="text-align: center; justify-items: center;">
                                             <tr>
                                                 <th scope="col">ID</th>
@@ -641,25 +638,24 @@ end:
                                                 <th scope="col">Equipment(s) involved </th>
                                                 <th scope="col">Person(s) involved</th>
                                                 <th scope="col">Incident Description</th>
-                                                <th scope="col">Image</th>
-                                                <th scope="col">Task Assigned on</th>
-                                                <th scope="col">Status</th>
+
+                                                <th scope="col">Email</th>
 
 
                                             </tr>
                                         </thead>
-                                        <tbody id="tbody3" style="text-align: center;">
+                                        <tbody id="tbody33" style="text-align: center;">
                                             <?php
 
            
-            $query = "SELECT * FROM assign_task WHERE email= '$email'";
+            $query = "SELECT * FROM nearmiss";
             $result = mysqli_query($con, $query);
 
             while($rows = mysqli_fetch_assoc($result))
             {?>
 
                                             <tr>
-                                                <td><?php echo $rows['incident_id'];?></td>
+                                                <td><?php echo $rows['number'];?></td>
                                                 <td><?php echo $rows['mine'];?>
                                                 </td>
                                                 <td><?php echo $rows['date_incident'];?></td>
@@ -670,22 +666,7 @@ end:
                                                 <td><?php echo $rows['equipment'];?></td>
                                                 <td><?php echo $rows['person_involved'];?></td>
                                                 <td><?php echo $rows['description'];?></td>
-                                                <td>
-
-                                                    <?php if (file_exists($rows['image'])){?>
-                                                    <a href="#">
-                                                        <img src="<?=$rows['image']?>" width="300" height="200"
-                                                            class="myImg">
-                                                    </a>
-                                                    <?php }  else{
-                                                       ?> <h5>Null</h5>
-                                                    <?php } 
-                                                       ?>
-
-
-                                                </td>
-                                                <td><?php echo $rows['date'];?></td>
-                                                <td><?php echo $rows['status'];?></td>
+                                                <td><?php echo $rows['email'];?></td>
                                                 <div id="myModal" class="modal">
                                                     <!-- The Close Button -->
                                                     <span class="close"
@@ -707,352 +688,294 @@ end:
                             </div>
                             <div class="tabBlock-pane">
 
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="offset-lg-0 col-lg-12 col-sm-8 col-8 border rounded main-section">
-                                            <h3 class="text-center text-inverse">Near Miss Investigation Report</h3>
-                                            <hr>
-                                            <p><?= $msg?></p>
-                                            <form class="container" action="investigation.php" method="post"
-                                                enctype="multipart/form-data" id="investigation">
+                                <button type="button" class="btn btn-info" onclick="exportThis1()"
+                                    style="margin-left: 900px;">Export to
+                                    Excel</button>
+                                <div class=" d-flex table-data"
+                                    style="height: 560px;overflow: scroll; flex-basis: 40%;  margin: 1em 0em; margin-left: 10px;">
+                                    <table class="table table-bordered display" id="table_content">
+                                        <thead style="text-align: center; justify-items: center;">
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Mine</th>
+                                                <th scope="col">Person Reported</th>
+                                                <th scope="col">Designation</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Shift</th>
+                                                <th scope="col">Category</th>
+                                                <th scope="col">Shift Incharge</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Details</th>
+                                                <th scope="col">Action taken</th>
+                                                <th scope="col">If yes, reason</th>
+                                                <th scope="col">If no, reason</th>
+                                                <th scope="col">Details of the person involved in UA/UC</th>
+                                                <th scope="col">Email</th>
 
-                                                <div class=" row">
-                                                    <div class="col-lg-6 col-sm-6 col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse" for="Investigation ID">Name of
-                                                                Mines</label>
-                                                            <input type="text" class="form-control" id="mines"
-                                                                name="mines" placeholder="Name of Mines"
-                                                                value="Kodingamali Bauxite Mines" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-sm-6 col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for="Investigation ID">Investigation ID</label>
-                                                            <?php
-                                                $query = "SELECT * FROM  nearmiss_investigation";
-                                                $q = mysqli_stmt_init($con);
-                                                mysqli_stmt_prepare($q, $query);
-                                                mysqli_stmt_execute($q);                                            
-                                                $result = mysqli_stmt_get_result($q); 
-                                                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                        
-                                                $number= mysqli_num_rows($result); 
-                                                $next=$number+1;                      
-                                                ?>
-                                                            <input type="text" class="form-control" id="number"
-                                                                name="number" value="<?php echo $next ?>" required
-                                                                readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-sm-6 col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse" for="site">Site*</label>
-                                                            <input type="text" class="form-control" id="site"
-                                                                name="site" style="text-transform:capitalize ;"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-sm-6 col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse" for="Near
-                                                                Miss/Incident Reference Number">Near
-                                                                Miss/Incident Reference Number*</label>
-                                                            <?php
 
-                                                                if(!empty($_GET['id'])){
-                                                                ?>
-                                                            <input type="text" class="form-control" id="id"
-                                                                style="text-transform:capitalize ;"
-                                                                value="<?=$_GET['id']?>" name="id" required readonly>
-                                                            <?php
-                                                                }  
-                                                                else{           
-                                                                ?>
-                                                            <input type="text" class="form-control" id="id"
-                                                                style="text-transform:capitalize ;" name="id" required>
-                                                            <?php
-                                                                }
-                                                                ?>
-                                                        </div>
-                                                    </div>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody44" style="text-align: center;">
+                                            <?php
 
-                                                </div>
-                                                <label class="text-inverse" style="font-weight: 600; font-size: 20px;"
-                                                    for="Investigation Team Details">
-                                                    Investigation Team Details </label>
-                                                <p>(Let the team be limited to max 3 persons)</p>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <table class="table table-bordered table-hover" id="tab_logic">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="text-center">
-                                                                        Name
-                                                                    </th>
-                                                                    <th class="text-center">
-                                                                        Designation
-                                                                    </th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr id='addr0'>
-                                                                    <td>
-                                                                        <input type="text" name='name[]'
-                                                                            class="form-control" required />
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" name='designation[]'
-                                                                            class="form-control" required />
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id='addr1'></tr>
-                                                            </tbody>
-                                                        </table>
+            require_once 'mysqli_connect.php';
+            $query = "SELECT * FROM uac";
+            $result = mysqli_query($con, $query);
 
-                                                    </div>
-                                                    <button id="add_row" class="btn btn-default pull-left" type="button"
-                                                        style="font-size:30px ; margin-left: 950px;"><i
-                                                            class="fa-sharp fa-solid fa-circle-plus"></i></button>
+            while($rows = mysqli_fetch_assoc($result))
+            {?>
 
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for="Details of the Near Miss/Incident: ">
-                                                                Details of the Near Miss/Incident: *</label>
-                                                            <textarea name="details" id="details" cols="30" rows="5"
-                                                                class="form-control" required></textarea>
-                                                        </div>
-                                                    </div>
+                                            <tr>
+                                                <td><?php echo $rows['id'];?></td>
+                                                <td><?php echo $rows['mines'];?>
+                                                </td>
+                                                <td><?php echo $rows['name'];?></td>
+                                                <td>
+                                                    <?php echo $rows['designation'];?></td>
+                                                <td><?php echo $rows['date'];?></td>
+                                                <td><?php echo $rows['time'];?></td>
+                                                <td><?php echo $rows['shift'];?></td>
+                                                <td><?php echo $rows['category'];?></td>
+                                                <td><?php echo $rows['shift_ic'];?></td>
+                                                <td><?php echo $rows['location'];?></td>
+                                                <td><?php echo $rows['detail'];?></td>
+                                                <td><?php echo $rows['action'];?></td>
+                                                <td><?php echo $rows['yes_detail'];?></td>
+                                                <td><?php echo $rows['no_detail'];?></td>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <th scope="col">Name</th>
+                                                            <th scope="col">Emp_ID </th>
+                                                            <th scope="col">Department</th>
+                                                            <th scope="col">Organization</th>
+                                                        </thead>
+                                                        <?php
+                                                $uac_id1=$rows['id'];
+                                        $query1 = "SELECT * FROM uac_person_detail WHERE uac_id= '$uac_id1'";
+                                        $result1 = mysqli_query($con, $query1);
+                            
+                                        while($rows1 = mysqli_fetch_assoc($result1))
+                                               { ?>
 
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse" for="Person(s) Involved: ">
-                                                                Person(s) Involved: *</label>
-                                                            <textarea name="person" id="person" cols="30" rows="5"
-                                                                class="form-control" required></textarea>
-                                                        </div>
-                                                    </div>
+                                                        <tbody>
+                                                            <tr>
 
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for=" Likely Consequence(s)/Consequence(s) of the Near Miss/ Incident: ">
-                                                                Likely Consequence(s)/Consequence(s) of the Near Miss/
-                                                                Incident: *</label>
-                                                            <textarea name="consequence" id="consequence" cols="30"
-                                                                rows="5" class="form-control" required></textarea>
-                                                        </div>
-                                                    </div>
+                                                                <td><?php echo $rows1['name'];?></td>
+                                                                <td><?php echo $rows1['employee_no'];?></td>
+                                                                <td><?php echo $rows1['department'];?></td>
+                                                                <td><?php echo $rows1['organization'];?></td>
+                                                            </tr>
+                                                        </tbody>
 
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for=" Chronology of Investigation:  "
-                                                                style="font-weight: 700;">
-                                                                Chronology of Investigation: *</label>
-                                                            <div class="row">
-
-                                                                <div class="col-lg-6 col-sm-6 col-12">
-                                                                    <div class="form-group">
-                                                                        <label for="Date of Visit to the site">Date of
-                                                                            Visit
-                                                                            to the site</label>
-                                                                        <input type="date" name="visit_date" required
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6 col-sm-6 col-12">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="Persons/witnesses examined or talked to">Persons/witnesses
-                                                                            examined or talked to</label>
-                                                                        <input type="text" name="person_talked" required
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-
-                                                                <div class="col-lg-6 col-sm-6 col-12">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="Date(s) of collection of further evidences/documents, if any: ">Date(s)
-                                                                            of collection of further
-                                                                            evidences/documents, if any: </label>
-                                                                        <input type="date" name="collection_date"
-                                                                            required class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6 col-sm-6 col-12">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="Date(s) when the team conferred to finalize the investigation:">Date(s)
-                                                                            when the team conferred to finalize the
-                                                                            investigation:*</label>
-                                                                        <input type="date" name="finalize_date" required
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <?php
+                }
+                ?>
+                                                    </table>
 
 
 
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for="Immediate Action(s) taken on site to fix the problem">
-                                                                Immediate Action(s) taken on site to fix the problem
-                                                                *</label>
-                                                            <textarea name="action" id="action" cols="30" rows="5"
-                                                                class="form-control" required></textarea>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for=" Findings of the Investigation & Further actions required to be taken (description in brief)">
-                                                                Findings of the Investigation & Further actions required
-                                                                to be taken (description in brief)*</label>
-                                                            <textarea name="finding" id="finding" cols="30" rows="5"
-                                                                class="form-control" required></textarea>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <label class="text-inverse"
-                                                                for=" Identification of Cause(s)"
-                                                                style="font-weight: 700;">
-                                                                Identification of Cause(s)*</label>
-                                                            <div class="row">
-
-                                                                <div class="col-lg-6 col-sm-6 col-12">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="Date of Visit to the site">Contributory
-                                                                            Cause(s)*</label>
-
-                                                                        <textarea name="contributory" id="contributory"
-                                                                            cols="30" rows="5" required
-                                                                            class="form-control"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6 col-sm-6 col-12">
-                                                                    <div class="form-group">
-                                                                        <label for="Root Cause(s)">Root
-                                                                            Cause(s)*</label>
+                                                </td>
+                                                <td><?php echo $rows['email'];?></td>
 
 
-                                                                        <textarea name="root" id="root" cols="30"
-                                                                            rows="5" required
-                                                                            class="form-control"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                            </tr>
 
+                                            <?php
+                }
+                ?>
+                                        </tbody>
+                                    </table>
 
-
-                                                    </div>
-                                                </div>
-
-                                                <hr>
-
-                                                <label class="text-inverse" style="font-weight: 600; font-size: 20px;"
-                                                    for="Proposed Corrective/Preventive Action(s):">
-                                                    Proposed Corrective/Preventive Action(s): </label>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <table class="table table-bordered table-hover" id="ptab_logic">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="text-center">
-                                                                        Action to be taken*
-                                                                    </th>
-                                                                    <th class="text-center">
-                                                                        Priority*
-                                                                    </th>
-                                                                    <th class="text-center">
-                                                                        Responsibility*
-                                                                    </th>
-                                                                    <th class="text-center">
-                                                                        Timeline*
-                                                                    </th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr id='paddr0'>
-                                                                    <td>
-
-                                                                        <textarea name="action_to[]" cols="40" rows="3"
-                                                                            class="form-control" required></textarea>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select
-                                                                            class="custom-select d-block form-control"
-                                                                            id="priority" name="priority[]" required>
-                                                                            <option value="">Select category</option>
-                                                                            <option value="High">High</option>
-                                                                            <option value="Medium">Medium</option>
-                                                                            <option value="Low">Low</option>
-
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" name='responsibility[]'
-                                                                            class="form-control" required />
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="date" name='timeline[]'
-                                                                            class="form-control" required />
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id='paddr1'></tr>
-                                                            </tbody>
-                                                        </table>
-
-                                                    </div>
-                                                    <button id="add_row1" class="btn btn-default pull-left"
-                                                        type="button" style="font-size:30px ; margin-left: 950px;"><i
-                                                            class="fa-sharp fa-solid fa-circle-plus"></i></button>
-
-                                                </div>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col-lg-12 col-sm-12 col-12 text-center">
-                                                        <button class="btn btn-info" type="submit" name="submit">Submit
-                                                            report</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="tabBlock-pane">
+                                <!-- <div onclick="exportThisWithParameter('multiLevelTable', 'Multi Level Export Table Example')"
+                                    style="cursor: pointer; border: 1px solid #ccc; text-align: center;width:19%;">
+                                    Export Multi Level Table to Excel With Parameter</div> -->
+                                <button type="button" class="btn btn-info" onclick="exportThis()"
+                                    style="margin-left: 900px;">Export to
+                                    Excel</button>
+                                <div class=" d-flex table-data"
+                                    style="height: 600px;overflow: scroll; flex-basis: 40%;  margin: 1em 0em; margin-left: 10px;">
+
+                                    <table class=" table table-bordered display" id="multiLevelTable">
+
+                                        <thead style="text-align: center; justify-items: center;">
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Mine</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Person Executed </th>
+                                                <th scope="col">Designation</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Workmen Interacted</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Brief about on-going Operations</th>
+                                                <th scope="col">Understanding of the Workmen on Safety</th>
+                                                <th scope="col">Safety Briefing Provided to Workmen</th>
+                                                <th scope="col">Details of the Observations</th>
+                                                <th scope="col">Proposed Corrective/Preventive Action(s)</th>
+
+
+
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="tbody55" style="text-align: center;">
+                                            <?php
+
+            require_once 'mysqli_connect.php';
+            $query = "SELECT * FROM vfl";
+            $result = mysqli_query($con, $query);
+
+            while($rows = mysqli_fetch_assoc($result))
+            {?>
+
+                                            <tr id="mail">
+                                                <td><?php echo $rows['id'];?></td>
+                                                <td><?php echo $rows['mines'];?>
+                                                </td>
+                                                <td><?php echo $rows['email'];?></td>
+                                                <td><?php echo $rows['name'];?></td>
+                                                <td>
+                                                    <?php echo $rows['designation'];?></td>
+                                                <td><?php echo $rows['date'];?></td>
+                                                <td><?php echo $rows['time'];?></td>
+                                                <td><?php echo $rows['workmen'];?></td>
+                                                <td><?php echo $rows['location'];?></td>
+                                                <td><?php echo $rows['brief'];?></td>
+                                                <td><?php echo $rows['understanding'];?></td>
+                                                <td><?php echo $rows['safety'];?></td>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <th scope="col">Observations</th>
+                                                            <th scope="col">Type </th>
+                                                            <th scope="col">Category</th>
+                                                            <th scope="col">Potential</th>
+                                                            <th scope="col">Severity</th>
+                                                        </thead>
+                                                        <?php
+                                                $vfl_id1=$rows['id'];
+                                        $query1 = "SELECT * FROM vfl_observation WHERE vfl_id= '$vfl_id1'";
+                                        $result1 = mysqli_query($con, $query1);
+                            
+                                        while($rows1 = mysqli_fetch_assoc($result1))
+                                               { ?>
+
+                                                        <tbody>
+                                                            <tr>
+
+                                                                <td><?php echo $rows1['observation'];?></td>
+                                                                <td><?php echo $rows1['type'];?></td>
+                                                                <td><?php echo $rows1['category'];?></td>
+                                                                <td><?php echo $rows1['potential'];?></td>
+                                                                <td><?php echo $rows1['severity'];?></td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                        <?php
+                }
+                ?>
+                                                    </table>
+
+
+
+
+                                                </td>
+
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <th scope="col">Observations</th>
+                                                            <th scope="col">Severity </th>
+                                                            <th scope="col">Action_to_be_taken</th>
+                                                            <th scope="col">Responsibility</th>
+                                                            <th scope="col">Timeline</th>
+                                                            <th scope="col">Action_closed_on</th>
+                                                        </thead>
+                                                        <?php
+                                                $vfl_id1=$rows['id'];
+                                        $query2 = "SELECT * FROM vlf_corrective WHERE vfl_id= '$vfl_id1'";
+                                        $result2 = mysqli_query($con, $query2);
+                            
+                                        while($rows2 = mysqli_fetch_assoc($result2))
+                                               { ?>
+
+                                                        <tbody>
+                                                            <tr>
+
+                                                                <td><?php echo $rows2['observation'];?></td>
+                                                                <td><?php echo $rows2['severity'];?></td>
+                                                                <td><?php echo $rows2['action'];?></td>
+                                                                <td><?php echo $rows2['responsibility'];?></td>
+                                                                <td><?php echo $rows2['timeline'];?></td>
+                                                                <td><?php echo $rows2['action_close'];?></td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                        <?php
+                }
+                ?>
+                                                    </table>
+
+
+
+                                                </td>
+
+
+
+                                            </tr>
+
+                                            <?php
+                }
+                ?>
+                                            <div id="myModal1" class="modal">
+                                                <!-- The Close Button -->
+                                                <span class="close"
+                                                    onclick="document.getElementById('myModal1').style.display='none'">&times;</span>
+                                                <!-- Modal Content (The Image) -->
+                                                <img class="modal-content" id="img02">
+                                                <!-- Modal Caption (Image Text) -->
+                                            </div>
+                                        </tbody>
+                                        <!-- <tfoot style="display: none;">
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Mine</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Person Executed </th>
+                                                <th scope="col">Designation</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Workmen Interacted</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Brief about on-going Operations</th>
+                                                <th scope="col">Understanding of the Workmen on Safety</th>
+                                                <th scope="col">Safety Briefing Provided to Workmen</th>
+                                                <th scope="col">Details of the Observations</th>
+                                                <th scope="col">Proposed Corrective/Preventive Action(s)</th>
+
+
+                                            </tr>
+                                        </tfoot> -->
+                                    </table>
+
+
+
+                                </div>
+                            </div>
+                            <div class="tabBlock-pane">
+                                <button type="button" class="btn btn-info" onclick="exportThis3()"
+                                    style="margin-left: 900px;">Export to
+                                    Excel</button>
                                 <div class=" d-flex table-data"
                                     style="height: 560px;overflow: scroll; flex-basis: 40%;  margin: 1em 0em; margin-left: 10px;">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered display" id="investigation">
                                         <thead style="text-align: center; justify-items: center;">
                                             <tr>
                                                 <th scope="col">Investigation ID</th>
@@ -1081,7 +1004,7 @@ end:
                                             <?php
 
            
-            $query = "SELECT * FROM nearmiss_investigation WHERE email= '$email'";
+            $query = "SELECT * FROM nearmiss_investigation";
             $result = mysqli_query($con, $query);
 
             while($rows = mysqli_fetch_assoc($result))
@@ -1181,17 +1104,110 @@ end:
                                     </table>
                                 </div>
                             </div>
+                            <div class="tabBlock-pane">
+                                <!-- <div onclick="exportThisWithParameter('multiLevelTable', 'Multi Level Export Table Example')"
+                                    style="cursor: pointer; border: 1px solid #ccc; text-align: center;width:19%;">
+                                    Export Multi Level Table to Excel With Parameter</div> -->
+                                <button type="button" class="btn btn-info" onclick="exportThis7()"
+                                    style="margin-left: 900px;">Export to
+                                    Excel</button>
+                                <div class=" d-flex table-data"
+                                    style="height: 600px;overflow: scroll; flex-basis: 40%;  margin: 1em 0em; margin-left: 10px;">
+
+                                    <table class=" table table-bordered display" id="passport">
+
+                                        <thead style="text-align: center; justify-items: center;">
+                                            <tr>
+                                                <th scope="col" style="width: 100px;">ID</th>
+
+                                                <th scope="col" style="width: 200px;">No of Near Miss reported</th>
+                                                <th scope="col" style="width: 200px;">No of Unsafe Act/Condition
+                                                    reported
+                                                </th>
+                                                <th scope="col" style="width: 200px;">No of Unsafe VFL reported</th>
+                                                <th scope="col" style="width: 200px;">No of Investigation Conduted</th>
+                                                <th scope="col" style="width: 200px;">No of Training Conduted</th>
+                                                <th scope="col" style="width: 200px;">Email</th>
+
+
+
+
+
+
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id=" tbody55" style="text-align: center;">
+                                            <?php
+
+            require_once 'mysqli_connect.php';
+            $query = "SELECT * FROM passport";
+            $result = mysqli_query($con, $query);
+
+            while($rows = mysqli_fetch_assoc($result))
+            {?>
+
+                                            <tr>
+                                                <td><?php echo $rows['id'];?></td>
+
+
+                                                <td><?php echo $rows['near_miss'];?></td>
+                                                <td><?php echo $rows['uac'];?></td>
+                                                <td>
+                                                    <?php echo $rows['vfl'];?></td>
+                                                <td><?php echo $rows['investigation'];?></td>
+                                                <td><?php echo $rows['training'];?></td>
+                                                <td><?php echo $rows['email'];?>
+
+
+
+
+
+
+                                            </tr>
+
+                                            <?php
+                }
+                ?>
+                                            <div id="myModal1" class="modal">
+                                                <!-- The Close Button -->
+                                                <span class="close"
+                                                    onclick="document.getElementById('myModal1').style.display='none'">&times;</span>
+                                                <!-- Modal Content (The Image) -->
+                                                <img class="modal-content" id="img02">
+                                                <!-- Modal Caption (Image Text) -->
+                                            </div>
+                                        </tbody>
+                                        <!-- <tfoot style="display: none;">
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Mine</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Person Executed </th>
+                                                <th scope="col">Designation</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Workmen Interacted</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Brief about on-going Operations</th>
+                                                <th scope="col">Understanding of the Workmen on Safety</th>
+                                                <th scope="col">Safety Briefing Provided to Workmen</th>
+                                                <th scope="col">Details of the Observations</th>
+                                                <th scope="col">Proposed Corrective/Preventive Action(s)</th>
+
+
+                                            </tr>
+                                        </tfoot> -->
+                                    </table>
+
+
+
+                                </div>
+                            </div>
                     </figure>
                 </div>
             </div>
-
-
-
-
-
-
-
-
 
             <!-- /.container-fluid -->
             <!-- End of Main Content -->
@@ -1213,6 +1229,14 @@ end:
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js">
+    </script>
+
+    <!--Datatable plugin JS library file -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js">
+    </script>
+
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -1249,6 +1273,9 @@ end:
     <!-- <script src='js/fullcalendar.min.js'></script> -->
     <script src='js/fullcalendarxx.min.js'></script>
     <script src='packages/list/main.js'> </script>
+    <script src="tableExport/tableExport.js"></script>
+    <script type="text/javascript" src="tableExport/jquery.base64.js"></script>
+    <script src="js/export.js"></script>
     <script>
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
@@ -1309,33 +1336,7 @@ end:
         TabBlock.init();
     });
     </script>
-    <script>
-    var modal = document.getElementById('myModal');
 
-    // Get the image and insert it inside the modal - use its "alt" text as a caption
-    var img = document.getElementsByClassName('myImg');
-    //window.alert(img);
-    var i = img.length;
-    var j;
-    var modalImg = document.getElementById('img01');
-
-    //var captionText = document.getElementById("caption");
-    for (j = 0; j < i; j++) {
-        img[j].onclick = function() {
-            modal.style.display = "flex";
-            modalImg.src = this.src;
-
-        }
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close");
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-    }
-    </script>
     <script>
     $(document).ready(function() {
         var i = 1;
@@ -1359,6 +1360,179 @@ end:
     });
     </script>
 
+
+    <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"
+        integrity="sha256-7LkWEzqTdpEfELxcZZlS6wAx5Ff13zZ83lYO2/ujj7g=" crossorigin="anonymous"></script>
+    <Script src="https://code.jquery.com/jquery-1.12.3.js" type="text/javascript"></Script>
+    <Script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js" type="text/javascript"></Script>
+    <Script src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js" type="text/javascript"></Script>
+    <Script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js" type="text/javascript"></Script>
+    <Script src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js" type="text/javascript"></Script>
+
+    <script type="text/javascript">
+    var exportThis = (function() {
+        var uri = 'data:application/vnd.ms-excel;base64,',
+            template =
+            '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"  xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--></head><body> <table>{table}</table></body></html>',
+            base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            },
+            format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            }
+        var table1 = document.getElementById("multiLevelTable");
+        return function() {
+            var ctx = {
+                worksheet: 'Report' || 'Worksheet',
+                table: table1.innerHTML
+            }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+    var exportThisWithParameter = (function() {
+        var uri = 'data:application/vnd.ms-excel;base64,',
+            template =
+            '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"  xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--></head><body> <table>{table}</table></body></html>',
+            base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            },
+            format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            }
+        return function(tableID, excelName) {
+            tableID = document.getElementById(tableID)
+            var ctx = {
+                worksheet: excelName || 'Worksheet',
+                table: tableID.innerHTML
+            }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+    </script>
+
+    <script>
+    $(document).ready(function() {
+        // Setup - add a text input to each footer cell
+        // $('#multiLevelTable tfoot th').each(function() {
+        //     var title = $('#multiLevelTable thead th').eq($(this).index()).text();
+        //     $(this).html('<input type="text" style="width: 380px" placeholder="Search ' + title +
+        //         '" />');
+        // });
+
+        // DataTable
+        var table = $('table.display').DataTable();
+
+        // Apply the search
+        table.columns().every(function() {
+            var that = this;
+
+            $(this()).on('keyup change', function() {
+                that
+                    .search(this.value)
+                    .draw();
+            });
+        });
+    });
+    </script>
+
+
+    <script>
+    var exportThis1 = (function() {
+        var uri = 'data:application/vnd.ms-excel;base64,',
+            template =
+            '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"  xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--></head><body> <table>{table}</table></body></html>',
+            base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            },
+            format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            }
+        var table1 = document.getElementById("table_content");
+        return function() {
+            var ctx = {
+                worksheet: 'Report' || 'Worksheet',
+                table: table1.innerHTML
+            }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+    </script>
+    <script>
+    var exportThis2 = (function() {
+        var uri = 'data:application/vnd.ms-excel;base64,',
+            template =
+            '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"  xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--></head><body> <table>{table}</table></body></html>',
+            base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            },
+            format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            }
+        var table2 = document.getElementById("table1");
+        return function() {
+            var ctx = {
+                worksheet: 'Report' || 'Worksheet',
+                table: table2.innerHTML
+            }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+    </script>
+    <script>
+    var exportThis3 = (function() {
+        var uri = 'data:application/vnd.ms-excel;base64,',
+            template =
+            '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"  xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--></head><body> <table>{table}</table></body></html>',
+            base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            },
+            format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            }
+        var table3 = document.getElementById("investigation");
+        return function() {
+            var ctx = {
+                worksheet: 'Report' || 'Worksheet',
+                table: table3.innerHTML
+            }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+    </script>
+    <script>
+    var exportThis7 = (function() {
+        var uri = 'data:application/vnd.ms-excel;base64,',
+            template =
+            '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"  xmlns="http://www.w3.org/TR/REC-html40"><head> <!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets> <x:ExcelWorksheet><x:Name>{worksheet}</x:Name> <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions> </x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook> </xml><![endif]--></head><body> <table>{table}</table></body></html>',
+            base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            },
+            format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            }
+        var table4 = document.getElementById("passport");
+        return function() {
+            var ctx = {
+                worksheet: 'Report' || 'Worksheet',
+                table: table4.innerHTML
+            }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+    </script>
 </body>
 
 </html>

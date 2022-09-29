@@ -146,9 +146,29 @@ if(isset($_SESSION['email'])){
                     <span>Photo Hub</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="userapproval.php">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
+                    aria-expanded="true" aria-controls="collapseThree">
                     <i class="fa-sharp fa-solid fa-person-circle-check"></i>
-                    <span>User Approval</span></a>
+                    <span>Approval</span>
+                </a>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+
+                        <a class="collapse-item" href="userapproval.php">Account</a>
+                        <a class="collapse-item" href="training_approval.php">Training</a>
+
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="reports.php">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Reports</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="training.php">
+                    <i class="fa-solid fa-person-chalkboard"></i>
+                    <span>Training</span></a>
             </li>
         </ul>
         <!-- End of Sidebar -->
@@ -293,7 +313,8 @@ if(isset($_SESSION['email'])){
                                 <div class="col-md-4">
                                     <div class="profile-work">
                                         <p>WORK LINK</p>
-                                        <a href="">Passport Details</a><br />
+                                        <a href="" data-toggle="modal" data-target="#exampleModalCenter">Passport
+                                            Details</a><br />
                                         <a href="">IME/PME</a><br />
                                     </div>
                                 </div>
@@ -374,61 +395,92 @@ if(isset($_SESSION['email'])){
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="profile" role="tabpanel"
-                                            aria-labelledby="profile-tab">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Experience</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>Expert</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Hourly Rate</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>10$/hr</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Total Projects</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>230</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>English Level</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>Expert</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Availability</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>6 months</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <label>Your Bio</label><br />
-                                                    <p>Your detail description</p>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <?php
+ $query = "SELECT * FROM passport WHERE email= '$email'";
+ $result = mysqli_query($con, $query);
+
+ while($rows = mysqli_fetch_assoc($result))
+ {?>
+
+                                <div class="modal-body">
+                                    <div class="col-md-12 ">
+                                        <div class="tab-content profile-tab" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                                aria-labelledby="home-tab">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <label>Number of Near Miss Reported</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <p><?php echo $rows['near_miss']; ?></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <label>Number of Unsafe Act/Condition Reported</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <p><?php echo $rows['uac']; ?></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <label>Number of VFL Reported</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <p><?php echo $rows['vfl']; ?></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <label>Number of Investigation Conducted</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <p><?php echo $rows['investigation']; ?></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <label>Number of Training Conducted</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <p><?php echo $rows['training']; ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php
+ }
+                                ?>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Content Row -->
 
                     <div class="row" style="font-family: 'Nunito', sans-serif;">

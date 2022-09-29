@@ -86,7 +86,8 @@ if(isset($_POST['create']) && empty($error)){
 
     if( $name!='' && $email!='' && $phone !='' && $blood != '' & $designation !='' && $password !='' && $doj !=''  && $id !='' && $department !=''){
 
-        echo '<script>alert("User Registered Successfully")</script>';
+    
+
         $_POST['name'] = '';
         $_POST['email'] = '';
         $_POST['blood'] = '';
@@ -97,12 +98,13 @@ if(isset($_POST['create']) && empty($error)){
         $_POST['doj']='';
         $_POST['id']='';
         $_POST['department']='';
+        echo '<script>alert("User Registered Successfully")</script>';
 
     }else{
         print "Error while registration...!";
     }
 }
-
+end:
 }
 
 if(isset($_POST['update']) && empty($error)){

@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>NearMiss</title>
+    <title>Training Approval</title>
 
     <!-- Custom fonts for this template-->
 
@@ -32,7 +32,6 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
 </head>
 <?php
 session_start();
@@ -41,6 +40,16 @@ require('mysqli_connect.php');
 require ('helper.php');
 
 $msg ="";
+
+if(isset($_GET['id'])){
+    $id=$_GET['id'];
+    $query = "UPDATE assign_task SET active=? WHERE incident_id =?"; 
+    $assign = 1;
+     $q = mysqli_stmt_init($con);
+     mysqli_stmt_prepare($q, $query);
+     mysqli_stmt_bind_param($q, 'ii', $assign,$id);
+     mysqli_stmt_execute($q);
+}
 
  if(isset($_SESSION['email'])){
     $email = $_SESSION['email'];
@@ -57,85 +66,11 @@ $msg ="";
                     
                         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
- } 
+ }
+
+ 
 
 
-if(isset($_POST['submit']) && empty($error)){
-
-    $id = validate_input_text($_POST['id1']);
-    
-
-
-    $query = "SELECT * FROM nearmiss where task_assign = 0 AND number = '$id'";
-    $result = mysqli_query($con, $query);
-    while($rows = mysqli_fetch_assoc($result))
-    {
-        $mines = $rows['mine'];
-        $date_incident = $rows['date_incident'];
-        $date_report = $rows['date_report'];
-        $person = $rows['person'];
-        $designation = $rows['designation'];
-        $reported_by = $rows['reported_by'];
-        $location = $rows['location'];
-        $equipment = $rows['equipment'];
-        $person_involved = $rows['person_involved'];
-        $image = $rows['image'];
-
-    }
-
-   
-    $clean = clean($_POST['description1']);
-    $description= validate_input_text($clean );
-    $name = validate_input_text($_POST['name']);
-    $email = validate_input_text($_POST['email1']);
-    $designation = validate_input_text($_POST['designation']);
-    $phone = ($_POST['phone']);
-    $date = date("Y-m-d");
-    $active = 0;
-    $status= "Not Completed";
-  
-  
-
-   // make a query
-   $query = "INSERT INTO assign_task (incident_id,description,name,email,designation, phone,active,date,mine,date_incident,date_report,person,designation1, reported_by, location,equipment,person_involved,image,status)";
-   $query .= "VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-   // initialize a statement
-   $q = mysqli_stmt_init($con);
-
-   // prepare sql statement
-   mysqli_stmt_prepare($q, $query);
-
-   // bind values
-   mysqli_stmt_bind_param($q, 'sssssssssssssssssss', $id,$description, $name,$email,$designation,$phone,$active,$date,$mines,$date_incident, $date_report,$person,$designation,$reported_by,$location,$equipment,$person_involved,$image,$status);
-
-   // execute statement
-   mysqli_stmt_execute($q);
-
-   if( $id!='' && $description!='' && $name !='' && $email != '' & $designation !='' && $phone !=''){
-      $query = "UPDATE nearmiss SET task_assign=? WHERE number =?"; 
-      $assign = 1;
-       $q = mysqli_stmt_init($con);
-       mysqli_stmt_prepare($q, $query);
-       mysqli_stmt_bind_param($q, 'ii', $assign,$id);
-       mysqli_stmt_execute($q);
-       $_POST['id1'] = '';
-       $_POST['description1'] = '';
-       $_POST['name'] = '';
-       $_POST['phone']='';
-       $_POST['email1']='';
-       $_POST['designation']='';
-       $msg = 'Task Assigned Successfully!';
-       
-    
-
-   }else{
-      
-    $msg = 'Error while assigning task...!!';
-
-   }
-}
-end:
 
 ?>
 <style>
@@ -237,157 +172,6 @@ end:
 
 .tabBlock-pane> :last-child {
     margin-bottom: 0;
-}
-
-#myImg:hover {
-    opacity: 0.7;
-}
-
-/* The Modal (background) */
-.modal1 {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    padding-top: 100px;
-    /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.9);
-    /* Black w/ opacity */
-}
-
-/* Modal Content (image) */
-.modal-content1 {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-}
-
-/* Caption of Modal Image */
-#caption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    text-align: center;
-    color: #ccc;
-    padding: 10px 0;
-    height: 150px;
-}
-
-/* Add Animation */
-.modal-content1,
-#caption {
-    -webkit-animation-name: zoom;
-    -webkit-animation-duration: 0.6s;
-    animation-name: zoom;
-    animation-duration: 0.6s;
-}
-
-@-webkit-keyframes zoom {
-    from {
-        -webkit-transform: scale(0)
-    }
-
-    to {
-        -webkit-transform: scale(1)
-    }
-}
-
-@keyframes zoom {
-    from {
-        transform: scale(0)
-    }
-
-    to {
-        transform: scale(1)
-    }
-}
-
-/* The Close Button */
-.close {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.close:hover,
-.close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.round {
-    width: 19px;
-    height: 19px;
-    border-radius: 50%;
-    position: relative;
-    background: red;
-    display: inline-block;
-    padding: 0.3rem 0.2rem !important;
-
-
-    z-index: 10 !important;
-    margin-top: -10px;
-
-}
-
-.round>span {
-    color: white;
-    display: block;
-    text-align: center;
-    font-size: 0.6rem !important;
-    padding: 0 !important;
-    margin-top: -2px;
-    margin-left: -2px;
-}
-
-#list {
-
-    display: none;
-    top: 33px;
-    position: absolute;
-    right: 2%;
-    background: #ffffff;
-    z-index: 100 !important;
-    width: 25vw;
-    margin-left: -37px;
-
-    padding: 0 !important;
-    margin: 0 auto !important;
-
-
-}
-
-.message>span {
-    width: 100%;
-    display: block;
-    color: red;
-    text-align: justify;
-    margin: 0.2rem 0.3rem !important;
-    padding: 0.3rem !important;
-    line-height: 1rem !important;
-    font-weight: bold;
-    border-bottom: 1px solid white;
-    font-size: 1.8rem !important;
-
 }
 </style>
 
@@ -512,7 +296,7 @@ end:
                                 <!-- Counter - Alerts -->
 
                                 <?php
-        $query = "SELECT * FROM assign_task where active =0 and email ='$email' ORDER BY date DESC LIMIT 0,5";
+        $query = "SELECT * FROM assign_task where active =0 and email ='$email' ORDER BY date DESC LIMIT 0,5 ";
         $count = mysqli_num_rows(mysqli_query($con,$query));
         ?>
                                 <span class="badge badge-danger badge-counter"
@@ -580,6 +364,7 @@ end:
                             </a>
                         </li>
                     </ul>
+
                 </nav>
                 <!-- End of Topbar -->
 
@@ -587,67 +372,56 @@ end:
                 <div class="container-fluid ">
                     <figure class="tabBlock">
                         <ul class="tabBlock-tabs">
-                            <li class="tabBlock-tab is-active">New Task</li>
-                            <li class="tabBlock-tab">Assigned task</li>
+                            <li class="tabBlock-tab is-active">Pending Approval</li>
+                            <li class="tabBlock-tab">Approved Training</li>
+
                         </ul>
                         <div class="tabBlock-content">
-                            <p><?= $msg?></p>
 
                             <div class="tabBlock-pane">
-
                                 <div class=" d-flex table-data"
                                     style="height: 560px;overflow: scroll; flex-basis: 40%;  margin: 1em 0em; margin-left: 10px;">
                                     <table class="table table-bordered">
                                         <thead style="text-align: center; justify-items: center;">
                                             <tr>
                                                 <th scope="col">ID</th>
-                                                <th scope="col">Incident Description</th>
-                                                <th scope="col">Image</th>
-                                                <th scope="col">Assign to</th>
-
-
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Designation</th>
+                                                <th scope="col">Training Title</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Approval</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="tbody3" style="text-align: center;">
+                                        <tbody id="tbody2" style="text-align: center;">
                                             <?php
-            $query = "SELECT * FROM nearmiss where task_assign = 0";
+
+           
+            $query = "SELECT * FROM training where is_approved = '0'";
             $result = mysqli_query($con, $query);
 
             while($rows = mysqli_fetch_assoc($result))
             {?>
 
                                             <tr>
-                                                <td data-id="<?php echo $rows['number']; ?>">
-                                                    <?php echo $rows['number'];?>
+                                                <td data-id="<?php echo $rows['id']; ?>"><?php echo $rows['id'];?>
                                                 </td>
-                                                <td data-id="<?php echo $rows['number']; ?>">
-                                                    <?php echo $rows['description'];?></td>
-                                                <td data-id="<?php echo $rows['number']; ?>">
 
-                                                    <?php if (file_exists($rows['image'])){?>
-                                                    <a href="#">
-                                                        <img src="<?=$rows['image']?>" width="300" height="200"
-                                                            class="myImg">
-                                                    </a>
-                                                    <?php }  else{
-                                                       ?> <h5>Null</h5>
-                                                    <?php } 
-                                                       ?>
+                                                <td data-id="<?php echo $rows['id']; ?>"><?php echo $rows['name'];?>
+                                                </td>
 
+                                                <td data-id="<?php echo $rows['id']; ?>">
+                                                    <?php echo $rows['designation'];?>
+                                                </td>
+                                                <td data-id="<?php echo $rows['id']; ?>"><?php echo $rows['title'];?>
+                                                </td>
 
+                                                <td data-id="<?php echo $rows['id']; ?>"><?php echo $rows['date'];?>
+                                                </td>
+                                                <td data-id="<?php echo $rows['id']; ?>"><?php echo $rows['email'];?>
                                                 </td>
                                                 <td><i class="fa-solid fa-user-pen assign " style="cursor: pointer;"
-                                                        data-id="<?php echo $rows['number']; ?>"></i>
-                                                </td>
-                                                <div id="myModal" class="modal1">
-                                                    <!-- The Close Button -->
-                                                    <span class="close"
-                                                        onclick="document.getElementById('myModal').style.display='none'">&times;</span>
-                                                    <!-- Modal Content (The Image) -->
-                                                    <img class="modal-content1" id="img01">
-                                                    <!-- Modal Caption (Image Text) -->
-                                                </div>
-
+                                                        data-id="<?php echo $rows['id']; ?>"></i></td>
                                             </tr>
 
                                             <?php
@@ -656,88 +430,7 @@ end:
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="modal fade exampleModal" id="exampleModal" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Task Assignment</h5>
-                                                <button type="button" class="close" id="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body1">
 
-                                                <form action="assigntask.php" method="post"
-                                                    enctype="multipart/form-data" id="reg-form">
-                                                    <div class="form-row" style="margin: 5px;">
-                                                        <div class="col">
-                                                            <label for="ID" class="col-form-label">Incident ID:</label>
-                                                            <input type="text" class="form-control" id="id" name="id1"
-                                                                readonly>
-                                                        </div>
-                                                        <div class="col">
-                                                            <label for="description" class="col-form-label">Incident
-                                                                Description:</label>
-                                                            <textarea cols="28" rows="2" id="description"
-                                                                name="description1" readonly> </textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-row" style="margin: 5px;">
-                                                        <div class="col">
-                                                            <label for="email" class="col-form-label">Email:</label>
-                                                            <select name="email1" id="email1" required
-                                                                class="custom-select d-block form-control">
-                                                                <option value="">Select Email</option>
-                                                                <?php
-                                                                
-                                                                 $query = "SELECT * FROM user where is_approved ='1'";
-                                                                 $result = mysqli_query($con, $query);
-                                                     
-                                                                 while($rows = mysqli_fetch_assoc($result))
-                                                                 {?>
-
-                                                                <option value="<?php echo $rows['email']; ?>">
-                                                                    <?php echo $rows['email']; ?></option>
-                                                                <?php } 
-                                                       ?>
-                                                            </select>
-                                                        </div>
-
-
-                                                        <div class="col">
-                                                            <label for="name" class="col-form-label">Name:</label>
-                                                            <input type="text" class="form-control" id="name"
-                                                                name="name" readonly required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-row" style="margin: 5px;">
-                                                        <div class="col">
-                                                            <label for="designation" class="col-form-label">Designation
-                                                                :</label>
-                                                            <input type="text" class="form-control" id="designation"
-                                                                name="designation" readonly required>
-                                                        </div>
-                                                        <div class="col">
-                                                            <label for="phone" class="col-form-label">Phone:</label>
-                                                            <input type="text" class="form-control" id="phone"
-                                                                name="phone" readonly required>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            id="close11">Close</button>
-                                                        <button type="submit" class="btn btn-primary" id="submit_login"
-                                                            name="submit">Post</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="tabBlock-pane">
                                 <div class=" d-flex table-data"
@@ -745,36 +438,65 @@ end:
                                     <table class="table table-bordered">
                                         <thead style="text-align: center; justify-items: center;">
                                             <tr>
-                                                <th scope="col">Incident ID</th>
-                                                <th scope="col">Description</th>
+                                                <th scope="col">ID</th>
                                                 <th scope="col">Name</th>
-                                                <th scope="col">Email</th>
                                                 <th scope="col">Designation</th>
-                                                <th scope="col">Phone</th>
+                                                <th scope="col">Training Title</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Members</th>
 
                                             </tr>
                                         </thead>
                                         <tbody id="tbody3" style="text-align: center;">
                                             <?php
 
-           require_once 'mysqli_connect.php';
-            $query = "SELECT * FROM assign_task";
+          
+            $query = "SELECT * FROM training WHERE is_approved = '1' ";
             $result = mysqli_query($con, $query);
 
             while($rows = mysqli_fetch_assoc($result))
             {?>
 
                                             <tr>
-                                                <td><?php echo $rows['incident_id'];?></td>
-                                                <td><?php echo $rows['description'];?>
+                                                <td><?php echo $rows['id'];?></td>
+                                                <td><?php echo $rows['name'];?>
                                                 </td>
-                                                <td><?php echo $rows['name'];?></td>
-                                                <td>
-                                                    <?php echo $rows['email'];?></td>
                                                 <td><?php echo $rows['designation'];?></td>
-                                                <td><?php echo $rows['phone'];?></td>
+                                                <td>
+                                                    <?php echo $rows['title'];?></td>
+                                                <td><?php echo $rows['date'];?></td>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <th scope="col">Members</th>
+
+                                                        </thead>
+                                                        <?php
+                                                $train_id=$rows['id'];
+                                        $query1 = "SELECT * FROM training_member WHERE train_id= '$train_id'";
+                                        $result1 = mysqli_query($con, $query1);
+                            
+                                        while($rows1 = mysqli_fetch_assoc($result1))
+                                               { ?>
+
+                                                        <tbody>
+                                                            <tr>
+
+                                                                <td><?php echo $rows1['member'];?></td>
+
+                                                            </tr>
+                                                        </tbody>
+
+                                                        <?php
+                }
+                ?>
+                                                    </table>
+
+
 
                                                 </td>
+
+
                                             </tr>
 
                                             <?php
@@ -784,32 +506,55 @@ end:
                                     </table>
                                 </div>
                             </div>
+                        </div>
                     </figure>
                 </div>
+            </div>
 
+            <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Alert</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
 
+                            <p>Do you really want to approve the account of selected user...</p>
+                            <input type="hidden" name="email1" id="email1" readonly>
+                            <input type="hidden" name="id1" id="id1" readonly>
 
-
-
-
-
-
-
-
-                <!-- /.container-fluid -->
-                <!-- End of Main Content -->
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy;Kodingamali Bauxite Mines 2022</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                id="close11">Close</button>
+                            <button type="button" class="btn btn-primary" id="approve">Approve</button>
                         </div>
                     </div>
-                </footer>
-                <!-- End of Footer -->
+                </div>
             </div>
-            <!-- End of Content Wrapper -->
+
+
+
+
+
+
+
+            <!-- /.container-fluid -->
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy;Kodingamali Bauxite Mines 2022</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
         </div>
+        <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
 
@@ -840,7 +585,6 @@ end:
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
     <script>
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
@@ -902,33 +646,6 @@ end:
     });
     </script>
     <script>
-    var modal = document.getElementById('myModal');
-
-    // Get the image and insert it inside the modal - use its "alt" text as a caption
-    var img = document.getElementsByClassName('myImg');
-    //window.alert(img);
-    var i = img.length;
-    var j;
-    var modalImg = document.getElementById('img01');
-
-    //var captionText = document.getElementById("caption");
-    for (j = 0; j < i; j++) {
-        img[j].onclick = function() {
-            modal.style.display = "flex";
-            modalImg.src = this.src;
-
-        }
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close");
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-    }
-    </script>
-    <script>
     $(document).ready(function() {
         $(".assign").on("click", function() {
             $("#exampleModal").modal("show");
@@ -948,17 +665,17 @@ end:
 
     $(".assign").click((e) => {
         let textvalues3 = displayData2(e);
-        console.log(textvalues3);
+        let email = $("input[name*='email1']");
         let id = $("input[name*='id1']");
-        let description = $("textarea[name*='description1']");
-        id.val(textvalues3[0]);
-        description.val(textvalues3[1]);
+        email.val(textvalues3[5]);
+        id.val(textvalues3[0])
+
 
     });
 
     function displayData2(e) {
         let id = 0;
-        const td = $("#tbody3 tr td");
+        const td = $("#tbody2 tr td");
         let textvalues3 = [];
         for (const value of td) {
             if (value.dataset.id == e.target.dataset.id) {
@@ -970,28 +687,25 @@ end:
     </script>
 
     <script>
-    document.getElementById("email1").onchange = changeListener;
+    document.getElementById('approve').onclick = changeListener;
 
     function changeListener() {
 
         var email = document.getElementById('email1').value;
+        var id = document.getElementById('id1').value;
+        console.log(email);
 
         $.ajax({
-            url: 'taskprocess.php', //This is the current doc
-            type: "POST",
-            dataType: 'json', // add json datatype to get json
+            url: 'training_approvalprocess.php', //This is the current doc
+            type: "POST", // add json datatype to get json
             data: ({
-                email: email
+                email: email,
+                id: id
             }),
             success: function(data) {
-                var name = data.name;
-                var designation = data.designation;
-                var phone = data.phone
 
-                document.getElementById("name").value = name;
-                document.getElementById("phone").value = phone;
-                document.getElementById("designation").value = designation;
-
+                alert("Training has been Approved Successfully");
+                location.reload();
             },
             error: function(xhr, status, error) {
                 console.error(xhr);
@@ -1000,65 +714,6 @@ end:
 
     };
     </script>
-    <script>
-    $(document).ready(function() {
-        var ids = new Array();
-        $('#over').on('click', function() {
-            $('#list').toggle();
-        });
-
-        //Message with Ellipsis
-        $('div.msg').each(function() {
-            var len = $(this).text().trim(" ").split(" ");
-            if (len.length > 12) {
-                var add_elip = $(this).text().trim().substring(0, 65) + "…";
-                $(this).text(add_elip);
-            }
-
-        });
-
-
-        $("#bell-count").on('click', function(e) {
-            e.preventDefault();
-
-            let belvalue = $('#bell-count').attr('data-value');
-
-            if (belvalue == '') {
-
-                console.log("inactive");
-            } else {
-                $(".round").css('display', 'none');
-                $("#list").css('display', 'block');
-
-                // $('.message').each(function(){
-                // var i = $(this).attr("data-id");
-                // ids.push(i);
-
-                // });
-                //Ajax
-                $('.message').click(function(e) {
-                    e.preventDefault();
-                    $.ajax({
-                        url: 'notify.php',
-                        type: 'POST',
-                        data: {
-                            "incident_id": $(this).attr('data-id')
-                        },
-                        success: function(data) {
-
-                            console.log(data);
-                            location.reload();
-                        }
-                    });
-                });
-            }
-        });
-    });
-    </script>
-
-
-
-
 
 </body>
 

@@ -105,6 +105,22 @@ if (empty($no_details)){
 
     if( $mines!='' && $person!='' && $designation !='' && $date != '' & $time !='' && $shift !='' && $category !='' && $shift_ic !='' && $location !='' && $details !='' && $action !='' && $yes_details !='' && $no_details !=''){
 
+
+        
+        $query1= "SELECT * FROM passport WHERE email ='$email'";
+        $q1 = mysqli_stmt_init($con);
+        mysqli_stmt_prepare($q1, $query1);
+        mysqli_stmt_execute($q1);                                            
+        $result1 = mysqli_stmt_get_result($q1); 
+        $row2 = mysqli_fetch_array($result1, MYSQLI_ASSOC);                                     
+        $uac1=$row2['uac'];
+
+         $query = "UPDATE passport SET uac =? WHERE email =?"; 
+         $assign = $uac1+1;
+         $q = mysqli_stmt_init($con);
+         mysqli_stmt_prepare($q, $query);
+         mysqli_stmt_bind_param($q, 'is', $assign,$email);
+         mysqli_stmt_execute($q);
         $_POST['mines'] = '';
         $_POST['person'] = '';
         $_POST['designation'] = '';
