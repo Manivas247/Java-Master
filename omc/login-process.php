@@ -37,18 +37,18 @@ if(empty($error)){
         // verify password
         if( $row['is_approved'] == '1'){
 
-        if($password == $row['password'] && $row['type'] == 'admin' ){
+        if($password == $row['password']){
             $_SESSION['email'] = $row['email'];
             header("location: homepage.php");
            
             exit();
         }
     
-        else if($password == $row['password'] && $row['type'] == 'user'){
-            $_SESSION['email'] = $row['email'];            
-            header("location: homepage.php");
-            exit();
-        }
+        // else if($password == $row['password'] && $row['type'] == 'user'){
+        //     $_SESSION['email'] = $row['email'];            
+        //     header("location: homepage.php");
+        //     exit();
+        // }
         else{
             echo '<script>alert("Incorrect username or password")</script>';
         }

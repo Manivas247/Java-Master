@@ -1,8 +1,14 @@
 <?php
 require('mysqli_connect.php');
 session_start();
+require ('helper.php');
 if(isset($_SESSION['email'])){
-    $email = $_SESSION['email'];
+    
+    $user = get_user_info($con, $_SESSION['email']);
+   
+        $email = $_SESSION['email'];
+        
+    $type = $user['type'];
 }
 include 'photofunction.php';
 $pdo = pdo_connect_mysql();
@@ -346,6 +352,9 @@ body {
                         <a class="collapse-item" href="unsafeA&C.php">Unsafe Act/Condition</a>
                         <a class="collapse-item" href="vfl.php">VFL</a>
                         <a class="collapse-item" href="">Special Task</a>
+                        <?php if($type == 'admin'){   ?>
+                        <a class="collapse-item" href="assigntask.php">Assign Task</a>
+                        <?php  } ?>
                         <a class="collapse-item" href="investigation.php">Investigation</a>
 
                     </div>
@@ -394,6 +403,34 @@ body {
                 <a class="nav-link" href="photohub.php">
                     <i class="fa-solid fa-camera-retro"></i>
                     <span>Photo Hub</span></a>
+            </li>
+            <?php if($type == 'admin'){   ?>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
+                    aria-expanded="true" aria-controls="collapseThree">
+                    <i class="fa-sharp fa-solid fa-person-circle-check"></i>
+                    <span>Approval</span>
+                </a>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+
+                        <a class="collapse-item" href="userapproval.php">Account</a>
+                        <a class="collapse-item" href="training_approval.php">Training</a>
+
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="reports.php">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Reports</span></a>
+            </li>
+            <?php  } ?>
+            <li class="nav-item">
+                <a class="nav-link" href="training.php">
+                    <i class="fa-solid fa-person-chalkboard"></i>
+                    <span>Training</span></a>
             </li>
         </ul>
         <!-- End of Sidebar -->

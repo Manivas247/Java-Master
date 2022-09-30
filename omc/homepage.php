@@ -50,7 +50,8 @@ if(isset($_SESSION['email'])){
     $user = get_user_info($con, $_SESSION['email']);
    
         $email = $_SESSION['email'];
-    
+        
+    $type = $user['type'];
 }
 ?>
 
@@ -95,7 +96,9 @@ if(isset($_SESSION['email'])){
                         <a class="collapse-item" href="unsafeA&C.php">Unsafe Act/Condition</a>
                         <a class="collapse-item" href="vfl.php">VFL</a>
                         <a class="collapse-item" href="">Special Task</a>
+                        <?php if($type == 'admin'){   ?>
                         <a class="collapse-item" href="assigntask.php">Assign Task</a>
+                        <?php  } ?>
                         <a class="collapse-item" href="investigation.php">Investigation</a>
 
                     </div>
@@ -145,6 +148,7 @@ if(isset($_SESSION['email'])){
                     <i class="fa-solid fa-camera-retro"></i>
                     <span>Photo Hub</span></a>
             </li>
+            <?php if($type == 'admin'){   ?>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
                     aria-expanded="true" aria-controls="collapseThree">
@@ -160,11 +164,13 @@ if(isset($_SESSION['email'])){
                     </div>
                 </div>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="reports.php">
                     <i class="fa-solid fa-print"></i>
                     <span>Reports</span></a>
             </li>
+            <?php  } ?>
             <li class="nav-item">
                 <a class="nav-link" href="training.php">
                     <i class="fa-solid fa-person-chalkboard"></i>
@@ -277,9 +283,18 @@ if(isset($_SESSION['email'])){
                 <!-- Begin Page Content -->
                 <div class="container-fluid ">
                     <!-- Page Heading -->
+                    <?php if($type == 'admin'){   ?>
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard - Admin Portal</h1>
                     </div>
+                    <?php }
+                    else{ ?>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard - User Portal</h1>
+                    </div>
+
+                    <?php } ?>
+
 
                     <!-- Content Row -->
                     <div class="row">
@@ -500,7 +515,7 @@ if(isset($_SESSION['email'])){
 
                                                 <div id="calendar" class="col-centered">
                                                 </div>
-
+                                                <input type="hidden" value="<?php echo $type; ?>" readonly id="type">
 
                                             </table>
 
@@ -639,7 +654,7 @@ if(isset($_SESSION['email'])){
     <script>
     $(document).ready(function() {
 
-
+        var type = document.getElementById("type").value;
         $('#calendar').fullCalendar({
             plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
             header: {
@@ -679,30 +694,33 @@ if(isset($_SESSION['email'])){
             allDaySlot: false,
 
 
-
             select: function(start, end) {
+                if (type == 'admin') {
 
-                //$('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
-                $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
-                $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
-                $('#ModalAdd').modal('show');
+                    //$('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
+                    $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
+                    $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
+                    $('#ModalAdd').modal('show');
+                }
             },
             eventRender: function(event, element) {
-                element.bind('dblclick',
-                    function() { //gawin mong CLICK yung parameter para maging single
-                        $('#ModalEdit #id').val(event.id);
-                        $('#ModalEdit #title').val(event.title);
-                        $('#ModalEdit #color').val(event.color);
-                        //$('#ModalEdit #start').val(event.start);
-                        $('#ModalEdit #start').val(moment(event.start).format(
-                            'YYYY-MM-DD HH:mm:ss'));
-                        $('#ModalEdit #end').val(moment(event.end).format(
-                            'YYYY-MM-DD HH:mm:ss'));
-                        //	$('#ModalEdit #end').val(event.end);
-                        $('#ModalEdit').modal('show');
-                        //var formattedTime = $.fullCalendar.formatDates(event.start, event.end, "HH:mm { - HH:mm}");
+                if (type == 'admin') {
+                    element.bind('dblclick',
+                        function() { //gawin mong CLICK yung parameter para maging single
+                            $('#ModalEdit #id').val(event.id);
+                            $('#ModalEdit #title').val(event.title);
+                            $('#ModalEdit #color').val(event.color);
+                            //$('#ModalEdit #start').val(event.start);
+                            $('#ModalEdit #start').val(moment(event.start).format(
+                                'YYYY-MM-DD HH:mm:ss'));
+                            $('#ModalEdit #end').val(moment(event.end).format(
+                                'YYYY-MM-DD HH:mm:ss'));
+                            //	$('#ModalEdit #end').val(event.end);
+                            $('#ModalEdit').modal('show');
+                            //var formattedTime = $.fullCalendar.formatDates(event.start, event.end, "HH:mm { - HH:mm}");
 
-                    });
+                        });
+                }
 
             },
 
@@ -769,6 +787,7 @@ if(isset($_SESSION['email'])){
                 },
                 <?php endforeach; ?>
             ]
+
         });
 
 
