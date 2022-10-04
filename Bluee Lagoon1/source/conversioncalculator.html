@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bluee Lagoon Logistics</title>
+    <!-- 
+Hydro Template 
+http://www.templatemo.com/tm-509-hydro
+-->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/magnific-popup.css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/css/templatemo-breezed.css" />
+
+    <script
+      src="https://kit.fontawesome.com/d0d48d242d.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="/css/templatemo-style.css" />
+    <link rel="stylesheet" href="/css/style.css.map" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style.scss" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+      integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- PRE LOADER -->
+    <section class="preloader">
+      <div class="spinner">
+        <span class="spinner-rotate"></span>
+      </div>
+    </section>
+
+    <!-- MENU -->
+    <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button
+            class="navbar-toggle"
+            data-toggle="collapse"
+            data-target=".navbar-collapse"
+          >
+            <span class="icon icon-bar"></span>
+            <span class="icon icon-bar"></span>
+            <span class="icon icon-bar"></span>
+          </button>
+
+          <!-- lOGO TEXT HERE -->
+          <a href="index.html" class="navbar-brand"
+            ><i class="fa-solid fa-ferry"></i> &nbsp;&nbsp;Bluee Lagoon</a
+          >
+        </div>
+
+        <!-- MENU LINKS -->
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-nav-first">
+            <li><a href="/index.html" class="smoothScroll">Home</a></li>
+            <li><a href="about.html" class="smoothScroll">About</a></li>
+            <li>
+              <a href="#" class="smoothScroll active1"
+                ><span class="span1">Resources</span></a
+              >
+              <ul>
+                <li><a href="volumetricweight.html">Volumetric Weight</a></li>
+                <li>
+                  <a href="conversioncalculator.html">Conversion Calculator</a>
+                </li>
+                <li><a href="currencyconvertor.html">Currency Converter</a></li>
+                <li><a href="">Container Dimensions</a></li>
+                <li>
+                  <a href="">Pallet Sizing</a>
+                </li>
+                <li class="bottom">
+                  <a href="inco.html">Inco Terms</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/source/service.html" class="smoothScroll">Services</a>
+            </li>
+            <li>
+              <a href="/source/contact.html" class="smoothScroll">Contacts</a>
+            </li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#"><i class="fa fa-facebook-square"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-twitter"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-instagram"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="main-banner header-text" id="top">
+      <div class="Modern-Slider1">
+        <!-- Item -->
+        <div class="item">
+          <div class="img-fill">
+            <img src="/images/service.jpg" alt="" />
+            <div class="overlay3"></div>
+            <div class="text-content">
+              <h1 style="font-family: 'Poppins', sans-serif"></h1>
+            </div>
+          </div>
+        </div>
+        <!-- // Item -->
+
+        <!-- // Item -->
+      </div>
+    </div>
+    <section id="conversion">
+      <h2>Conversion Calculator</h2>
+      <ul class="main-box">
+        <li class="box active">
+          <span>Length</span>
+
+          <div class="detail active">
+            <form
+              class="user"
+              action="register.php"
+              method="POST"
+              id="reg-form"
+            >
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="inches"
+                    name="inches"
+                    placeholder="Inches"
+                    oninput="lengthConverter(this.id,this.value)"
+                    onchange="lengthConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="centimeter"
+                    name="centimeter"
+                    placeholder="Centimeter"
+                    oninput="lengthConverter(this.id,this.value)"
+                    onchange="lengthConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="inches1"
+                    name="inches1"
+                    placeholder="Inches"
+                    oninput="lengthConverter(this.id,this.value)"
+                    onchange="lengthConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="millimeter"
+                    name="millimeter"
+                    placeholder="Millimeter"
+                    oninput="lengthConverter(this.id,this.value)"
+                    onchange="lengthConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="feet"
+                    name="feet"
+                    placeholder="Feet"
+                    oninput="lengthConverter(this.id,this.value)"
+                    onchange="lengthConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="meter"
+                    name="meter"
+                    placeholder="Meter"
+                    oninput="lengthConverter(this.id,this.value)"
+                    onchange="lengthConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="yard"
+                    name="yard"
+                    placeholder="Yard"
+                    oninput="lengthConverter(this.id,this.value)"
+                    onchange="lengthConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    name="meter1"
+                    id="meter1"
+                    placeholder="Meter"
+                    oninput="lengthConverter(this.id,this.value)"
+                    onchange="lengthConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="miles"
+                    name="miles"
+                    placeholder="Miles"
+                    oninput="lengthConverter(this.id,this.value)"
+                    onchange="lengthConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    name="kilometer"
+                    id="kilometer"
+                    placeholder="Kilometer"
+                    oninput="lengthConverter(this.id,this.value)"
+                    onchange="lengthConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <hr />
+              <button type="reset" class="">Reset</button>
+            </form>
+          </div>
+        </li>
+        <li class="box">
+          <span>Area</span>
+          <div class="detail">
+            <form
+              class="user"
+              action="register.php"
+              method="POST"
+              id="reg-form"
+            >
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="sinches"
+                    name="sinches"
+                    placeholder="Square Inches"
+                    oninput="areaConverter(this.id,this.value)"
+                    onchange="areaConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="scentimeter"
+                    name="scentimeter"
+                    placeholder="Square Centimeter"
+                    oninput="areaConverter(this.id,this.value)"
+                    onchange="areaConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="syard"
+                    name="syard"
+                    placeholder="Square Yard"
+                    oninput="areaConverter(this.id,this.value)"
+                    onchange="areaConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="smeter1"
+                    name="smeter1"
+                    placeholder="Square Meter"
+                    oninput="areaConverter(this.id,this.value)"
+                    onchange="areaConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="sfeet"
+                    name="sfeet"
+                    placeholder="Square Feet"
+                    oninput="areaConverter(this.id,this.value)"
+                    onchange="areaConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="smeter"
+                    name="smeter"
+                    placeholder="Square Meter"
+                    oninput="areaConverter(this.id,this.value)"
+                    onchange="areaConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="acres"
+                    name="acres"
+                    placeholder="Acres"
+                    oninput="areaConverter(this.id,this.value)"
+                    onchange="areaConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    name="hectares"
+                    id="hectares"
+                    placeholder="Hectares"
+                    oninput="areaConverter(this.id,this.value)"
+                    onchange="areaConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="smiles"
+                    name="smiles"
+                    placeholder="Square Miles"
+                    oninput="areaConverter(this.id,this.value)"
+                    onchange="areaConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    name="skilometer1"
+                    id="skilometer1"
+                    placeholder="Square Kilometer"
+                    oninput="areaConverter(this.id,this.value)"
+                    onchange="areaConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <hr />
+              <button type="reset" class="">Reset</button>
+            </form>
+          </div>
+        </li>
+        <li class="box">
+          <span>Volume</span>
+
+          <div class="detail">
+            <form
+              class="user"
+              action="register.php"
+              method="POST"
+              id="reg-form"
+            >
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="cinches"
+                    name="cinches"
+                    placeholder="Cubic Inches"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="ccentimeter"
+                    name="ccentimeter"
+                    placeholder="Cubic Centimeter"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="cfeet"
+                    name="cfeet"
+                    placeholder="Cubic Feet"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="cmeter"
+                    name="cmeter"
+                    placeholder="Cubic Meter"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="cyard"
+                    name="cyard"
+                    placeholder="Cubic Yard"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="cmeter1"
+                    name="cmeter1"
+                    placeholder="Cubic Meter"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="cinches1"
+                    name="cinches1"
+                    placeholder="Cubic Inches"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    name="litres"
+                    id="litres"
+                    placeholder="Litres"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="gallon"
+                    name="gallon"
+                    placeholder="Gallon"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    name="litres1"
+                    id="litres1"
+                    placeholder="Litres"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="usgallon"
+                    name="usgallon"
+                    placeholder="US Gallon"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    name="litres2"
+                    id="litres2"
+                    placeholder="Kilometer"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="founces"
+                    name="founces"
+                    placeholder="Fluid Ounces"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    name="cmillilitres"
+                    id="cmillilitres"
+                    placeholder="Cubic Millilitres"
+                    oninput="volumeConverter(this.id,this.value)"
+                    onchange="volumeConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <hr />
+              <button type="reset" class="">Reset</button>
+            </form>
+          </div>
+        </li>
+        <li class="box">
+          <span>Weight</span>
+          <div class="detail">
+            <form
+              class="user"
+              action="register.php"
+              method="POST"
+              id="reg-form"
+            >
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="ounces1"
+                    name="ounces1"
+                    placeholder="Ounces"
+                    oninput="weightConverter(this.id,this.value)"
+                    onchange="weightConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="grams"
+                    name="grams"
+                    placeholder="Grams"
+                    oninput="weightConverter(this.id,this.value)"
+                    onchange="weightConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="pounds"
+                    name="pounds"
+                    placeholder="Poundes"
+                    oninput="weightConverter(this.id,this.value)"
+                    onchange="weightConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="kilograms"
+                    name="kilograms"
+                    placeholder="Kilograms"
+                    oninput="weightConverter(this.id,this.value)"
+                    onchange="weightConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="long"
+                    name="long"
+                    placeholder="Long Tons"
+                    oninput="weightConverter(this.id,this.value)"
+                    onchange="weightConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="tonnes"
+                    name="tonnes"
+                    placeholder="Tonnes"
+                    oninput="weightConverter(this.id,this.value)"
+                    onchange="weightConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    id="short"
+                    name="short"
+                    placeholder="Short Tons"
+                    oninput="weightConverter(this.id,this.value)"
+                    onchange="weightConverter(this.id,this.value)"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="number"
+                    class="form-control form-control-user"
+                    name="tonnes1"
+                    id="tonnes1"
+                    placeholder="Tonnes"
+                    oninput="weightConverter(this.id,this.value)"
+                    onchange="weightConverter(this.id,this.value)"
+                  />
+                </div>
+              </div>
+
+              <hr />
+              <button type="reset" class="">Reset</button>
+            </form>
+          </div>
+        </li>
+      </ul>
+
+      <div class="wrapper">
+        <div class="print-tab" data-tab-id="1">
+          <ul class="print-tab-menu">
+            <li data-tab-menu="tab1"><a>Length</a></li>
+            <li data-tab-menu="tab2"><a>Area</a></li>
+            <li data-tab-menu="tab3"><a>Volume</a></li>
+            <li data-tab-menu="tab4"><a>Weight</a></li>
+          </ul>
+          <div class="print-tab-content">
+            <div data-tab-content="tab1" style="width: 96%">
+              <form
+                class="user"
+                action="register.php"
+                method="POST"
+                id="reg-form"
+              >
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="inches2"
+                      name="inches2"
+                      placeholder="Inches"
+                      oninput="lengthConverter(this.id,this.value)"
+                      onchange="lengthConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="centimeter2"
+                      name="centimeter2"
+                      placeholder="Centimeter"
+                      oninput="lengthConverter(this.id,this.value)"
+                      onchange="lengthConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="inches12"
+                      name="inches12"
+                      placeholder="Inches"
+                      oninput="lengthConverter(this.id,this.value)"
+                      onchange="lengthConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="millimeter2"
+                      name="millimeter2"
+                      placeholder="Millimeter"
+                      oninput="lengthConverter(this.id,this.value)"
+                      onchange="lengthConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="feet2"
+                      name="feet2"
+                      placeholder="Feet"
+                      oninput="lengthConverter(this.id,this.value)"
+                      onchange="lengthConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="meter2"
+                      name="meter2"
+                      placeholder="Meter"
+                      oninput="lengthConverter(this.id,this.value)"
+                      onchange="lengthConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="yard2"
+                      name="yard2"
+                      placeholder="Yard"
+                      oninput="lengthConverter(this.id,this.value)"
+                      onchange="lengthConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      name="meter12"
+                      id="meter12"
+                      placeholder="Meter"
+                      oninput="lengthConverter(this.id,this.value)"
+                      onchange="lengthConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="miles2"
+                      name="miles2"
+                      placeholder="Miles"
+                      oninput="lengthConverter(this.id,this.value)"
+                      onchange="lengthConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      name="kilometer2"
+                      id="kilometer2"
+                      placeholder="Kilometer"
+                      oninput="lengthConverter(this.id,this.value)"
+                      onchange="lengthConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <hr />
+                <button type="reset" class="">Reset</button>
+              </form>
+            </div>
+            <div data-tab-content="tab2" style="width: 96%">
+              <form
+                class="user"
+                action="register.php"
+                method="POST"
+                id="reg-form"
+              >
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="sinches5"
+                      name="sinches5"
+                      placeholder="Square Inches"
+                      oninput="areaConverter(this.id,this.value)"
+                      onchange="areaConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="scentimeter5"
+                      name="scentimeter5"
+                      placeholder="Square Centimeter"
+                      oninput="areaConverter(this.id,this.value)"
+                      onchange="areaConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="syard5"
+                      name="syard5"
+                      placeholder="Square Yard"
+                      oninput="areaConverter(this.id,this.value)"
+                      onchange="areaConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="smeter15"
+                      name="smeter15"
+                      placeholder="Square Meter"
+                      oninput="areaConverter(this.id,this.value)"
+                      onchange="areaConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="sfeet5"
+                      name="sfeet5"
+                      placeholder="Square Feet"
+                      oninput="areaConverter(this.id,this.value)"
+                      onchange="areaConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="smeter5"
+                      name="smeter5"
+                      placeholder="Square Meter"
+                      oninput="areaConverter(this.id,this.value)"
+                      onchange="areaConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="acres5"
+                      name="acres5"
+                      placeholder="Acres"
+                      oninput="areaConverter(this.id,this.value)"
+                      onchange="areaConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      name="hectares5"
+                      id="hectares5"
+                      placeholder="Hectares"
+                      oninput="areaConverter(this.id,this.value)"
+                      onchange="areaConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="smiles5"
+                      name="smiles5"
+                      placeholder="Square Miles"
+                      oninput="areaConverter(this.id,this.value)"
+                      onchange="areaConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      name="skilometer15"
+                      id="skilometer15"
+                      placeholder="Square Kilometer"
+                      oninput="areaConverter(this.id,this.value)"
+                      onchange="areaConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <hr />
+                <button type="reset" class="">Reset</button>
+              </form>
+            </div>
+            <div data-tab-content="tab3" style="width: 96%">
+              <form
+                class="user"
+                action="register.php"
+                method="POST"
+                id="reg-form"
+              >
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="cinches5"
+                      name="cinches5"
+                      placeholder="Cubic Inches"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="ccentimeter5"
+                      name="ccentimeter5"
+                      placeholder="Cubic Centimeter"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="cfeet5"
+                      name="cfeet5"
+                      placeholder="Cubic Feet"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="cmeter5"
+                      name="cmeter5"
+                      placeholder="Cubic Meter"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="cyard5"
+                      name="cyard5"
+                      placeholder="Cubic Yard"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="cmeter15"
+                      name="cmeter15"
+                      placeholder="Cubic Meter"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="cinches15"
+                      name="cinches15"
+                      placeholder="Cubic Inches"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      name="litres5"
+                      id="litres5"
+                      placeholder="Litres"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="gallon5"
+                      name="gallon5"
+                      placeholder="Gallon"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      name="litres15"
+                      id="litres15"
+                      placeholder="Litres"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="usgallon5"
+                      name="usgallon5"
+                      placeholder="US Gallon"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      name="litres25"
+                      id="litres25"
+                      placeholder="Kilometer"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="founces5"
+                      name="founces5"
+                      placeholder="Fluid Ounces"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      name="cmillilitres5"
+                      id="cmillilitres5"
+                      placeholder="Cubic Millilitres"
+                      oninput="volumeConverter(this.id,this.value)"
+                      onchange="volumeConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <hr />
+                <button type="reset" class="">Reset</button>
+              </form>
+            </div>
+            <div data-tab-content="tab4" style="width: 96%">
+              <form
+                class="user"
+                action="register.php"
+                method="POST"
+                id="reg-form"
+              >
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="ounces15"
+                      name="ounces15"
+                      placeholder="Ounces"
+                      oninput="weightConverter(this.id,this.value)"
+                      onchange="weightConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="grams5"
+                      name="grams5"
+                      placeholder="Grams"
+                      oninput="weightConverter(this.id,this.value)"
+                      onchange="weightConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="pounds5"
+                      name="pounds5"
+                      placeholder="Poundes"
+                      oninput="weightConverter(this.id,this.value)"
+                      onchange="weightConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="kilograms5"
+                      name="kilograms5"
+                      placeholder="Kilograms"
+                      oninput="weightConverter(this.id,this.value)"
+                      onchange="weightConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="long5"
+                      name="long5"
+                      placeholder="Long Tons"
+                      oninput="weightConverter(this.id,this.value)"
+                      onchange="weightConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="tonnes5"
+                      name="tonnes5"
+                      placeholder="Tonnes"
+                      oninput="weightConverter(this.id,this.value)"
+                      onchange="weightConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      id="short5"
+                      name="short5"
+                      placeholder="Short Tons"
+                      oninput="weightConverter(this.id,this.value)"
+                      onchange="weightConverter(this.id,this.value)"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      class="form-control form-control-user"
+                      name="tonnes15"
+                      id="tonnes15"
+                      placeholder="Tonnes"
+                      oninput="weightConverter(this.id,this.value)"
+                      onchange="weightConverter(this.id,this.value)"
+                    />
+                  </div>
+                </div>
+
+                <hr />
+                <button type="reset" class="">Reset</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- quote -->
+    <div class="container12">
+      <div class="row quote">
+        <div class="col-9" style="margin-right: 70px">
+          <h1>Not sure which solution fits your transportation needs?</h1>
+          <br />
+        </div>
+        <div class="col-3">
+          <a href="/source/contact.php"
+            ><button class="button-86" role="button">Get A Quote</button></a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer data-stellar-background-ratio="0.5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <div class="footer-thumb footer-info">
+              <h2>Bluee Lagoon Logistics</h2>
+              <p>
+                Whatever your Industry is we are your most preferable Logistics
+                Busniess Partner
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-4">
+            <div class="footer-thumb">
+              <h2>Company</h2>
+              <ul class="footer-link">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Services</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-4">
+            <div class="footer-thumb">
+              <h2>Resources</h2>
+              <ul class="footer-link">
+                <li><a href="#">Volumetric Weight</a></li>
+                <li><a href="#">Conversion Calculator</a></li>
+                <li><a href="#">Currency Converter</a></li>
+                <li><a href="#">Container Dimensions</a></li>
+                <li><a href="#">Pallet Sizing</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-sm-12">
+            <div class="footer-bottom">
+              <div class="col-md-6 col-sm-5">
+                <div class="copyright-text">
+                  <p>Copyright &copy; 2022 Techmates Info Soultions Pvt. Ltd</p>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-7">
+                <div class="phone-contact">
+                  <p>Call us <span>(+91) 892-551-6016</span></p>
+                </div>
+                <ul class="social-icon">
+                  <li>
+                    <a
+                      href="https://www.facebook.com/templatemo"
+                      class="fa fa-facebook-square"
+                      attr="facebook icon"
+                    ></a>
+                  </li>
+                  <li><a href="#" class="fa fa-twitter"></a></li>
+                  <li><a href="#" class="fa fa-instagram"></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.stellar.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/smoothscroll.js"></script>
+    <script src="/js/custom.js"></script>
+    <script src="/js/slick.js"></script>
+
+    <script>
+      var getslide = $(".main-box li").length - 1;
+
+      var slidecal = 30 / getslide + "%";
+
+      $(".box").css({ width: slidecal });
+
+      $(".box").click(function () {
+        $(".box").removeClass("active");
+        $(this).addClass("active");
+      });
+    </script>
+
+    <script>
+      function lengthConverter(source, valNum) {
+        valNum = parseFloat(valNum);
+        var inputFeet = document.getElementById("feet");
+        var inputMeters = document.getElementById("meter");
+        var inputMeters1 = document.getElementById("meter1");
+        var inputInches = document.getElementById("inches");
+        var inputInches1 = document.getElementById("inches1");
+        var inputcm = document.getElementById("centimeter");
+        var inputYards = document.getElementById("yard");
+        var inputKilometers = document.getElementById("kilometer");
+        var inputMiles = document.getElementById("miles");
+        var inputMilli = document.getElementById("millimeter");
+
+        if (source == "inches") {
+          inputcm.value = (valNum * 2.54).toFixed(4);
+        }
+        if (source == "centimeter") {
+          inputInches.value = (valNum * 0.39).toFixed(4);
+        }
+        if (source == "inches1") {
+          inputMilli.value = (valNum * 25.4).toFixed(4);
+        }
+        if (source == "millimeter") {
+          inputInches1.value = (valNum * 0.04).toFixed(4);
+        }
+        if (source == "feet") {
+          inputMeters.value = (valNum * 0.31).toFixed(4);
+        }
+        if (source == "meter") {
+          inputFeet.value = (valNum * 3.28).toFixed(4);
+        }
+        if (source == "yard") {
+          inputMeters1.value = (valNum * 0.91).toFixed(4);
+        }
+        if (source == "meter1") {
+          inputYards.value = (valNum * 1.09).toFixed(4);
+        }
+        if (source == "miles") {
+          inputKilometers.value = (valNum * 1.61).toFixed(4);
+        }
+        if (source == "kilometer") {
+          inputMiles.value = (valNum * 0.62).toFixed(4);
+        }
+
+        // mobile
+
+        var inputFeet2 = document.getElementById("feet2");
+        var inputMeters2 = document.getElementById("meter2");
+        var inputMeters12 = document.getElementById("meter12");
+        var inputInches2 = document.getElementById("inches2");
+        var inputInches12 = document.getElementById("inches12");
+        var inputcm2 = document.getElementById("centimeter2");
+        var inputYards2 = document.getElementById("yard2");
+        var inputKilometers2 = document.getElementById("kilometer2");
+        var inputMiles2 = document.getElementById("miles2");
+        var inputMilli2 = document.getElementById("millimeter2");
+
+        if (source == "inches2") {
+          inputcm2.value = (valNum * 2.54).toFixed(4);
+        }
+        if (source == "centimeter2") {
+          inputInches2.value = (valNum * 0.39).toFixed(4);
+        }
+        if (source == "inches12") {
+          inputMilli2.value = (valNum * 25.4).toFixed(4);
+        }
+        if (source == "millimeter2") {
+          inputInches12.value = (valNum * 0.04).toFixed(4);
+        }
+        if (source == "feet2") {
+          inputMeters2.value = (valNum * 0.31).toFixed(4);
+        }
+        if (source == "meter2") {
+          inputFeet2.value = (valNum * 3.28).toFixed(4);
+        }
+        if (source == "yard2") {
+          inputMeters12.value = (valNum * 0.91).toFixed(4);
+        }
+        if (source == "meter12") {
+          inputYards2.value = (valNum * 1.09).toFixed(4);
+        }
+        if (source == "miles2") {
+          inputKilometers2.value = (valNum * 1.61).toFixed(4);
+        }
+        if (source == "kilometer2") {
+          inputMiles2.value = (valNum * 0.62).toFixed(4);
+        }
+      }
+
+      function areaConverter(source, valNum) {
+        valNum = parseFloat(valNum);
+        var Isinches = document.getElementById("sinches");
+        var Iscentimeter = document.getElementById("scentimeter");
+        var Isfeet = document.getElementById("sfeet");
+        var Ismeter = document.getElementById("smeter");
+        var Isyard = document.getElementById("syard");
+        var Ismeter1 = document.getElementById("smeter1");
+        var Ismiles = document.getElementById("smiles");
+        var Iskilometer1 = document.getElementById("skilometer1");
+        var Iacres = document.getElementById("acres");
+        var Ihectares = document.getElementById("hectares");
+
+        if (source == "sinches") {
+          Iscentimeter.value = (valNum * 64.51).toFixed(4);
+        }
+        if (source == "scentimeter") {
+          Isinches.value = (valNum * 0.15).toFixed(4);
+        }
+        if (source == "sfeet") {
+          Ismeter.value = (valNum * 0.09).toFixed(4);
+        }
+        if (source == "smeter") {
+          Isfeet.value = (valNum * 10.76).toFixed(4);
+        }
+        if (source == "syard") {
+          Ismeter1.value = (valNum * 0.84).toFixed(4);
+        }
+        if (source == "smeter1") {
+          Isyard.value = (valNum * 1.2).toFixed(4);
+        }
+        if (source == "smiles") {
+          Iskilometer1.value = (valNum * 2.59).toFixed(4);
+        }
+        if (source == "skilometer1") {
+          Ismiles.value = (valNum * 0.39).toFixed(4);
+        }
+        if (source == "acres") {
+          Ihectares.value = (valNum * 0.4).toFixed(4);
+        }
+        if (source == "hectares") {
+          Iacres.value = (valNum * 2.47).toFixed(4);
+        }
+
+        // mobile
+
+        var Isinches5 = document.getElementById("sinches5");
+        var Iscentimeter5 = document.getElementById("scentimeter5");
+        var Isfeet5 = document.getElementById("sfeet5");
+        var Ismeter5 = document.getElementById("smeter5");
+        var Isyard5 = document.getElementById("syard5");
+        var Ismeter15 = document.getElementById("smeter15");
+        var Ismiles5 = document.getElementById("smiles5");
+        var Iskilometer15 = document.getElementById("skilometer15");
+        var Iacres5 = document.getElementById("acres5");
+        var Ihectares5 = document.getElementById("hectares5");
+
+        if (source == "sinches5") {
+          Iscentimeter5.value = (valNum * 64.51).toFixed(4);
+        }
+        if (source == "scentimeter5") {
+          Isinches5.value = (valNum * 0.15).toFixed(4);
+        }
+        if (source == "sfeet5") {
+          Ismeter5.value = (valNum * 0.09).toFixed(4);
+        }
+        if (source == "smeter5") {
+          Isfeet5.value = (valNum * 10.76).toFixed(4);
+        }
+        if (source == "syard5") {
+          Ismeter15.value = (valNum * 0.84).toFixed(4);
+        }
+        if (source == "smeter15") {
+          Isyard5.value = (valNum * 1.2).toFixed(4);
+        }
+        if (source == "smiles5") {
+          Iskilometer15.value = (valNum * 2.59).toFixed(4);
+        }
+        if (source == "skilometer15") {
+          Ismiles5.value = (valNum * 0.39).toFixed(4);
+        }
+        if (source == "acres5") {
+          Ihectares5.value = (valNum * 0.4).toFixed(4);
+        }
+        if (source == "hectares5") {
+          Iacres5.value = (valNum * 2.47).toFixed(4);
+        }
+      }
+
+      function volumeConverter(source, valNum) {
+        valNum = parseFloat(valNum);
+        var Icinches = document.getElementById("cinches");
+        var Iccentimeter = document.getElementById("ccentimeter");
+        var Icfeet = document.getElementById("cfeet");
+        var Icmeter = document.getElementById("cmeter");
+        var Icyard = document.getElementById("cyard");
+        var Icmeter1 = document.getElementById("cmeter1");
+        var Icinches1 = document.getElementById("cinches1");
+        var Ilitres = document.getElementById("litres");
+        var Igallon = document.getElementById("gallon");
+        var Ilitres1 = document.getElementById("litres1");
+        var Iusgallon = document.getElementById("usgallon");
+        var Ilitres2 = document.getElementById("litres2");
+        var Ifounces = document.getElementById("founces");
+        var Icmillilitres = document.getElementById("cmillilitres");
+
+        if (source == "cinches") {
+          Iccentimeter.value = (valNum * 16.39).toFixed(4);
+        }
+        if (source == "ccentimeter") {
+          Icinches.value = (valNum * 0.06).toFixed(4);
+        }
+        if (source == "cfeet") {
+          Icmeter.value = (valNum * 0.03).toFixed(4);
+        }
+        if (source == "cmeter") {
+          Icfeet.value = (valNum * 35.32).toFixed(4);
+        }
+        if (source == "cyard") {
+          Icmeter1.value = (valNum * 0.76).toFixed(4);
+        }
+        if (source == "cmeter1") {
+          Icyard.value = (valNum * 1.31).toFixed(4);
+        }
+        if (source == "cinches1") {
+          Ilitres.value = (valNum * 0.02).toFixed(4);
+        }
+        if (source == "litres") {
+          Icinches1.value = (valNum * 61.03).toFixed(4);
+        }
+        if (source == "gallon") {
+          Ilitres1.value = (valNum * 4.55).toFixed(4);
+        }
+        if (source == "litres1") {
+          Igallon.value = (valNum * 0.22).toFixed(4);
+        }
+        if (source == "usgallon") {
+          Ilitres2.value = (valNum * 3.79).toFixed(4);
+        }
+        if (source == "litres2") {
+          Iusgallon.value = (valNum * 0.26).toFixed(4);
+        }
+        if (source == "founces") {
+          Icmillilitres.value = (valNum * 30.77).toFixed(4);
+        }
+        if (source == "cmillilitres") {
+          Ifounces.value = (valNum * 0.03).toFixed(4);
+        }
+
+        // mobile
+
+        var Icinches5 = document.getElementById("cinches5");
+        var Iccentimeter5 = document.getElementById("ccentimeter5");
+        var Icfeet5 = document.getElementById("cfeet5");
+        var Icmeter5 = document.getElementById("cmeter5");
+        var Icyard5 = document.getElementById("cyard5");
+        var Icmeter15 = document.getElementById("cmeter15");
+        var Icinches15 = document.getElementById("cinches15");
+        var Ilitres5 = document.getElementById("litres5");
+        var Igallon5 = document.getElementById("gallon5");
+        var Ilitres15 = document.getElementById("litres15");
+        var Iusgallon5 = document.getElementById("usgallon5");
+        var Ilitres25 = document.getElementById("litres25");
+        var Ifounces5 = document.getElementById("founces5");
+        var Icmillilitres5 = document.getElementById("cmillilitres5");
+
+        if (source == "cinches5") {
+          Iccentimeter5.value = (valNum * 16.39).toFixed(4);
+        }
+        if (source == "ccentimeter5") {
+          Icinches5.value = (valNum * 0.06).toFixed(4);
+        }
+        if (source == "cfeet5") {
+          Icmeter5.value = (valNum * 0.03).toFixed(4);
+        }
+        if (source == "cmeter5") {
+          Icfeet5.value = (valNum * 35.32).toFixed(4);
+        }
+        if (source == "cyard5") {
+          Icmeter15.value = (valNum * 0.76).toFixed(4);
+        }
+        if (source == "cmeter15") {
+          Icyard5.value = (valNum * 1.31).toFixed(4);
+        }
+        if (source == "cinches15") {
+          Ilitres5.value = (valNum * 0.02).toFixed(4);
+        }
+        if (source == "litres5") {
+          Icinches15.value = (valNum * 61.03).toFixed(4);
+        }
+        if (source == "gallon5") {
+          Ilitres15.value = (valNum * 4.55).toFixed(4);
+        }
+        if (source == "litres15") {
+          Igallon5.value = (valNum * 0.22).toFixed(4);
+        }
+        if (source == "usgallon5") {
+          Ilitres25.value = (valNum * 3.79).toFixed(4);
+        }
+        if (source == "litres25") {
+          Iusgallon5.value = (valNum * 0.26).toFixed(4);
+        }
+        if (source == "founces5") {
+          Icmillilitres5.value = (valNum * 30.77).toFixed(4);
+        }
+        if (source == "cmillilitres5") {
+          Ifounces5.value = (valNum * 0.03).toFixed(4);
+        }
+      }
+
+      function weightConverter(source, valNum) {
+        valNum = parseFloat(valNum);
+        var ounces1 = document.getElementById("ounces1");
+        var grams = document.getElementById("grams");
+        var pounds = document.getElementById("pounds");
+        var kilograms = document.getElementById("kilograms");
+        var long = document.getElementById("long");
+        var tonnes = document.getElementById("tonnes");
+        var short = document.getElementById("short");
+        var tonnes1 = document.getElementById("tonnes1");
+
+        if (source == "ounces1") {
+          grams.value = (valNum * 28.35).toFixed(4);
+        }
+        if (source == "grams") {
+          ounces1.value = (valNum * 0.04).toFixed(4);
+        }
+        if (source == "pounds") {
+          kilograms.value = (valNum * 0.45).toFixed(4);
+        }
+        if (source == "kilograms") {
+          pounds.value = (valNum * 2.21).toFixed(4);
+        }
+        if (source == "long") {
+          tonnes.value = (valNum * 1.02).toFixed(4);
+        }
+        if (source == "tonnes") {
+          long.value = (valNum * 0.98).toFixed(4);
+        }
+        if (source == "short") {
+          tonnes1.value = (valNum * 0.91).toFixed(4);
+        }
+        if (source == "tonnes1") {
+          short.value = (valNum * 1.1).toFixed(4);
+        }
+
+        // mobile
+
+        var ounces15 = document.getElementById("ounces15");
+        var grams5 = document.getElementById("grams5");
+        var pounds5 = document.getElementById("pounds5");
+        var kilograms5 = document.getElementById("kilograms5");
+        var long5 = document.getElementById("long5");
+        var tonnes5 = document.getElementById("tonnes5");
+        var short5 = document.getElementById("short5");
+        var tonnes15 = document.getElementById("tonnes15");
+
+        if (source == "ounces15") {
+          grams5.value = (valNum * 28.35).toFixed(4);
+        }
+        if (source == "grams5") {
+          ounces15.value = (valNum * 0.04).toFixed(4);
+        }
+        if (source == "pounds5") {
+          kilograms5.value = (valNum * 0.45).toFixed(4);
+        }
+        if (source == "kilograms5") {
+          pounds5.value = (valNum * 2.21).toFixed(4);
+        }
+        if (source == "long5") {
+          tonnes5.value = (valNum * 1.02).toFixed(4);
+        }
+        if (source == "tonnes5") {
+          long5.value = (valNum * 0.98).toFixed(4);
+        }
+        if (source == "short5") {
+          tonnes15.value = (valNum * 0.91).toFixed(4);
+        }
+        if (source == "tonnes15") {
+          short5.value = (valNum * 1.1).toFixed(4);
+        }
+      }
+    </script>
+
+    <script>
+      $(function () {
+        $.each($(".print-tab .print-tab-menu > li"), function (index, value) {
+          var menu = $(value).data("tab-menu");
+          var tabID = $(value).parent().parent().data("tab-id");
+          var hash = window.location.hash.split("#").join("");
+
+          if (hash.length > 0) {
+            if (menu == hash) {
+              $(
+                '.print-tab[data-tab-id="' +
+                  tabID +
+                  '"] .print-tab-menu > li[data-tab-menu="' +
+                  menu +
+                  '"]'
+              ).addClass("active");
+              $(
+                '.print-tab[data-tab-id="' +
+                  tabID +
+                  '"] .print-tab-content > div[data-tab-content="' +
+                  menu +
+                  '"]'
+              ).addClass("view");
+            }
+          } else {
+            $(
+              '.print-tab[data-tab-id="' +
+                tabID +
+                '"] .print-tab-menu > li:eq(0)'
+            ).addClass("active");
+            $(
+              '.print-tab[data-tab-id="' +
+                tabID +
+                '"] .print-tab-content > div:eq(0)'
+            ).addClass("view");
+          }
+        });
+
+        $(".print-tab .print-tab-menu > li").click(function (event) {
+          var $this = $(this),
+            $data = $this.data("tab-menu"),
+            $tabID = $this.parent().parent().data("tab-id");
+          if (!$(this).hasClass("active")) {
+            window.location.hash = $data;
+
+            $(
+              '.print-tab[data-tab-id="' + $tabID + '"] .print-tab-menu > li'
+            ).removeClass("active");
+            $(this).addClass("active");
+
+            $(
+              '.print-tab[data-tab-id="' +
+                $tabID +
+                '"] .print-tab-content > div.view'
+            ).removeClass("view");
+            $(
+              '.print-tab[data-tab-id="' +
+                $tabID +
+                '"] .print-tab-content > div[data-tab-content="' +
+                $data +
+                '"]'
+            ).addClass("view");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

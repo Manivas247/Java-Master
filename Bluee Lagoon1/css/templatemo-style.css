@@ -635,7 +635,7 @@ li {
   #top .input-group input {
     text-align: center;
     padding: 20px;
-    margin-left: -320px;
+    margin-left: -380px;
     width: 200px;
   }
   .input-group-append {
@@ -1300,12 +1300,12 @@ banner
   #top .input-group input {
     text-align: center;
     padding: 20px;
-    margin-left: -320px;
+    margin-left: -260px;
     width: 200px;
   }
   .input-group-append {
     display: flex;
-    margin-left: -120px;
+    margin-left: -60px;
   }
   .input-group-append button {
     padding: 10px;
@@ -3036,8 +3036,363 @@ span.dot.no15 {
   span.dot:after {
     background-color: #1c9ccd;
   }
+  .tabs-content {
+    margin-left: -40px;
+    margin-top: 0px;
+  }
 }
 
 #contact {
   height: 60vh;
+}
+
+/* Single Service */
+
+.single-services {
+  margin-top: 140px;
+}
+
+#tabs ul {
+  margin: 0;
+  padding: 0;
+}
+#tabs ul li {
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 100%;
+}
+#tabs ul li:last-child {
+  margin-bottom: 0px;
+}
+#tabs ul li a {
+  text-transform: capitalize;
+  width: 100%;
+  padding: 30px 30px;
+  display: inline-block;
+  background-color: #a4c639;
+  font-size: 20px;
+  color: #121212;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+#tabs ul li a i {
+  float: right;
+  margin-top: 5px;
+}
+#tabs ul .ui-tabs-active span {
+  background: #faf5b2;
+  border: #faf5b2;
+  line-height: 90px;
+  border-bottom: none;
+}
+#tabs ul .ui-tabs-active a {
+  color: #fff;
+}
+#tabs ul .ui-tabs-active span {
+  color: #1e1e1e;
+}
+.tabs-content {
+  margin-left: 30px;
+  text-align: left;
+  display: inline-block;
+  transition: all 0.3s;
+}
+.tabs-content img {
+  max-width: 100%;
+  overflow: hidden;
+}
+.tabs-content h4 {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  margin-bottom: 15px;
+  margin-top: -80px;
+}
+.tabs-content p {
+  font-size: 18px;
+  color: #7a7a7a;
+  margin-bottom: 0px;
+  text-align: justify;
+}
+
+#inco h2 {
+  margin-top: -50px;
+  margin-bottom: -50px;
+  font-weight: 500;
+}
+
+#tabs1 ul {
+  margin: 0;
+  padding: 0;
+}
+#tabs1 ul li {
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 100%;
+}
+#tabs1 ul li:last-child {
+  margin-bottom: 0px;
+}
+#tabs1 ul li a {
+  text-transform: capitalize;
+  width: 100%;
+  padding: 30px 30px;
+  display: inline-block;
+  background-color: #a4c639;
+  font-size: 20px;
+  color: #121212;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+#tabs1 ul li a i {
+  float: right;
+  margin-top: 5px;
+}
+#tabs1 ul .ui-tabs-active span {
+  background: #faf5b2;
+  border: #faf5b2;
+  line-height: 90px;
+  border-bottom: none;
+}
+#tabs1 ul .ui-tabs-active a {
+  color: #fff;
+}
+#tabs1 ul .ui-tabs-active span {
+  color: #1e1e1e;
+}
+
+#currency {
+  height: 90vh;
+}
+
+#currency h2 {
+  margin-bottom: 30px;
+  margin-top: -30px;
+  font-weight: 500;
+}
+.main {
+  width: 50vw;
+  margin: auto;
+  padding: 30px;
+  border-radius: 5px;
+  background-color: rgba(8, 134, 61, 0.5);
+  color: white;
+}
+
+label {
+  font-size: 20px;
+}
+
+#finalAmount {
+  margin: 50px auto;
+}
+
+#finalAmount h3 {
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.finalValue {
+  font-family: "Amiri", serif;
+}
+
+@media (max-width: 768px) {
+  hr {
+    width: 60%;
+  }
+  .main {
+    width: 100%;
+  }
+  #currency {
+    height: 100vh;
+  }
+}
+
+@media (max-width: 400px) {
+  .heading {
+    font-size: 60px;
+  }
+  hr {
+    width: 75%;
+  }
+  #finalAmount h2,
+  .finalValue {
+    font-size: 40px;
+  }
+}
+
+.main-box {
+  display: flex;
+  background: #000;
+  margin: 70px auto 70px auto;
+  padding: 0;
+  width: 991px;
+}
+
+.box {
+  height: 450px;
+  padding: 15px;
+  border-right: 1px solid white;
+  webkit-transition: 0.8s;
+  -o-transition: 0.8s;
+  transition: 0.8s;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+}
+
+.detail {
+  width: 85%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: white;
+  color: black;
+  opacity: 0;
+  padding: 30px;
+  box-sizing: border-box;
+  webkit-transition: 0.8s;
+  -o-transition: 0.8s;
+  transition: 0.8s;
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+}
+
+.box.active {
+  width: 70% !important;
+}
+
+.box.active .detail {
+  opacity: 1;
+  -webkit-transition-delay: 0.6s;
+  -moz-transition-delay: 0.6s;
+  -o-transition-delay: 0.6s;
+  transition-delay: 0.6s;
+  transform: none;
+}
+
+.box span {
+  writing-mode: vertical-rl;
+  font-size: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  width: 40px;
+  transform: rotate(180deg);
+  font-weight: 400;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+.box.active span {
+  left: 25px;
+  right: auto;
+  margin: 0;
+  font-weight: 600;
+}
+
+p {
+  line-height: 23px;
+}
+
+@media (max-width: 768px) {
+  .main-box {
+    display: none;
+  }
+}
+
+#conversion h2 {
+  font-weight: 500;
+  margin-bottom: -50px;
+  margin-top: -50px;
+}
+
+.wrapper {
+  margin: 2% auto 0 auto;
+  max-width: 700px;
+  display: none;
+}
+
+.print-tab {
+  margin-bottom: 3em;
+  width: 100%;
+  box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.62);
+  overflow: hidden;
+}
+
+.print-tab ul.print-tab-menu {
+  width: 100%;
+
+  white-space: nowrap;
+  background: #f3f3f3;
+  box-shadow: rgba(0, 0, 0, 0.298039) 0px 0px 4px;
+}
+
+.print-tab ul.print-tab-menu > li {
+  position: relative;
+  margin: 0 -0.2em 0 0;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.print-tab ul.print-tab-menu > li.active {
+  border-top: 3px solid red;
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.14902) 0px -2px 3px 0px;
+  z-index: 2;
+}
+
+.print-tab ul.print-tab-menu > li > a {
+  display: block;
+  min-width: 140px;
+  max-width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #818181;
+  font-size: 15px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.print-tab .print-tab-content > div {
+  margin: 10px;
+  position: relative;
+  padding: 5px;
+  display: none;
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.298039) 1px 0px 10px 1px;
+}
+
+.print-tab .print-tab-content > div.view {
+  display: block;
+  width: 100%;
+  min-height: 200px;
+}
+
+.print-tab .print-tab-content > div p {
+  text-align: center;
+  min-height: 200px;
+  line-height: 200px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    display: contents;
+  }
+
+  .print-tab {
+    margin-top: 80px;
+  }
 }
