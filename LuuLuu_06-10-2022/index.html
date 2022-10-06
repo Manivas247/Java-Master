@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuuLuuHomes.com</title>
+    <link rel="stylesheet" href="./source/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./jquery.flipster.min.css" />
+    <link
+      rel="stylesheet"
+      href="./font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@500&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/d0d48d242d.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+   
+ 
+    <style>
+        
+
+
+        /*Universal Grid Element Behavoir*/
+/*-------------------------------------------*/
+nav ul li {
+  margin-right: 60px !important;}
+.Grid {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+}
+
+.Grid-cell {
+  /*Positioning*/
+  position: relative;
+  
+  /*Display and Box Model*/
+  flex: 1;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box; 
+}
+/*-------------------------------------------*/
+
+
+/*Individual Cell Behavoir for Screen Sizes*/
+/*===========================================*/
+
+/*Mobile First Individual Cell Sizing*/
+/*-------------------------------------------*/
+.Grid--cols-1 > .Grid-cell {
+  flex: 0 0 100%;
+}
+
+.Grid--cols-2 > .Grid-cell {
+  flex: 0 0 100%;
+}
+  
+.Grid--cols-3 > .Grid-cell {
+  flex: 0 0 100%;
+}
+  
+.Grid--cols-4 > .Grid-cell {
+  flex: 0 0 100%;
+} 
+  
+.Grid--cols-flex3 > .Grid-cell {
+  flex: 0 0 100%;
+}
+
+.Grid--cols-flex4 > .Grid-cell {
+  flex: 0 0 100%;
+}
+
+.Grid--cols-flex5 > .Grid-cell {
+  flex: 0 0 100%;
+}
+
+.Grid--cols-inline > .Grid-cell {
+  flex: 0 0 100%;
+}
+
+.alignHorizontal > .Grid-cell {
+  display: flex;
+  justify-content: center;
+}
+
+.alignVertical > .Grid-cell {
+  display: flex;
+  align-items: center;
+}
+/*-------------------------------------------*/
+
+/*800px or More Screens Default Desktop Behavoir*/
+/*-------------------------------------------*/
+@media (min-width: 800px) {
+  .Grid--cols-1 > .Grid-cell {
+    flex: 0 0 100%;
+  }
+  .Grid--cols-2 > .Grid-cell {
+    flex: 0 0 50%;
+  }
+  .Grid--cols-3 > .Grid-cell {
+    flex: 0 0 33.33%;
+  }
+  .Grid--cols-4 > .Grid-cell {
+    flex: 0 0 25%;
+  }
+  .Grid--cols-5 > .Grid-cell {
+    flex: 0 0 20%;
+  } 
+  .Grid--cols-6 > .Grid-cell {
+    flex: 0 0 16.66%;
+  } 
+  .Grid--cols-flex3 > .Grid-cell {
+    flex: 0 0 50%;
+  }
+  .Grid--cols-flex4 > .Grid-cell {
+    flex: 0 0 50%;
+  }
+  .Grid--cols-flex5 > .Grid-cell {
+    flex: 0 0 50%;
+  }
+  /*Gutters*/
+  .Grid--gutters {
+    margin-left: -4em;
+  }
+  .Grid--gutters .Grid-cell {
+    padding-left: 4em;
+  }
+}
+/*-------------------------------------------*/
+
+/*1000px or More Screens 2 per Row*/
+/*-------------------------------------------*/
+@media (min-width: 1000px) {
+  .Grid--cols-flex3 > .Grid-cell {
+    flex: 0 0 50%;
+  }
+  .Grid--cols-flex4 > .Grid-cell {
+    flex: 0 0 50%;
+  }
+  .Grid--cols-flex5 > .Grid-cell {
+    flex: 0 0 50%;
+  }
+}
+/*-------------------------------------------*/
+
+/*1200px or More Screens, Flex 3 per Row*/
+/*-------------------------------------------*/
+@media (min-width: 1200px) {
+  .Grid--cols-flex3 > .Grid-cell {
+    flex: 0 0 33.33%;
+  }
+  .Grid--cols-flex4 > .Grid-cell {
+    flex: 0 0 33.3%;
+  }
+  .Grid--cols-flex5 > .Grid-cell {
+    flex: 0 0 33.3%;
+  }
+  /*Gutters*/
+  .Grid--gutters {
+    margin-left: -8em;
+  }
+  .Grid--gutters .Grid-cell {
+    padding-left: 8em;
+  }
+}
+/*-------------------------------------------*/
+
+/*1400px or More Screens, Flex 4 per Row*/
+/*-------------------------------------------*/
+@media (min-width: 1400px) {
+  .Grid--cols-flex4 > .Grid-cell {
+    flex: 0 0 25%;
+  }
+  .Grid--cols-flex5 > .Grid-cell {
+    flex: 0 0 25%;
+  }
+}
+/*-------------------------------------------*/
+
+/*1600px or More Screens, Flex 5 per Row*/
+/*-------------------------------------------*/
+@media (min-width: 1600px) {
+  .Grid--cols-flex5 > .Grid-cell {
+    flex: 0 0 20%;
+  }
+  /*Gutters*/
+  .Grid--gutters {
+    margin-left: -12em;
+  }
+  .Grid--gutters .Grid-cell {
+    padding-left: 12em;
+  }
+}
+/*-------------------------------------------*/
+
+/*===========================================*/
+
+
+/*********************************************/
+
+
+.featured {
+  width: 850px;
+  margin: 0 auto;
+}
+
+@media(max-width: 800px) {
+  .featured {
+    width: 300px;
+  }
+}
+
+.featured-title {
+  width: 100%;
+  text-align: center;
+}
+
+.featured-title h1 {
+  font-family: "Montserrat";
+  font-size: 40px;
+  text-transform: uppercase;
+  letter-spacing: 7px;
+}
+
+.welcome-line {
+  position: absolute;
+  height: 2px;
+  background-color: #f1e8dc;
+  z-index: -10;
+}
+
+.line-d {
+  width: 500px;
+  -webkit-transform: translate(150px, 0px) rotate(20deg);
+  transform: translate(150px, 0px) rotate(20deg);
+}
+
+.line-e {
+  width: 700px;
+  -webkit-transform: translate(70px, -30px) rotate(-5deg);
+  transform: translate(70px, -30px) rotate(-5deg);
+}
+
+
+.featured-product {
+  margin-top: 50px;
+  cursor: pointer;
+  opacity: 0;
+  -webkit-transform: translate(0, 100px);
+  transform: translate(0, 100px);
+  -webkit-transition: all .75s ease;
+  transition: all .75s ease;
+}
+
+.featured-product.reveal {
+  opacity: 1;
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.featured-b {
+  margin-top: 130px;
+}
+
+.parallax-image {
+  width: 300px;
+  height: 400px;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  transform-style: preserve-3d;
+  box-shadow: 0px 0px 60px 20px rgba(0,0,0,0.1);
+}
+
+.image-border {
+  position: absolute;
+  top: 50px;
+
+  left: 50px;
+  /* Firefox */
+  height: -moz-calc(100% - 100px);
+  /* WebKit */
+  height: -webkit-calc(100% - 100px);
+  /* Opera */
+  height: -o-calc(100% - 100px);
+  /* Standard */
+  height: calc(100% - 100px);
+
+  width: -moz-calc(100% - 100px);
+  /* WebKit */
+  width: -webkit-calc(100% - 100px);
+  /* Opera */
+  width: -o-calc(100% - 100px);
+  /* Standard */
+  width: calc(100% - 100px);
+ 
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  o-box-sizing: border-box;
+  box-sizing: border-box;
+  
+  border: 2px solid #f1e8dc;
+  transform: translateZ(20px);
+}
+
+.product-desc {
+  padding-top: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+.product-desc h1 {
+  font-family: "Montserrat";
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 7px;
+}
+body{
+height: 100%;
+overflow-x: hidden !important;
+width: 100%;
+position: relative;
+
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <div class="navbar">
+          <div class="logo">
+            <a href="index.html" style="display: flex"
+              ><i
+                class="fa-solid fa-sink"
+                style="font-size: 23px; color: whitesmoke"
+              ></i>
+              <h3
+                style="
+                  color: palegoldenrod;
+                  font-weight: bold;
+                  margin-top: -8px;
+                "
+              >
+                &nbsp;LUULUU HOMES
+              </h3></a
+            >
+          </div>
+          <nav>
+            <ul id="menuitems">
+              <li><a class="active" href="index.html">Home</a></li>
+              <li><a href="./source/mainproduct.html">Products</a></li>
+              <li><a href="./source/about.html">About</a></li>
+              <li><a href="./source/contact.php">Contact</a></li>
+            </ul>
+          </nav>
+          <img src="./source/assets/menu.png" class="menu-icon" onclick="menutoggle()" />
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <h1>
+              The most exquisite choices come from our house <br />
+              #exquisite
+            </h1>
+            <a href="./source/products.html" class="btn">Explore Now &#8594;</a>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Our Area of Expertise -->
+
+    <div class="categories">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="site-heading text-center">
+            <h2>Our Area of <span> &nbsp;Expertise</span></h2>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="w3-content w3-display-container"
+        
+      >
+        <img
+          class="mySlides"
+          src="./source/assets/bathroom.jpg"
+          
+        />
+        <img
+          class="mySlides"
+          src="./source/assets/kitchen.jpg"
+          
+        />
+        <img
+          class="mySlides"
+          src="./source/assets/tiles.jpg"
+          
+        />
+        <img
+          class="mySlides"
+          src="./source/assets/led.jpg"
+         
+        />
+        <img
+          class="mySlides"
+          src="./source/assets/door.jpg"
+          
+        />
+        <img
+          class="mySlides"
+          src="./source/assets/mirror.jpg"
+         
+        />
+
+        <!-- <div
+          class="w3-center w3-container w3-section w3-large w3-text-black w3-display-bottommiddle"
+          style="width: 100%"
+        >
+          <div class="w3-left w3-hover-text-deep-orange" onclick="plusDivs(-1)">
+            &#10094;
+          </div>
+          <div class="w3-right w3-hover-text-deep-orange" onclick="plusDivs(1)">
+            &#10095;
+          </div>
+          <span
+            class="w3-badge demo w3-border w3-transparent w3-hover-black"
+            onclick="currentDiv(1)"
+          ></span>
+          <span
+            class="w3-badge demo w3-border w3-transparent w3-hover-black"
+            onclick="currentDiv(2)"
+          ></span>
+          <span
+            class="w3-badge demo w3-border w3-transparent w3-hover-black"
+            onclick="currentDiv(3)"
+          ></span>
+          <span
+            class="w3-badge demo w3-border w3-transparent w3-hover-black"
+            onclick="currentDiv(4)"
+          ></span>
+          <span
+            class="w3-badge demo w3-border w3-transparent w3-hover-black"
+            onclick="currentDiv(5)"
+          ></span>
+          <span
+            class="w3-badge demo w3-border w3-transparent w3-hover-black"
+            onclick="currentDiv(6)"
+          ></span>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- featured -->
+    <div class="featured">
+  
+        <div class="featured-title">
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="site-heading text-center">
+                    <h2>Discover<span> &nbsp;LuuLuuHomes</span></h2>
+                  </div>
+                </div>
+              </div>
+          <div class="welcome-line line-d">
+          </div>
+          <div class="welcome-line line-e">
+          </div>
+        </div>
+      
+        <div class="Grid Grid--cols-2 alignHorizontal">
+      
+          <div class="Grid-cell">
+      
+           <a href="/source/mainproduct.html"> <div class="featured-product revealEm">
+              <div class="parallax-image" style="background-image:url(/source/assets/index_door.jpg)">
+                <div class="image-border"></div>
+              </div>
+              <div class="product-desc">
+                <h1>Doors</h1>
+              </div>
+            </div></a>
+      
+          </div>
+      
+      
+          <div class="Grid-cell">
+      
+            <a href="/source/mainproduct.html"> <div class="featured-product featured-b revealEm">
+              <div class="parallax-image" style="background-image:url(/source/assets/index_window.jpg)">
+                <div class="image-border"></div>
+              </div>
+              <div class="product-desc">
+                <h1>Windows</h1>
+              </div>
+            </div></a>
+      
+          </div>
+      
+      
+          <div class="Grid-cell">
+      
+            <a href="/source/mainproduct.html"> <div class="featured-product revealEm">
+              <div class="parallax-image" style="background-image:url(/source/assets/index_cctv.jpg)">
+                <div class="image-border"></div>
+              </div>
+              <div class="product-desc">
+                <h1>CCTV Cameras</h1>
+              </div>
+            </div></a>
+      
+          </div>
+      
+      
+          <div class="Grid-cell">
+      
+            <a href="/source/mainproduct.html"> <div class="featured-product featured-b revealEm">
+              <div class="parallax-image" style="background-image:url(/source/assets/index_electrical.jpg)">
+                <div class="image-border"></div>
+              </div>
+              <div class="product-desc">
+                <h1>Electrical</h1>
+              </div>
+            </div></a>
+      
+          </div>
+      
+      
+          <div class="Grid-cell">
+      
+            <a href="/source/mainproduct.html"> <div class="featured-product revealEm">
+              <div class="parallax-image" style="background-image:url(/source/assets/index_tiles.jpg)">
+                <div class="image-border"></div>
+              </div>
+              <div class="product-desc">
+                <h1>Tiles</h1>
+              </div>
+            </div></a>
+      
+          </div>
+      
+      
+          <div class="Grid-cell">
+      
+            <a href="/source/mainproduct.html"> <div class="featured-product featured-b revealEm">
+              <div class="parallax-image" style="background-image:url(/source/assets/index_ceramics.jpg)">
+                <div class="image-border"></div>
+              </div>
+              <div class="product-desc">
+                <h1>Ceramics</h1>
+              </div>
+            </div></a>
+      
+          </div>
+          <div class="Grid-cell">
+      
+            <a href="/source/mainproduct.html"> <div class="featured-product revealEm">
+              <div class="parallax-image" style="background-image:url(/source/assets/index_sanitaryware.jpg)">
+                <div class="image-border"></div>
+              </div>
+              <div class="product-desc">
+                <h1>Sanitaryware</h1>
+              </div>
+            </div></a>
+      
+          </div>
+          <div class="Grid-cell">
+      
+            <a href="/source/mainproduct.html"> <div class="featured-product featured-b revealEm">
+              <div class="parallax-image" style="background-image:url(/source/assets/index_taps.jpg)">
+                <div class="image-border"></div>
+              </div>
+              <div class="product-desc">
+                <h1>Taps</h1>
+              </div>
+            </div></a>
+      
+          </div>
+          <div class="Grid-cell">
+      
+            <a href="/source/mainproduct.html"> <div class="featured-product revealEm">
+              <div class="parallax-image" style="background-image:url(/source/assets/index_kitchen.jpg)">
+                <div class="image-border"></div>
+              </div>
+              <div class="product-desc">
+                <h1>Kitchen</h1>
+              </div>
+            </div></a>
+      
+          </div>
+          <div class="Grid-cell">
+      
+            <a href="/source/mainproduct.html"> <div class="featured-product featured-b revealEm">
+              <div class="parallax-image" style="background-image:url(/source/assets/index_light.jpg)">
+                <div class="image-border"></div>
+              </div>
+              <div class="product-desc">
+                <h1>LED Lights</h1>
+              </div>
+            </div></a>
+      
+          </div>
+      
+      
+          <!--Grid-->
+        </div>
+      
+        <!--Featured-->
+      </div>
+
+    <!-- our services -->
+
+    <section
+      class="we-offer-area text-center bg-gray"
+      style="background-color: whitesmoke; margin: 0px"
+    >
+      <div class="container1" style="margin-top: -40px">
+        <div class="row">
+          <div class="col-md-12" style="margin-top: -10px">
+            <div class="site-heading text-center">
+              <h2>What we <span>Offer</span></h2>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row our-offer-items less-carousel"
+          style="margin-top: -30px"
+        >
+          <!-- Single Item -->
+          <div class="col-md-4 col-sm-6 equal-height">
+            <div class="item">
+              <i class="fa-solid fa-broom"></i>
+              <h4>Home Maintenance</h4>
+              <ul>
+                <div class="services" style="display: flex">
+                  <div style="margin: 15px">
+                    <li>Air conditioning</li>
+                    <li>Heating System</li>
+                    <li>Plumbing</li>
+                    <li>Pest Control</li>
+                    <li>Electricity</li>
+                    <li>Kitchen Equipment Maintenance</li>
+                  </div>
+                  <div style="margin: 15px">
+                    <li>Water Maintenance</li>
+                    <li>Safety Maintenance</li>
+                    <li>Alteration</li>
+                    <li>Rest Room Repair</li>
+                    <li>Remodelling & House Renovation</li>
+                  </div>
+                </div>
+              </ul>
+            </div>
+          </div>
+          <!-- End Single Item -->
+
+          <!-- Single Item -->
+          <div class="col-md-4 col-sm-6 equal-height">
+            <div class="item">
+              <i class="fa-solid fa-paint-roller"></i>
+              <h4>Contract Works</h4>
+              <ul>
+                <li>Painting Work</li>
+                <li>Carpenting Work</li>
+                <li>Plumbing Work</li>
+                <li>Modular Kitchen</li>
+                <li>Providing Building Materials & Equipment</li>
+              </ul>
+            </div>
+          </div>
+          <!-- End Single Item -->
+
+          <!-- Single Item -->
+          <div class="col-md-4 col-sm-6 equal-height">
+            <div class="item">
+              <i class="fa-solid fa-pump-soap"></i>
+              <h4>Washing Room</h4>
+              <ul>
+                <li>Vaccum Cleaner</li>
+                <li>Cleaning Items</li>
+                <li>Washing Room Cabinet</li>
+              </ul>
+            </div>
+          </div>
+          <!-- End Single Item -->
+
+          <!-- Single Item -->
+          <div class="col-md-4 col-sm-6 equal-height">
+            <div class="item">
+              <i class="fa-solid fa-seedling"></i>
+              <h4>Gardening</h4>
+              <ul>
+                <div class="services" style="display: flex">
+                  <div class="row1">
+                    <li>Grass</li>
+                    <li>Plants</li>
+                    <li>Flower Pots</li>
+                  </div>
+                  <div class="row2">
+                    <li>Artificial Plant</li>
+                    <li>Tile</li>
+                    <li>Rain Tree</li>
+                  </div>
+                </div>
+              </ul>
+            </div>
+          </div>
+          <!-- End Single Item -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonial -->
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="site-heading text-center">
+          <h2>What are people<span> &nbsp;saying about us</span></h2>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial" style="margin-top: -110px">
+      <div class="small-container9">
+        <div class="row">
+          <div class="col-3">
+            <i class="fa fa-quote-left"></i>
+            <p>
+              >Very good customer service from “LuuLuu Homes”. Excellent
+              showroom and having a vast variety in sanitary ware, floor and
+              wall tiles. A good range of bathroom fittings.They take care of
+              the customer's need so well.
+            </p>
+            <div class="rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </div>
+            <h3>Satya Moorthy</h3>
+          </div>
+          <div class="col-3">
+            <i class="fa fa-quote-left"></i>
+            <p>
+              They really try to help us and choose whatever is the best for us
+              rather than leaving it to our choice and probably ending up
+              choosing the wrong one. I feel everyone who is constructing a
+              house SHOULD visit this place once at least
+            </p>
+            <div class="rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+            </div>
+            <h3>Irfan Khan</h3>
+          </div>
+          <div class="col-3">
+            <i class="fa fa-quote-left"></i>
+            <p>
+              It was a great experience. The most satisfying thing in LuuLuu
+              Homes is their customer service. Best place to buy premium and
+              high quality products. They are even providing best quality
+              materials according to our budget
+            </p>
+            <div class="rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </div>
+            <h3>MahaLakshmi</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- brands -->
+    <div class="row">
+        <div class="col-md-12">
+          <div class="site-heading text-center">
+            <h2>Our Esteemed<span> &nbsp;Partners</span></h2>
+          </div>
+        </div>
+      </div>
+
+    <div class="brands" style="margin-top: -50px;">
+      <div class="small-container11">
+        <div class="row">
+          <div class="col-5">
+            <img src="./source/assets/kholer.png" />
+          </div>
+          <div class="col-5">
+            <img src="./source/assets/JAQUAR.png" />
+          </div>
+          <div class="col-5">
+            <img src="./source/assets/hindware.png" />
+          </div>
+          <div class="col-5">
+            <img src="./source/assets/parryware.png" />
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Footer -->
+
+    <div class="footer">
+      <div class="container2">
+        <div class="row">
+          <div class="footer-col-2">
+            <a href="index.html"><i class="fa-solid fa-sink"></i>
+            <h3>
+              &nbsp;LUULUU HOMES
+            </h3></a
+          >
+            <p>The most exquisite choices come from our house</p>
+          </div>
+          <div class="footer-col-3">
+            <h3>Quick Links</h3><hr>
+            <ul
+            style="
+              cursor: pointer;
+              font-weight: bold;
+              text-align: justify;
+              margin-left: 80px;
+            "
+          >
+            <a href="index.html"> <li style="margin: 10px">Home</li></a>
+            <a href="./source/about.html"> <li style="margin: 10px">About</li></a>
+            <a href="./source/products.html"><li style="margin: 10px">Products</li></a>
+            <a href="./source/contact.php"
+              ><li style="margin: 10px">Contact US</li></a
+            >
+          </div>
+          <div class="footer-col-4">
+            <h3>Follow Us</h3><hr>
+            <ul style="cursor: pointer; margin-left: 60px;" >
+                <a href="#" style="display: flex;"><i class="fa-brands fa-facebook" style="margin: 5px;"></i><li  style="margin: 5px;">Facebook</li></a>
+                    <a href="#" style="display: flex;"><i class="fa-brands fa-square-twitter" style="margin: 5px;"></i><li  style="margin: 5px;">Twitter</li></a>
+                        <a href="#" style="display: flex;"><i class="fa-brands fa-square-instagram" style="margin: 5px;"></i><li  style="margin: 5px;">Instagram</li></a>
+                            <a href="#" style="display: flex;"><i class="fa-brands fa-youtube" style="margin: 5px;"></i><li  style="margin: 5px;">Youtube</li></a>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <p class="copyright">©Copyright 2022 - LuuLuu Homes</p>
+      </div>
+    </div>
+
+  <!-- Back to Top -->
+  <a href="https://wa.me/9841032642" target="_blank" class="back-to-top"
+  ><img style="width: 60px;" src="/source/assets/WhatsApp.png" alt=""></a>
+  
+  
+
+
+    <!-- js for toggle menu -->
+    <script>
+      var MenuItems = document.getElementById("menuitems");
+      MenuItems.style.maxHeight = "0px";
+      function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+          MenuItems.style.maxHeight = "200px";
+        } else {
+          MenuItems.style.maxHeight = "0px";
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./jquery.flipster.min.js"></script>
+    <script src="/source/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   
+    <script src="https://cdn.rawgit.com/gijsroge/tilt.js/38991dd7/dest/tilt.jquery.js" ></script>
+    <script>
+      $(".carousel").flipster({
+        loop: true,
+      });
+    </script>
+    <script>
+    //   var slideIndex = 1;
+    //   showDivs(slideIndex);
+
+    //   function plusDivs(n) {
+    //     showDivs((slideIndex += n));
+    //   }
+
+    //   function currentDiv(n) {
+    //     showDivs((slideIndex = n));
+    //   }
+
+    //   function showDivs(n) {
+    //     var i;
+    //     var x = document.getElementsByClassName("mySlides");
+    //     var dots = document.getElementsByClassName("demo");
+    //     if (n > x.length) {
+    //       slideIndex = 1;
+    //     }
+    //     if (n < 1) {
+    //       slideIndex = x.length;
+    //     }
+    //     for (i = 0; i < x.length; i++) {
+    //       x[i].style.display = "none";
+    //     }
+    //     for (i = 0; i < dots.length; i++) {
+    //       dots[i].className = dots[i].className.replace(" w3-brown", "");
+    //     }
+    //     x[slideIndex - 1].style.display = "block";
+    //     dots[slideIndex - 1].className += " w3-brown";
+    //   }
+    var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}    
+  x[myIndex-1].style.display = "block";  
+  setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+
+    </script>
+
+    <script>
+        $('.parallax-image').tilt({
+  perspective: 500,
+  scale: 1
+});
+
+
+//Reveal Hidden Elements Initial
+
+$('.revealEm').each(function(i) {
+  var top_of_object = $(this).offset().top;
+  var bottom_of_window = $(window).scrollTop() + $(window).height();
+  if (bottom_of_window > top_of_object) {
+    $(this).addClass("reveal");
+  }
+});
+
+
+//Reveal Hidden Elements on Scroll
+
+$(window).scroll(function() {
+  $('.revealEm').each(function(i) {
+    var top_of_object = $(this).offset().top;
+    var bottom_of_window = $(window).scrollTop() + $(window).height();
+    if (bottom_of_window > top_of_object) {
+      $(this).addClass("reveal");
+    }
+  });
+});
+    </script>
+  </body>
+</html>

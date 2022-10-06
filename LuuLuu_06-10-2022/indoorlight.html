@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuLuHomes.com</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./jquery.flipster.min.css" />
+    <link
+      rel="stylesheet"
+      href="./font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/d0d48d242d.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/d0d48d242d.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  </head>
+  <style>
+    nav ul li {
+      margin-right: 60px !important;
+    }
+  </style>
+  <style>
+    body {
+      background: #1111;
+      margin: 0;
+      background-size: cover;
+    }
+    .item {
+      justify-content: space-around;
+      align-content: center;
+      border-image-slice: 1;
+      min-height: 310vh;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      margin-left: 380px;
+    }
+    .pos1 {
+      height: 350px;
+      width: 350px;
+      background-image: url("./assets/bulk head light.png");
+      background-size: 350px;
+      background-position: center;
+      transition: 0.5s;
+    }
+    .pos2 {
+      height: 350px;
+      width: 350px;
+      background-image: url("./assets/dimpper light.jpg");
+      background-size: 350px;
+      background-position: center;
+      transition: 0.5s;
+    }
+    .pos3 {
+      height: 350px;
+      width: 350px;
+      background-image: url("./assets/panel light.jpeg");
+      background-size: 350px;
+      background-position: center;
+      transition: 0.5s;
+    }
+    .pos4 {
+      height: 350px;
+      width: 350px;
+      background-image: url("./assets/spot-lighting.jpg");
+      background-size: 350px;
+      background-position: center;
+      transition: 0.5s;
+    }
+
+    .pos6 {
+      height: 350px;
+      width: 350px;
+      background-image: url("./assets/tarck light.jpg");
+      background-size: 350px;
+      background-position: center;
+      transition: 0.5s;
+    }
+    .pos7 {
+      height: 350px;
+      width: 350px;
+      background-image: url("./assets/wall light.jpg");
+      background-size: 350px;
+      background-position: center;
+      transition: 0.5s;
+    }
+    .pos8 {
+      height: 350px;
+      width: 350px;
+      background-image: url("./assets/step light.jpg");
+      background-size: 350px;
+      background-position: center;
+      transition: 0.5s;
+    }
+    .pos9 {
+      height: 350px;
+      width: 350px;
+      background-image: url("./assets/ledmirror.jpg");
+      background-size: 350px;
+      background-position: center;
+      transition: 0.5s;
+    }
+    .pos10 {
+      height: 350px;
+      width: 350px;
+      background-image: url("./assets/Decorative_Lights.jpg");
+      background-size: 350px;
+      background-position: center;
+      transition: 0.5s;
+    }
+    .card {
+      margin: 40px;
+      width: 350px;
+      background: linear-gradient(150deg, #f17501, #f1e2b1);
+      display: grid;
+      justify-content: center;
+      height: 500px;
+      border-radius: 4px;
+      text-align: center;
+      overflow: hidden;
+      transition: 0.5s;
+    }
+    .card > img {
+      width: 350px;
+    }
+    .abv {
+      margin-top: 40%;
+      padding: 30px;
+      font-size: 25px;
+      font-family: nyala;
+      font-weight: bolder;
+      color: #442b41;
+      background: rgba(255, 255, 255, 0.5);
+    }
+    .card > h2 {
+      text-align: center;
+      font-family: Gabriola;
+      color: #442b41;
+      font-size: 20px;
+    }
+    .pos1:hover {
+      background-size: 400px;
+    }
+    .pos2:hover {
+      background-size: 400px;
+    }
+    .pos3:hover {
+      background-size: 400px;
+    }
+    .pos4:hover {
+      background-size: 400px;
+    }
+    .pos8:hover {
+      background-size: 400px;
+    }
+    .pos6:hover {
+      background-size: 400px;
+    }
+    .pos7:hover {
+      background-size: 400px;
+    }
+    .pos9:hover {
+      background-size: 400px;
+    }
+    .pos10:hover {
+      background-size: 400px;
+    }
+    @media (max-width: 720px) {
+      .item {
+        grid-template-columns: auto;
+        margin-left: 40px;
+        min-height: 520vh;
+      }
+      .card > h2 {
+        font-size: 16px;
+      }
+    }
+    .container500 {
+      position: relative;
+      display: inline-block;
+      padding: 0 75px;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    span {
+      width: 100%;
+    }
+
+    .text {
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: 800;
+      position: relative;
+      color: #34495e;
+      margin-top: 145px;
+      width: 100%;
+      visibility: hidden;
+      text-align: center;
+    }
+
+    .text::before {
+      content: attr(data-text);
+      text-align: left;
+      position: absolute;
+      color: #fff;
+      width: 0;
+      overflow: hidden;
+    }
+
+    .container500::before {
+      content: "";
+      width: 0%;
+      height: 10%;
+      position: absolute;
+      background: #2980b9;
+      right: 0;
+      top: 140px;
+      transition: 0.6s;
+    }
+
+    .container500:hover .text::before,
+    .container500:hover::before {
+      width: 100%;
+      visibility: visible;
+    }
+    @media (min-width: 1920px) and (max-width: 2560px) {
+      .item {
+        min-height: 140vh;
+        grid-template-columns: auto auto auto auto;
+        margin-left: 650px;
+      }
+    }
+  </style>
+  <body>
+    <div class="header">
+      <div class="container198">
+        <div class="navbar">
+          <div class="logo">
+            <a href="/index.html" style="display: flex"
+              ><i
+                class="fa-solid fa-sink"
+                style="font-size: 23px; color: whitesmoke"
+              ></i>
+              <h3
+                style="
+                  color: palegoldenrod;
+                  font-weight: bold;
+                  margin-top: -8px;
+                "
+              >
+                &nbsp;LUULUU HOMES
+              </h3></a
+            >
+          </div>
+          <nav>
+            <ul id="menuitems">
+              <li><a href="/index.html">Home</a></li>
+              <li><a class="active" href="mainproduct.html">Products</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.php">Contact</a></li>
+            </ul>
+          </nav>
+          <img src="assets/menu.png" class="menu-icon" onclick="menutoggle()" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="site-heading text-center" style="margin-bottom: -40px">
+          <h2>Indoor<span> &nbsp;Lights</span></h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="card">
+        <a href="indoor_bulk.html">
+          <div class="pos1">
+            <span class="container500">
+              <div class="text" data-text="Bulk Head">Bulk Head</div>
+            </span>
+          </div>
+        </a>
+        <h2>
+          "We are offering led bulkhead Light to our clients.We are offering LED
+          WALL Light to our clients.We hold specialization in offering a wide
+          range of LED BULKHEAD LIGHT , LED GARDEN WALL LIGHT."
+        </h2>
+      </div>
+      <div class="card">
+        <a href="indoor_dimmer.html">
+          <div class="pos2">
+            <span class="container500">
+              <div class="text" data-text="Dimmer Light">Dimmer Light</div>
+            </span>
+          </div>
+        </a>
+        <h2>
+          "Easy to Install and USB Cable Design: No wall or holes drilling, no
+          tools required. The led mirror lights for vanity with strong 3M
+          double-sided tapes can be directly stuck on the mirror or mirror
+          frame. "
+        </h2>
+      </div>
+      <div class="card">
+        <a href="indoor_panel.html">
+          <div class="pos3">
+            <span class="container500">
+              <div class="text" data-text="Panel Light">Panel Light</div>
+            </span>
+          </div>
+        </a>
+        <h2>
+          " These lights came in PVC body with HPF Driver. We manufacture Panel
+          light from 6W to 20W. These Panel Lights are protected by serge
+          protection for longer life span"
+        </h2>
+      </div>
+      <div class="card">
+        <a href="indoor_spot.html">
+          <div class="pos4">
+            <span class="container500">
+              <div class="text" data-text="Spot Light">Spot Light</div>
+            </span>
+          </div>
+        </a>
+        <h2>
+          "This spot light is available from us in various specifications to
+          choose from. Offered spot light is designed by optimum quality
+          material and modular techniques keeping in mind the set market
+          standard."
+        </h2>
+      </div>
+
+      <div class="card">
+        <a href="indoor_track.html">
+          <div class="pos6">
+            <span class="container500">
+              <div class="text" data-text="Track Light">Track Light</div>
+            </span>
+          </div>
+        </a>
+        <h2>
+          "These products are manufactured using optimum grade raw material and
+          advanced technology. Our customers can avail these products in several
+          specifications in the nationwide market. "
+        </h2>
+      </div>
+      <div class="card">
+        <a href="indoor_wall.html">
+          <div class="pos7">
+            <span class="container500">
+              <div class="text" data-text="Wall Light">Wall Light</div>
+            </span>
+          </div>
+        </a>
+        <h2>
+          ". When night falls, turn on the outdoor wall light, warm and soft
+          light shines through the lampshade and projects on your house. The
+          anti-corrosion performance can extend the service life;"
+        </h2>
+      </div>
+
+      <div class="card">
+        <a href="indoor_step.html">
+          <div class="pos8">
+            <span class="container500">
+              <div class="text" data-text="Step Light">Step Light</div>
+            </span>
+          </div>
+        </a>
+        <h2>
+          "These are made available to our customers as per the set industry
+          standards and at extremely affordable rates as well. These have got
+          satin finish plastic diffuser with a very high light emission."
+        </h2>
+      </div>
+      <div class="card">
+        <a href="indoor_mirror.html">
+          <div class="pos9">
+            <span class="container500">
+              <div class="text" data-text="Mirror LED">Mirror LED</div>
+            </span>
+          </div>
+        </a>
+        <h2>
+          "LED mirrors come in many different shapes and sizes. From small
+          compact models to much larger bathroom mirrors, there is something for
+          everyone and every need."
+        </h2>
+      </div>
+      <div class="card">
+        <a href="indoor_decorative.html">
+          <div class="pos10">
+            <span class="container500">
+              <div class="text" data-text="Decorative Lights">
+                Decorative Lights
+              </div>
+            </span>
+          </div>
+        </a>
+        <h2>
+          "We are leading manufacturer & supplier of Wall Light For Living Room
+          And Home Decor Pendants Ceiling Lamp.We ensure to provide good quality
+          products to our customers."
+        </h2>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="container2">
+        <div class="row">
+          <div class="footer-col-2">
+            <a href="/index.html"
+              ><i class="fa-solid fa-sink"></i>
+              <h3>&nbsp;LUULUU HOMES</h3></a
+            >
+            <p>The most exquisite choices come from our house</p>
+          </div>
+          <div class="footer-col-3">
+            <h3>Quick Links</h3>
+            <hr />
+            <ul
+              style="
+                cursor: pointer;
+                font-weight: bold;
+                text-align: justify;
+                margin-left: 80px;
+              "
+            >
+              <a href="/index.html"> <li style="margin: 10px">Home</li></a>
+              <a href="about.html"> <li style="margin: 10px">About</li></a>
+              <a href="products.html"><li style="margin: 10px">Products</li></a>
+              <a href="contact.php"><li style="margin: 10px">Contact US</li></a>
+            </ul>
+          </div>
+          <div class="footer-col-4">
+            <h3>Follow Us</h3>
+            <hr />
+            <ul style="cursor: pointer; margin-left: 60px">
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-facebook" style="margin: 5px"></i>
+                <li style="margin: 5px">Facebook</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-square-twitter" style="margin: 5px"></i>
+                <li style="margin: 5px">Twitter</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i
+                  class="fa-brands fa-square-instagram"
+                  style="margin: 5px"
+                ></i>
+                <li style="margin: 5px">Instagram</li></a
+              >
+              <a href="#" style="display: flex"
+                ><i class="fa-brands fa-youtube" style="margin: 5px"></i>
+                <li style="margin: 5px">Youtube</li></a
+              >
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <p class="copyright">©Copyright 2022 - LuuLuu Homes</p>
+      </div>
+    </div>
+
+    <a href="https://wa.me/9841032642" target="_blank" class="wat1"
+      ><img style="width: 60px" src="./assets/WhatsApp.png" alt=""
+    /></a>
+
+    <!-- js for toggle menu -->
+    <script src="./main.js"></script>
+    <script>
+      var MenuItems = document.getElementById("menuitems");
+      MenuItems.style.maxHeight = "0px";
+      function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+          MenuItems.style.maxHeight = "200px";
+        } else {
+          MenuItems.style.maxHeight = "0px";
+        }
+      }
+    </script>
+    <script>
+      const categoryTitle = document.querySelectorAll(".category-title");
+      const allCategoryPosts = document.querySelectorAll(".all");
+
+      for (let i = 0; i < categoryTitle.length; i++) {
+        categoryTitle[i].addEventListener(
+          "click",
+          filterPosts.bind(this, categoryTitle[i])
+        );
+      }
+
+      function filterPosts(item) {
+        changeActivePosition(item);
+        for (let i = 0; i < allCategoryPosts.length; i++) {
+          if (
+            allCategoryPosts[i].classList.contains(item.attributes.id.value)
+          ) {
+            allCategoryPosts[i].style.display = "block";
+          } else {
+            allCategoryPosts[i].style.display = "none";
+          }
+        }
+      }
+
+      function changeActivePosition(activeItem) {
+        for (let i = 0; i < categoryTitle.length; i++) {
+          categoryTitle[i].classList.remove("active");
+        }
+        activeItem.classList.add("active");
+      }
+    </script>
+  </body>
+</html>
