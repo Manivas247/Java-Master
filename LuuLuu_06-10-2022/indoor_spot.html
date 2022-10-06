@@ -155,7 +155,7 @@
               <li><a href="/index.html">Home</a></li>
               <li><a class="active" href="mainproduct.html">Products</a></li>
               <li><a href="about.html">About</a></li>
-              <li><a href="contact.php">Contact</a></li>
+              <li><a href="contact.html">Contact</a></li>
             </ul>
           </nav>
           <img src="assets/menu.png" class="menu-icon" onclick="menutoggle()" />
@@ -486,7 +486,7 @@
               <a href="/index.html"> <li style="margin: 10px">Home</li></a>
               <a href="about.html"> <li style="margin: 10px">About</li></a>
               <a href="products.html"><li style="margin: 10px">Products</li></a>
-              <a href="contact.php"><li style="margin: 10px">Contact US</li></a>
+              <a href="contact.html"><li style="margin: 10px">Contact US</li></a>
             </ul>
           </div>
           <div class="footer-col-4">
@@ -561,29 +561,4 @@
         }
       }
 
-      function changeActivePosition(activeItem) {
-        for (let i = 0; i < categoryTitle.length; i++) {
-          categoryTitle[i].classList.remove("active");
-        }
-        activeItem.classList.add("active");
-      }
-    </script>
-    <script>
-      const spans = document.querySelectorAll(".word span");
-
-      spans.forEach((span, idx) => {
-        span.addEventListener("click", (e) => {
-          e.target.classList.add("active");
-        });
-        span.addEventListener("animationend", (e) => {
-          e.target.classList.remove("active");
-        });
-
-        // Initial animation
-        setTimeout(() => {
-          span.classList.add("active");
-        }, 750 * (idx + 1));
-      });
-    </script>
-  </body>
-</html>
+      function changeActivePosition(ac
